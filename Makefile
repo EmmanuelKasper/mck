@@ -8,7 +8,7 @@ freemint-1.18.0.tar.bz2:
 freemint/auto/mint000.prg: freemint-1.18.0.tar.bz2
 	mkdir -p freemint
 	bzcat $< | tar -C freemint -xvf -
-	# archive files are newer than their content
+	# mark the mint file as newer as the originating zip
 	touch $@ 
 
 cleanall:
