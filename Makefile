@@ -1,16 +1,18 @@
-.PHONY: cleanall
+.PHONY: clean cleanall install ansible
 
-all: freemint/auto/mint000.prg
+MOUNT_POINT = /stmint
 
-freemint-1.18.0.tar.bz2:
-	wget https://github.com/freemint/freemint/releases/download/freemint-1_18_0/freemint-1.18.0.tar.bz2
+ansible:
+	ansible-playbook solomint.yml --inventory localhost,
 
-freemint/auto/mint000.prg: freemint-1.18.0.tar.bz2
-	mkdir -p freemint
-	bzcat $< | tar -C freemint -xvf -
-	# mark the mint file as newer as the originating zip
-	touch $@ 
+install:
+	cp -r target/* $(MOUNT_POINT)
 
-cleanall:
+clean:
+	rm -fr target
 	rm -fr freemint
+
+cleanall: clean
 	rm -f freemint-1.18.0.tar.bz2
+
+include make.mk
