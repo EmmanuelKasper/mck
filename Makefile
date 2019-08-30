@@ -1,15 +1,15 @@
 .PHONY: clean cleanall install ansible
 
-MOUNT_POINT = /stmint
+MOUNT_POINT = target
 
 ansible:
 	ansible-playbook solomint.yml --inventory localhost,
 
 install:
-	cp -r target/* $(MOUNT_POINT)
+	cp -r build/* $(MOUNT_POINT)
 
 clean:
-	rm -fr target
+	rm -fr build
 	rm -fr freemint
 
 cleanall: clean

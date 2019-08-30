@@ -1,4 +1,4 @@
-- name: build a solomint distribution for the Atari ST line of computers
+- name: Build a ST Mint distribution using the TOS AES
   hosts: localhost
   connection: local
   gather_facts: no
@@ -6,45 +6,5 @@
     - version: 1.18
     - file_version: 1-18-0
   tasks:
-    - name: download mint {{ version }} distribution
-      get_url: 
-        url: https://github.com/freemint/freemint/releases/download/freemint-1_18_0/freemint-{{ version }}.0.tar.bz2
-        dest: "{{ playbook_dir }}/freemint-{{ version }}.0.tar.bz2"
-        force: no
-
-    - name: create folder structure
-      file:
-        path: "{{ item }}"
-        state: directory
-      loop:
-        - freemint
-        - target/auto
-
-    - name: unpack freemint archive
-      unarchive:
-        src: freemint-{{ version }}.0.tar.bz2
-        dest: freemint
-        creates: freemint/auto/mint000.prg
-
-    - name: copy freemint kernel
-      copy:
-        src: freemint/auto/mint000.prg
-        dest: target/auto/mint000.prg
-
-    - name : copy freemint sysdir
-      shell: cp -r freemint/mint target/
-      args:
-        creates: target/mint
-
-    - name: use the ROM AES
-      replace:
-        path: "target/mint/{{ file_version }}/mint.cnf"
-        regexp: '^#GEM=ROM$'
-        replace: 'GEM=ROM'
-    
-    - name: remove default hostname
-      replace:
-        path: "target/mint/{{ file_version }}/mint.cnf"
-        regexp : '^setenv HOSTNAME saturn$'
-        replace: 'setenv HOSTNAME stmint'
-    
+    - import_tasks: basemint.yml
+    - import_tasks: tos_aes.yml

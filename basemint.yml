@@ -1,0 +1,38 @@
+    - name: download mint {{ version }} distribution
+      get_url: 
+        url: https://github.com/freemint/freemint/releases/download/freemint-1_18_0/freemint-{{ version }}.0.tar.bz2
+        dest: "{{ playbook_dir }}/freemint-{{ version }}.0.tar.bz2"
+        force: no
+
+    - name: create folder structure
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - freemint
+        - build/auto
+    
+# do this manually instead of using unarchive,
+# to avoid unclear error: Failed to find handler for bla.
+# Make sure the required command to extract the file is installed.
+    - name: unpack freemint archive
+      shell: tar -C freemint -xaf "freemint-{{ version }}.0.tar.bz2" 
+      args:
+        creates: freemint/auto/mint000.prg
+        warn: no
+
+    - name: copy freemint kernel
+      copy:
+        src: freemint/auto/mint000.prg
+        dest: build/auto/mint000.prg
+
+    - name : copy freemint sysdir
+      shell: cp -r freemint/mint build/
+      args:
+        creates: build/mint
+
+    - name: remove default hostname
+      replace:
+        path: "build/mint/{{ file_version }}/mint.cnf"
+        regexp : '^setenv HOSTNAME saturn$'
+        replace: 'setenv HOSTNAME stmint'

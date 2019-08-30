@@ -1,4 +1,4 @@
-mk: target/mint/1-18-0/mint.toc
+mk: build/mint/1-18-0/mint.toc
 
 freemint-1.18.0.tar.bz2:
 	wget https://github.com/freemint/freemint/releases/download/freemint-1_18_0/freemint-1.18.0.tar.bz2
@@ -9,15 +9,15 @@ freemint/auto/mint000.prg: freemint-1.18.0.tar.bz2
 	# mark the mint file as newer as the originating zip
 	touch $@ 
 
-target/auto/mint000.prg: freemint/auto/mint000.prg
-	mkdir -p target/auto
+build/auto/mint000.prg: freemint/auto/mint000.prg
+	mkdir -p build/auto
 	cp $? $@
 
-target/mint/1-18-0/mint.cnf: target/auto/mint000.prg
-	mkdir -p target
-	cp -r freemint/mint target/
+build/mint/1-18-0/mint.cnf: build/auto/mint000.prg
+	mkdir -p build
+	cp -r freemint/mint build/
 
-target/mint/1-18-0/mint.toc: target/mint/1-18-0/mint.cnf
+build/mint/1-18-0/mint.toc: build/mint/1-18-0/mint.cnf
 	cp $? $?.orig
 	sed 's/setenv HOSTNAME saturn/setenv HOSTNAME stmint/' $?.orig > $?
 	cp $? $?.orig

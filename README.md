@@ -8,8 +8,23 @@ A proof of concept to build an Atari ST Mint distribution using Ansible as a bui
 Having ansible and a POSIX make installed, call
 
 ```
-make ansible
+make
 ```
 
-then copy the content of the /target dir to a Atari ST disk image.
-You can find a ready to use disk image at https://hatari.tuxfamily.org/hd80mb.image.gz
+To install the distribution, mount the first partition of an Atari disk on $PWD/target
+and call
+
+```
+make install
+```
+
+or
+```
+make MOUNT_POINT=/media/manu/P1 install
+```
+
+If working with disk images, you can mount the disk image with the command:
+```
+udisksctl loop-setup --file my_disk.img
+```
+
