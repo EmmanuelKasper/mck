@@ -28,3 +28,13 @@ If working with disk images, you can mount the disk image with the command:
 udisksctl loop-setup --file my_disk.img
 ```
 
+## ROADMAP
+
+- rebuild solomint with latest freemint build
+- try xaaes with latest freemint build
+- try myaes with latest freemint build
+- add okamishell, configure tos2win
+- maybe: add demo programs to show multitasking capabilities
+- try ethernet programm with freemint
+- cross compile nweb
+- cross compile suckless core tools
