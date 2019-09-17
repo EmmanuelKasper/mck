@@ -1,4 +1,4 @@
-MCK: The St Mint Construction Kit
+MCK: The Mint Construction Kit
 =================================
 
 A proof of concept to build an Atari ST Mint distribution using Ansible as a build tool.
@@ -25,7 +25,13 @@ make MOUNT_POINT=/media/manu/P1 install
 
 If working with disk images, you can mount the disk image with the command:
 ```
-udisksctl loop-setup --file my_disk.img
+udisksctl loop-setup --file 1GB.img
+udisksctl mount --block-device /dev/loop0p1
+```
+and unmount afterwards with
+```
+udisksctl unmount --block-device /dev/loop0p1
+udisksctl loop-delete --block-device /dev/loop0
 ```
 
 ## ROADMAP

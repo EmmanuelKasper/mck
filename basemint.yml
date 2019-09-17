@@ -1,5 +1,5 @@
     - name: download mint {{ version }} distribution
-      get_url: 
+      get_url:
         url: https://github.com/freemint/freemint/releases/download/freemint-1_18_0/freemint-{{ version }}.0.tar.bz2
         dest: "{{ playbook_dir }}/freemint-{{ version }}.0.tar.bz2"
         force: no
@@ -11,12 +11,13 @@
       loop:
         - freemint
         - build/auto
-    
+        - build/distrib
+
 # do this manually instead of using unarchive,
 # to avoid unclear error: Failed to find handler for bla.
 # Make sure the required command to extract the file is installed.
     - name: unpack freemint archive
-      shell: tar -C freemint -xaf "freemint-{{ version }}.0.tar.bz2" 
+      shell: tar -C freemint -xaf "freemint-{{ version }}.0.tar.bz2"
       args:
         creates: freemint/auto/mint000.prg
         warn: no
@@ -36,3 +37,36 @@
         path: "build/mint/{{ file_version }}/mint.cnf"
         regexp : '^setenv HOSTNAME saturn$'
         replace: 'setenv HOSTNAME stmint'
+
+    - name: download public domain okami shell
+      get_url:
+        url: https://sites.google.com/site/stessential/home/all-software/okamishl.zip
+        dest: "{{ playbook_dir }}/okamishl.zip"
+        force: no
+
+    - name: extract okami shell
+      shell: unzip okamishl.zip
+      args:
+        creates: OKAMI_SH.ELL/SH.TTP
+
+    - name: fix unzip permissions
+      file:
+        path: "{{ item }}"
+        mode: 0644
+      loop:
+        - OKAMI_SH.ELL/SH.TTP
+        - OKAMI_SH.ELL/PROFILE
+
+    - name: copy okami shell to 'distri' folder
+      copy:
+        src: "{{ item }}"
+        dest: build/distrib/
+      loop:
+        - OKAMI_SH.ELL/MSH.PRG
+        - OKAMI_SH.ELL/MSH.INF
+        - OKAMI_SH.ELL/SH.TTP
+        - OKAMI_SH.ELL/PROFILE
+
+
+
+

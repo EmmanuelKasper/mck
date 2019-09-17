@@ -1,0 +1,9 @@
+- name: Build a ST Mint distribution using the okamishell
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    - version: 1.18
+    - file_version: 1-18-0
+  tasks:
+    - import_tasks: basemint.yml
