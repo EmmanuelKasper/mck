@@ -54,8 +54,11 @@
         path: "{{ item }}"
         mode: 0644
       loop:
+        - OKAMI_SH.ELL/MSH.PRG
+        - OKAMI_SH.ELL/MSH.INF
         - OKAMI_SH.ELL/SH.TTP
         - OKAMI_SH.ELL/PROFILE
+        - OKAMI_SH.ELL/HELP
 
     - name: copy okami shell to 'distri' folder
       copy:
@@ -66,6 +69,7 @@
         - OKAMI_SH.ELL/MSH.INF
         - OKAMI_SH.ELL/SH.TTP
         - OKAMI_SH.ELL/PROFILE
+        - OKAMI_SH.ELL/HELP
 
 
 
