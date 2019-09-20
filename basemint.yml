@@ -1,7 +1,7 @@
     - name: download mint {{ version }} distribution
       get_url:
-        url: https://github.com/freemint/freemint/releases/download/freemint-1_18_0/freemint-{{ version }}.0.tar.bz2
-        dest: "{{ playbook_dir }}/freemint-{{ version }}.0.tar.bz2"
+        url: "https://bintray.com/freemint/freemint/download_file?file_path=snapshots%2F1-19-2a88f753%2Ffreemint-1-19-2a8-000-st_ste.zip"
+        dest: "{{ playbook_dir }}/freemint-{{ version }}-000-st_ste.zip"
         force: no
 
     - name: create folder structure
@@ -13,19 +13,16 @@
         - build/auto
         - build/distrib
 
-# do this manually instead of using unarchive,
-# to avoid unclear error: Failed to find handler for bla.
-# Make sure the required command to extract the file is installed.
     - name: unpack freemint archive
-      shell: tar -C freemint -xaf "freemint-{{ version }}.0.tar.bz2"
-      args:
-        creates: freemint/auto/mint000.prg
-        warn: no
+      unarchive:
+        src: freemint-{{ version }}-000-st_ste.zip
+        dest: "freemint"
+        creates: "freemint/auto/mint-{{ minor_version }}.prg"
 
     - name: copy freemint kernel
       copy:
-        src: freemint/auto/mint000.prg
-        dest: build/auto/mint000.prg
+        src: freemint/auto/mint-{{ minor_version }}.prg
+        dest: build/auto/mint-{{ minor_version }}.prg
 
     - name : copy freemint sysdir
       shell: cp -r freemint/mint build/
@@ -34,7 +31,7 @@
 
     - name: remove default hostname
       replace:
-        path: "build/mint/{{ file_version }}/mint.cnf"
+        path: "build/mint/{{ version }}/mint.cnf"
         regexp : '^setenv HOSTNAME saturn$'
         replace: 'setenv HOSTNAME stmint'
 

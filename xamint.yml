@@ -3,8 +3,9 @@
   connection: local
   gather_facts: no
   vars:
-    - version: 1.18
-    - file_version: 1-18-0
+    - minor_version: 2a8
+    - major_version: 1-19
+    - version: "{{ major_version }}-{{ minor_version }}"
   tasks:
     - import_tasks: basemint.yml
     - import_tasks: xaaes.yml

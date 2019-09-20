@@ -1,16 +1,16 @@
 - name: enable xaaes in Freemint config
   replace:
-    path: "build/mint/{{ file_version }}/mint.cnf"
+    path: "build/mint/{{ version }}/mint.cnf"
     regexp: '^#GEM=u:/c/mint/xaaes/xaloader.prg$'
     replace: 'INIT=u:/c/mint/mint/1-18-0/xaaes/xaloader.prg'
 
 - name: creates a xaaes config file based on defaults
   copy:
-    src: "build/mint/{{ file_version }}/xaaes/example.cnf"
-    dest: "build/mint/{{ file_version }}/xaaes/xaaes.cnf"
+    src: "build/mint/{{ version }}/xaaes/example.cnf"
+    dest: "build/mint/{{ version }}/xaaes/xaaes.cnf"
 
 - name: set xaaes resolution to ST High (640*400) 
   replace:
-    path:  "build/mint/{{ file_version }}/xaaes/xaaes.cnf"
+    path:  "build/mint/{{ version }}/xaaes/xaaes.cnf"
     regexp: '^#video = 4$'
     replace: 'video = 4'
