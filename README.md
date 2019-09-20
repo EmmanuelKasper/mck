@@ -1,7 +1,11 @@
-MCK: The Mint Construction Kit
+MCK: The ST Mint Construction Kit
 =================================
 
-A proof of concept to build an Atari ST Mint distribution using Ansible as a build tool.
+A proof of concept to build an Atari ST Freemint distribution using Ansible as a build tool.
+Freemint is an Unix-like kernel for the Atari ST, see https://freemint.github.io/ for details
+
+## Ready to use disk images for your Atari
+See http://www.subsole.org/st_mint
 
 ## Usage
 
@@ -11,8 +15,7 @@ Having ansible and a POSIX make installed, call
 make
 ```
 
-To install the distribution, mount the first partition of an Atari disk on $PWD/target
-and call
+To copy all the stuff in the first partition of a TOS/DOS disk image, call
 
 ```
 make install
@@ -21,17 +24,6 @@ make install
 or
 ```
 make MOUNT_POINT=/media/manu/P1 install
-```
-
-If working with disk images, you can mount the disk image with the command:
-```
-udisksctl loop-setup --file 1GB.img
-udisksctl mount --block-device /dev/loop0p1
-```
-and unmount afterwards with
-```
-udisksctl unmount --block-device /dev/loop0p1
-udisksctl loop-delete --block-device /dev/loop0
 ```
 
 ## ROADMAP

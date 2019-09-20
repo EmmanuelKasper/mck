@@ -1,5 +1,4 @@
-.PHONY: clean cleanall install ansible
-
+.PHONY: clean cleanall install test
 MOUNT_POINT = /media/manu/P1
 
 text:
@@ -12,7 +11,14 @@ solo:
 	ansible-playbook solomint.yml --inventory localhost,
 
 install:
-	cp -rv build/* $(MOUNT_POINT)
+	udisksctl loop-setup --file 1GB.img
+	udisksctl mount --block-device /dev/loop0p1
+	(cd build; tar cf - *) | (cd $(MOUNT_POINT); tar xf - )
+	udisksctl unmount --block-device /dev/loop0p1
+	udisksctl loop-delete --block-device /dev/loop0
+
+test:
+	hatari --acsi 1GB.img &
 
 clean:
 	rm -fr build
