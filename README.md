@@ -28,7 +28,6 @@ make MOUNT_POINT=/media/manu/P1 install
 
 ## ROADMAP
 
-- add nohog.acc to solomint
 - try xaaes with latest freemint build
 - try myaes with latest freemint build
 - add okamishell, configure tos2win
