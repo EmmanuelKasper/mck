@@ -16,8 +16,8 @@
     - name: unpack freemint archive
       unarchive:
         src: freemint-{{ version }}-000-st_ste.zip
-        dest: "freemint"
-        creates: "freemint/auto/mint-{{ minor_version }}.prg"
+        dest: freemint
+        creates: freemint/auto/mint-{{ minor_version }}.prg
 
     - name: copy freemint kernel
       copy:
@@ -25,7 +25,7 @@
         dest: build/auto/mint-{{ minor_version }}.prg
 
     - name : copy freemint sysdir
-      shell: cp -r freemint/mint build/
+      command: cp -r freemint/mint build/
       args:
         creates: build/mint
 
@@ -35,6 +35,12 @@
         regexp : '^setenv HOSTNAME saturn$'
         replace: 'setenv HOSTNAME stmint'
 
+    - name: remove floppy drive B from Desktop
+      replace:
+        path: "build/mint/{{ version }}/mint.cnf"
+        regexp : '^#FDC_HIDE_B=YES$'
+        replace: 'FDC_HIDE_B=YES'
+
     - name: download public domain okami shell
       get_url:
         url: https://sites.google.com/site/stessential/home/all-software/okamishl.zip
@@ -42,9 +48,10 @@
         force: no
 
     - name: extract okami shell
-      shell: unzip okamishl.zip
-      args:
-        creates: OKAMI_SH.ELL/SH.TTP
+      unarchive:
+        src: okamishl.zip
+        dest: "{{ playbook_dir }}"
+        creates: OKAMI_SH.ELL
 
     - name: fix unzip permissions
       file:

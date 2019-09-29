@@ -8,4 +8,24 @@
     - version: "{{ major_version }}-{{ minor_version }}"
   tasks:
     - import_tasks: basemint.yml
-    - import_tasks: xaaes.yml
+
+    - name: creates a backup of the xaaes config file
+      command: mv build/mint/{{ version }}/xaaes/xaaes.cnf build/mint/{{ version }}/xaaes/xaaes.cnf.orig
+      args:
+        creates: build/mint/{{ version }}/xaaes/xaaes.cnf.orig
+
+    - name: convert xaaes config file to utf-8 so we can edit it with ansible
+      shell: "iconv -f 437 -t utf-8 build/mint/{{ version }}/xaaes/xaaes.cnf.orig  | sed -n '/^[^# ]/p' > build/mint/{{ version }}/xaaes/xaaes.cnf"
+      args:
+        creates: build/mint/{{ version }}/xaaes/xaaes.cnf
+
+    - name: set xaaes resolution to ST High (640*400)
+      lineinfile:
+        path: build/mint/{{ version }}/xaaes/xaaes.cnf
+        line: 'video = 4'
+
+    - name: copy a default configuration file for teradesk
+      copy:
+        src: resources/TERADESK.INF
+        dest: build/mint/{{ version }}/sys-root/opt/GEM/teradesk/TERADESK.INF
+

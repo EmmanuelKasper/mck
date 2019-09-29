@@ -1,0 +1,330 @@
+TeraDesk-inf
+
+; Avoid editing this file by hand !!!
+
+options=
+{
+	infv=0x0400
+	save=0x0000
+	dial=0x0001
+	xpre=0x0000
+	pref=0x101F
+	buff=512
+	maxd=256
+	plin=80
+	tabs=8
+	cwin=0
+	mode=0
+	sort=0
+	aarr=1
+	attr=0x0014
+	flds=0x001F
+	vidp=0x0000
+	vres=0
+	dpat=4
+	dcol=3
+	wpat=0
+	wcol=0
+}
+
+shortcuts=
+{
+	open=0x024F
+	show=0x0249
+	srch=0x0246
+	prin=0x0250
+	dele=0x027F
+	sela=0x0241
+	quit=0x0251
+	cycl=0x0257
+	svop=0x0253
+}
+
+filetypes=
+{
+	ftype=
+	{
+		mask=*
+	}
+	ftype=
+	{
+		mask=*.*
+	}
+	ftype=
+	{
+		mask=*.PRG
+	}
+	ftype=
+	{
+		mask=*.APP
+	}
+	ftype=
+	{
+		mask=*.GTP
+	}
+	ftype=
+	{
+		mask=*.TOS
+	}
+	ftype=
+	{
+		mask=*.TTP
+	}
+	ftype=
+	{
+		mask=*.ACC
+	}
+	ftype=
+	{
+		mask=*.TXT
+	}
+	ftype=
+	{
+		mask=*.IMG
+	}
+}
+
+apptypes=
+{
+	ptype=
+	{
+		name=*.PRG
+		flag=0x2001
+	}
+	ptype=
+	{
+		name=*.APP
+		flag=0x2001
+	}
+	ptype=
+	{
+		name=*.GTP
+		appt=1
+		flag=0x2001
+	}
+	ptype=
+	{
+		name=*.TOS
+		appt=3
+		flag=0x2000
+	}
+	ptype=
+	{
+		name=*.TTP
+		appt=4
+		flag=0x2000
+	}
+	ptype=
+	{
+		name=*.ACC
+		appt=2
+		flag=0x2000
+	}
+}
+
+icontypes=
+{
+}
+
+deskicons=
+{
+	iconw=80
+	iconh=46
+	icon=
+	{
+		name=FLOPPY
+		labl=FLOPPY
+		type=1
+	}
+	icon=
+	{
+		name=HARD@DISC
+		labl=HARD@DISC
+		type=1
+		driv=2
+		xpos=2
+	}
+	icon=
+	{
+		name=HARD@DISC
+		labl=HARD@DISC
+		type=1
+		driv=3
+		xpos=3
+	}
+	icon=
+	{
+		name=HARD@DISC
+		labl=HARD@DISC
+		type=1
+		driv=4
+		xpos=4
+	}
+	icon=
+	{
+		name=HARD@DISC
+		labl=HARD@DISC
+		type=1
+		driv=20
+		xpos=5
+	}
+	icon=
+	{
+		name=PRINTER
+		labl=PRINTER
+		type=3
+		ypos=1
+	}
+	icon=
+	{
+		name=DISABLE
+		labl=TRASH
+		type=2
+		ypos=2
+	}
+}
+
+applications=
+{
+}
+
+windows=
+{
+	directories=
+	{
+		font=
+		{
+			iden=1
+			size=10
+			fcol=1
+		}
+		pos=
+		{
+			xpos=160
+			ypos=34
+			winw=40
+			winh=13
+		}
+		pos=
+		{
+			xpos=176
+			ypos=50
+			winw=42
+			winh=13
+		}
+		pos=
+		{
+			xpos=192
+			ypos=66
+			winw=44
+			winh=13
+		}
+		pos=
+		{
+			xpos=208
+			ypos=82
+			winw=46
+			winh=13
+		}
+		pos=
+		{
+			xpos=224
+			ypos=98
+			winw=48
+			winh=13
+		}
+		pos=
+		{
+			xpos=240
+			ypos=114
+			winw=50
+			winh=13
+		}
+		pos=
+		{
+			xpos=256
+			ypos=130
+			winw=52
+			winh=13
+		}
+		pos=
+		{
+			xpos=272
+			ypos=146
+			winw=54
+			winh=13
+		}
+	}
+	views=
+	{
+		font=
+		{
+			iden=1
+			size=10
+			fcol=1
+		}
+		pos=
+		{
+			xpos=80
+			ypos=38
+			winw=60
+			winh=10
+		}
+		pos=
+		{
+			xpos=88
+			ypos=70
+			winw=62
+			winh=10
+		}
+		pos=
+		{
+			xpos=96
+			ypos=102
+			winw=62
+			winh=10
+		}
+		pos=
+		{
+			xpos=104
+			ypos=134
+			winw=64
+			winh=10
+		}
+		pos=
+		{
+			xpos=112
+			ypos=166
+			winw=64
+			winh=10
+		}
+		pos=
+		{
+			xpos=120
+			ypos=198
+			winw=66
+			winh=10
+		}
+		pos=
+		{
+			xpos=128
+			ypos=230
+			winw=66
+			winh=10
+		}
+		pos=
+		{
+			xpos=136
+			ypos=262
+			winw=68
+			winh=10
+		}
+	}
+}
+
+avstats=
+{
+}
+
+end
+

@@ -28,10 +28,9 @@ make MOUNT_POINT=/media/manu/P1 install
 
 ## ROADMAP
 
-- try xaaes with latest freemint build
-- try myaes with latest freemint build
-- add okamishell, configure tos2win
-- maybe: add demo programs to show multitasking capabilities
+- partition fresh disk image with AHDI drivers (31MB,31MB ) and use that
+- fix tos2win shell window
+- maybe: add demo programs to show multitasking capabilities (2048 ...)
 - try ethernet programm with freemint
 - cross compile nweb
 - cross compile suckless core tools

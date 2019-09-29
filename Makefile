@@ -1,6 +1,8 @@
 .PHONY: clean cleanall install test
 MOUNT_POINT = /media/manu/P1
 
+all: xa
+
 solo:
 	ansible-playbook solomint.yml --inventory localhost,
 
@@ -21,11 +23,12 @@ test:
 	hatari --acsi 1GB.img &
 
 clean:
+	rm -fr OKAMI_SH.ELL
 	rm -fr build
 	rm -fr freemint
+	rm -f *.retry
 
 cleanall: clean
-	rm -fr OKAMI_SH.ELL
 	rm -f okamishl.zip
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-2a8-000-st_ste.zip
 
