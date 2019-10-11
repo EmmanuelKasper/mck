@@ -1,0 +1,12 @@
+### xaaes.inf: written by 1.6.4 Beta ###
+### File-selector ###
+	FS_SORTDIR=0
+	FS_SORT=0
+	FS_TREEVIEW=0
+	FS_RTBUILD=0
+	FS_POINT=0
+	FS_XYWH=0,0,0,0
+### System-Window ###
+	SYS_XYWH=0,0,0,0
+### View ###
+	VIEW_XYWH=0,0,0,0

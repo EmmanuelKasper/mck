@@ -23,7 +23,7 @@ options=
 	vres=0
 	dpat=4
 	dcol=3
-	wpat=0
+	wpat=1
 	wcol=0
 }
 
@@ -157,16 +157,8 @@ deskicons=
 		name=HARD@DISC
 		labl=HARD@DISC
 		type=1
-		driv=4
-		xpos=4
-	}
-	icon=
-	{
-		name=HARD@DISC
-		labl=HARD@DISC
-		type=1
 		driv=20
-		xpos=5
+		xpos=4
 	}
 	icon=
 	{
