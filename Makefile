@@ -1,5 +1,4 @@
 .PHONY: clean cleanall install test
-MOUNT_POINT = /media/manu/P1
 
 all: xa
 
@@ -12,19 +11,26 @@ text:
 xa:
 	ansible-playbook xamint.yml --inventory localhost,
 
-install:
+imageinstall:
 	udisksctl loop-setup --file 1GB.img
 	udisksctl mount --block-device /dev/loop0p1
-	(cd build; tar cf - *) | (cd $(MOUNT_POINT); tar xf - )
+	rm -fr /media/manu/P1/*
+	(cd build; tar cf - *) | (cd /media/manu/P1; tar xf -)
 	udisksctl unmount --block-device /dev/loop0p1
 	udisksctl loop-delete --block-device /dev/loop0
+
+cardinstall:
+	mount /stmint
+	rm -fr /stmint/auto /stmint/distrib /stmint/mint
+	cp -r build/auto build/distrib build/mint /stmint
+	umount /stmint
 
 test:
 	hatari --acsi 1GB.img &
 
 clean:
 	rm -fr OKAMI_SH.ELL
-	rm -fr build
+	rm -fr build/*
 	rm -fr freemint
 	rm -f *.retry
 

@@ -15,22 +15,18 @@ Having ansible and a POSIX make installed, call
 make
 ```
 
-To copy all the stuff in the first partition of a TOS/DOS disk image, call
+To copy all the stuff in the first partition of a TOS/DOS disk image named 1GB.img, call
 
 ```
-make install
+make imageinstall
 ```
 
-or
+To copy all the stuff in a partition mounted on /stmint, call
 ```
-make MOUNT_POINT=/media/manu/P1 install
+make cardinstall
 ```
 
-## ROADMAP
+## Roadmap / Status
+see https://github.com/EmmanuelKasper/mck/wiki/Roadmap
 
-- partition fresh disk image with AHDI drivers (31MB,31MB ) and use that
-- fix tos2win shell window
-- maybe: add demo programs to show multitasking capabilities (2048 ...)
-- try ethernet programm with freemint
-- cross compile nweb
-- cross compile suckless core tools
+

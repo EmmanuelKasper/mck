@@ -1,4 +1,6 @@
-build
+build/auto
+build/distrib
+build/mint
 target
 freemint
 freemint-1.18.0.tar.bz2
