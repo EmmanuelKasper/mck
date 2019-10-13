@@ -35,6 +35,14 @@
         regexp : '^setenv HOSTNAME saturn$'
         replace: 'setenv HOSTNAME stmint'
 
+    - name: disable {{ item }} driver
+      command: mv build/mint/{{ version }}/{{ item }}.xfs build/mint/{{ version }}/{{ item }}.xfx
+      args:
+        creates: build/mint/{{ version }}/{{ item }}.xfx
+      loop:
+        - ext2
+        - nfs
+
     - name: remove floppy drive B from Desktop
       replace:
         path: "build/mint/{{ version }}/mint.cnf"
