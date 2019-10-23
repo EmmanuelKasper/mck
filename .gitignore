@@ -1,5 +1,6 @@
 build/auto
 build/distrib
+build/extra/
 build/mint
 target
 freemint
@@ -10,3 +11,8 @@ OKAMI_SH.ELL
 okamishl.zip
 freemint-1-19-2a8-000-st_ste.zip
 xamint.retry
+grab0001.png
+resources/2048.68K/
+resources/2048_13b_68k.zip
+resources/command.tos
+resources/disk00

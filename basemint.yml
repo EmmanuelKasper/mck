@@ -11,7 +11,7 @@
       loop:
         - freemint
         - build/auto
-        - build/distrib
+        - build/extra
 
     - name: unpack freemint archive
       unarchive:
@@ -42,47 +42,3 @@
       loop:
         - ext2
         - nfs
-
-    - name: remove floppy drive B from Desktop
-      replace:
-        path: "build/mint/{{ version }}/mint.cnf"
-        regexp : '^#FDC_HIDE_B=YES$'
-        replace: 'FDC_HIDE_B=YES'
-
-    - name: download public domain okami shell
-      get_url:
-        url: https://sites.google.com/site/stessential/home/all-software/okamishl.zip
-        dest: "{{ playbook_dir }}/okamishl.zip"
-        force: no
-
-    - name: extract okami shell
-      unarchive:
-        src: okamishl.zip
-        dest: "{{ playbook_dir }}"
-        creates: OKAMI_SH.ELL
-
-    - name: fix unzip permissions
-      file:
-        path: "{{ item }}"
-        mode: 0644
-      loop:
-        - OKAMI_SH.ELL/MSH.PRG
-        - OKAMI_SH.ELL/MSH.INF
-        - OKAMI_SH.ELL/SH.TTP
-        - OKAMI_SH.ELL/PROFILE
-        - OKAMI_SH.ELL/HELP
-
-    - name: copy okami shell to 'distri' folder
-      copy:
-        src: "{{ item }}"
-        dest: build/distrib/
-      loop:
-        - OKAMI_SH.ELL/MSH.PRG
-        - OKAMI_SH.ELL/MSH.INF
-        - OKAMI_SH.ELL/SH.TTP
-        - OKAMI_SH.ELL/PROFILE
-        - OKAMI_SH.ELL/HELP
-
-
-
-

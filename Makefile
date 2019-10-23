@@ -21,8 +21,8 @@ imageinstall:
 
 cardinstall:
 	mount /stmint
-	rm -fr /stmint/auto /stmint/distrib /stmint/mint
-	cp -r build/auto build/distrib build/mint /stmint
+	rm -fr /stmint/auto /stmint/extra /stmint/mint
+	cp -r build/auto build/extra build/mint /stmint
 	umount /stmint
 
 test:
@@ -35,7 +35,8 @@ clean:
 	rm -f *.retry
 
 cleanall: clean
-	rm -f okamishl.zip
+	rm -f resources/disk00 resources/command.tos
+	rm -fr resources/2048_13b_68k.zip resources/2048.68K
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-2a8-000-st_ste.zip
 
 include make.mk

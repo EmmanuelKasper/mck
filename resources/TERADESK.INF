@@ -5,7 +5,7 @@ TeraDesk-inf
 options=
 {
 	infv=0x0400
-	save=0x0000
+	save=0x0001
 	dial=0x0001
 	xpre=0x0000
 	pref=0x101F
@@ -174,6 +174,24 @@ deskicons=
 		type=2
 		ypos=2
 	}
+	icon=
+	{
+		name=GEM@APP
+		labl=2048.APP
+		type=5
+		path=C:\EXTRA\2048.68K\2048.APP
+		xpos=2
+		ypos=1
+	}
+	icon=
+	{
+		name=TOS@APP
+		labl=COMMAND.TOS
+		type=5
+		path=C:\EXTRA\COMMAND.TOS
+		xpos=3
+		ypos=1
+	}
 }
 
 applications=
@@ -192,10 +210,10 @@ windows=
 		}
 		pos=
 		{
-			xpos=160
-			ypos=34
-			winw=40
-			winh=13
+			xpos=125
+			ypos=117
+			winw=38
+			winh=4
 		}
 		pos=
 		{

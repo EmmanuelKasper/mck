@@ -19,10 +19,10 @@
       args:
         creates: build/mint/{{ version }}/xaaes/xaaes.cnf
 
-    # - name: set xaaes resolution to ST High (640*400)
-    #   lineinfile:
-    #     path: build/mint/{{ version }}/xaaes/xaaes.cnf
-    #     line: 'video = 4'
+    - name: set xaaes resolution to ST High (640*400)
+      lineinfile:
+        path: build/mint/{{ version }}/xaaes/xaaes.cnf
+        line: 'video = 4'
 
     - name: copy a default INF file for teradesk
       copy:
@@ -33,4 +33,51 @@
       copy:
         src: resources/TERADESK.INF
         dest: build/mint/{{ version }}/sys-root/opt/GEM/teradesk/TERADESK.INF
+  
+    - name: remove floppy drive B from Desktop
+      replace:
+        path: "build/mint/{{ version }}/mint.cnf"
+        regexp : '^#FDC_HIDE_B=YES$'
+        replace: 'FDC_HIDE_B=YES'
+
+    - name: download command.tos minix disk image
+      get_url:
+        url: http://download.minix3.org/previous-versions/Atari/disk00
+        dest: "{{ playbook_dir }}/resources/disk00"
+        force: no
+
+    - name: extract command.tos shell
+      command: mcopy -i resources/disk00 ::command.tos resources/command.tos
+      args: 
+        creates: resources/command.tos
+
+    - name: copy command.tos to 'extra' folder
+      copy:
+        src: "{{ item }}"
+        dest: build/extra/
+      loop:
+        - resources/command.tos
+    
+    - name: download 2048 game
+      get_url:
+        url: https://ptonthat.fr/files/2048/2048_13b_68k.zip
+        dest: "{{ playbook_dir }}/resources/2048_13b_68k.zip"
+        force: no
+
+    - name: extract 2048
+      unarchive:
+        src: resources/2048_13b_68k.zip
+        dest: "{{ playbook_dir }}/resources"
+        creates: "{{ playbook_dir }}/resources/2048.68K/2048.APP"
+    
+      # ignore warning to use the ansible file module, as it does not support recursion
+    - name: fix 2048 zip permissions
+      command: chmod -R ug+rw resources/2048.68K/
+      args:
+        warn: false
+    
+    - name : copy 2048
+      command: cp -r resources/2048.68K build/extra/
+      args:
+        creates: build/extra/2048.68K
 
