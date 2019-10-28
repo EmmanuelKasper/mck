@@ -1,6 +1,6 @@
     - name: download mint {{ version }} distribution
       get_url:
-        url: "https://bintray.com/freemint/freemint/download_file?file_path=snapshots%2F1-19-2a88f753%2Ffreemint-1-19-2a8-000-st_ste.zip"
+        url: "https://bintray.com/freemint/freemint/download_file?file_path=snapshots%2F{{ major_version }}-{{ commit_hash }}%2Ffreemint-{{ major_version }}-{{ minor_version }}-000-st_ste.zip"
         dest: "{{ playbook_dir }}/freemint-{{ version }}-000-st_ste.zip"
         force: no
 

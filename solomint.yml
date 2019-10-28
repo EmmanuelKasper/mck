@@ -2,11 +2,11 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  vars:
-    - minor_version: 2a8
-    - major_version: 1-19
-    - version: "{{ major_version }}-{{ minor_version }}"
   tasks:
+    - name: load freemint version from freemint-version.yml
+      include_vars:
+        file: freemint-version.yml
+
     - import_tasks: basemint.yml
 
     - name: use the ROM AES

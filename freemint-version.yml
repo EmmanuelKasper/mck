@@ -1,0 +1,5 @@
+---
+major_version: 1-19
+commit_hash: 2a88f753
+minor_version: 2a8
+version: "{{ major_version }}-{{ minor_version }}"
