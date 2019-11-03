@@ -37,6 +37,6 @@ clean:
 cleanall: clean
 	rm -f resources/disk00 resources/command.tos
 	rm -fr resources/2048_13b_68k.zip resources/2048.68K
-	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-2a8-000-st_ste.zip
+	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 
 include make.mk

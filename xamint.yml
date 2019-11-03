@@ -30,11 +30,21 @@
         src: resources/XAAES.INF
         dest: build/mint/{{ version }}/xaaes/XAAES.INF
 
+    - name: create a directory for toswin2 defaults
+      file:
+        path: build/mint/{{ version }}/sys-root/root/defaults
+        state: directory
+
+    - name: copy a configuration file for tos2win with tw52 as the default terminal type
+      copy:
+        src: resources/TOSWIN2.CFG
+        dest: build/mint/{{ version }}/sys-root/root/defaults/TOSWIN2.CFG
+
     - name: copy a default configuration file for teradesk
       copy:
         src: resources/TERADESK.INF
         dest: build/mint/{{ version }}/sys-root/opt/GEM/teradesk/TERADESK.INF
-  
+
     - name: remove floppy drive B from Desktop
       replace:
         path: "build/mint/{{ version }}/mint.cnf"
@@ -49,7 +59,7 @@
 
     - name: extract command.tos shell
       command: mcopy -i resources/disk00 ::command.tos resources/command.tos
-      args: 
+      args:
         creates: resources/command.tos
 
     - name: copy command.tos to 'extra' folder
@@ -58,7 +68,7 @@
         dest: build/extra/
       loop:
         - resources/command.tos
-    
+
     - name: download 2048 game
       get_url:
         url: https://ptonthat.fr/files/2048/2048_13b_68k.zip
@@ -70,13 +80,13 @@
         src: resources/2048_13b_68k.zip
         dest: "{{ playbook_dir }}/resources"
         creates: "{{ playbook_dir }}/resources/2048.68K/2048.APP"
-    
+
       # ignore warning to use the ansible file module, as it does not support recursion
     - name: fix 2048 zip permissions
       command: chmod -R ug+rw resources/2048.68K/
       args:
         warn: false
-    
+
     - name : copy 2048
       command: cp -r resources/2048.68K build/extra/
       args:
