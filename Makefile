@@ -39,4 +39,10 @@ cleanall: clean
 	rm -fr resources/2048_13b_68k.zip resources/2048.68K
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 
+release:
+	cp card.img st_mint-0.8.img
+	zip st_mint-0.8.img.zip st_mint-0.8.img
+	scp st_mint-0.8.img.zip manu@ada:/srv/www/subsole.org/static/retrocomputing/
+	rm st_mint-0.8.img card.img
+
 include make.mk
