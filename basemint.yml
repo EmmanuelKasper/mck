@@ -12,6 +12,7 @@
         - freemint
         - build/auto
         - build/extra
+        - resources/etherne/
 
     - name: unpack freemint archive
       unarchive:
@@ -42,3 +43,25 @@
       loop:
         - ext2
         - nfs
+
+    - name: download ethernec driver
+      get_url:
+        url: http://web222.webclient5.de/prj/atari/download/etherne.zip
+        dest: resources/etherne.zip
+        force: no
+
+    - name: unarchive ethernec driver
+      unarchive:
+        src: resources/etherne.zip
+        dest: resources/etherne/
+        creates: resources/etherne/ENEC.MIF
+
+    - name: fix ethernet driver file permissions
+      file:
+        path: resources/etherne/ENEC.MIF
+        mode: '0644'
+
+    - name: copy ethernec driver to mint folder
+      command: cp resources/etherne/ENEC.MIF build/mint/{{ version }}/enec.xif
+      args:
+        creates: build/mint/{{ version }}/enec.xif

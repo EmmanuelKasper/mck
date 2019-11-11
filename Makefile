@@ -23,6 +23,9 @@ cardinstall:
 	mount /stmint
 	rm -fr /stmint/auto /stmint/extra /stmint/mint
 	cp -r build/auto build/extra build/mint /stmint
+	# rsync --archive --verbose build/auto /stmint/auto
+	# rsync --archive --verbose build/extra /stmint/extra
+	# rsync --archive --verbose build/mint /stmint/mint
 	umount /stmint
 
 test:
@@ -37,6 +40,7 @@ clean:
 cleanall: clean
 	rm -f resources/disk00 resources/command.tos
 	rm -fr resources/2048_13b_68k.zip resources/2048.68K
+	rm -fr etherne.zip etherne/
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 
 release:
