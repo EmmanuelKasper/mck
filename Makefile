@@ -7,7 +7,7 @@ SHELL = ksh
 .PHONY: clean cleanall install test
 
 IMAGE_MOUNT_POINT = /mnt/loop0
-DISK_IMAGE = scsitools.img
+DISK_IMAGE = ahdi-64M.img
 
 all: xa
 
