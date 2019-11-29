@@ -30,11 +30,10 @@ install:
 
 cardinstall:
 	mount /stmint
-	rm -fr /stmint/auto /stmint/mint
-	cp -r build/auto build/mint /stmint
-	# rsync --archive --verbose build/auto /stmint/auto
-	# rsync --archive --verbose build/extra /stmint/extra
-	# rsync --archive --verbose build/mint /stmint/mint
+	rm -fr /stmint/{auto,extra,mint}
+	cp -r build/{auto,extra,mint} /stmint
+#	for dir in auto extra mint; do \
+#	rsync --archive --verbose build/$$dir /stmint/$$dir; done
 	umount /stmint
 
 test:
