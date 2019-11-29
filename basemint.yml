@@ -61,7 +61,7 @@
         path: resources/etherne/ENEC.MIF
         mode: '0644'
 
-    - name: copy ethernec driver to mint folder
-      command: cp resources/etherne/ENEC.MIF build/mint/{{ version }}/enec.xif
+    - name: copy ethernec driver to mint folder but leaves it disabled
+      command: cp resources/etherne/ENEC.MIF build/mint/{{ version }}/enec.xix
       args:
-        creates: build/mint/{{ version }}/enec.xif
+        creates: build/mint/{{ version }}/enec.xix
