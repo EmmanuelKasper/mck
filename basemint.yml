@@ -36,6 +36,12 @@
         regexp : '^setenv HOSTNAME saturn$'
         replace: 'setenv HOSTNAME stmint'
 
+    - name: set kernel debug level to alert
+      replace:
+        path: "build/mint/{{ version }}/mint.cnf"
+        regexp : '^#KERN_DEBUG_LEVEL=1$'
+        replace: 'KERN_DEBUG_LEVEL=1'
+
     - name: disable {{ item }} driver
       command: mv build/mint/{{ version }}/{{ item }}.xfs build/mint/{{ version }}/{{ item }}.xfx
       args:
