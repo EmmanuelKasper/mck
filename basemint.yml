@@ -42,13 +42,38 @@
         regexp : '^#KERN_DEBUG_LEVEL=1$'
         replace: 'KERN_DEBUG_LEVEL=1'
 
-    - name: disable {{ item }} driver
+    - name: disable unused drivers
       command: mv build/mint/{{ version }}/{{ item }}.xfs build/mint/{{ version }}/{{ item }}.xfx
       args:
         creates: build/mint/{{ version }}/{{ item }}.xfx
       loop:
         - ext2
         - nfs
+
+    - name: copy sash sell
+      copy:
+        src: sash-3.8/sash
+        dest: build/mint/{{ version }}/sys-root/bin
+
+    - name: set sash as the default root shell
+      copy:
+        dest: "build/mint/{{ version }}/sys-root/etc/passwd"
+        content: |
+          root:x:0:0::/root:/bin/sash
+
+
+    - name: create defaults directory
+      file:
+        path: build/mint/{{ version }}/sys-root/root/defaults
+        state: directory
+
+    - name: use all builtins by default, and set a root prompt
+      copy:
+        dest: "build/mint/{{ version }}/sys-root/root/defaults/sash.cfg"
+        content: |
+          aliasall
+          prompt #
+
 
     - name: download ethernec driver
       get_url:
