@@ -8,6 +8,7 @@ SHELL = ksh
 
 IMAGE_MOUNT_POINT = /mnt/loop0
 DISK_IMAGE = ahdi-64M.img
+VERSION = 1.0
 
 all: xa
 
@@ -57,9 +58,9 @@ cleanall: clean
 	make -C sash-3.8 clean
 
 release:
-	cp card.img st_mint-0.8.img
-	zip st_mint-0.8.img.zip st_mint-0.8.img
-	scp st_mint-0.8.img.zip manu@ada:/srv/www/subsole.org/static/retrocomputing/
-	rm st_mint-0.8.img card.img
+	cp ahdi-64M.img st_mint-$(VERSION).img
+	zip st_mint-$(VERSION).img.zip st_mint-$(VERSION).img
+	scp st_mint-$(VERSION).img.zip manu@ada:/srv/www/subsole.org/static/retrocomputing
+	rm st_mint-$(VERSION).img
 
 include make.mk
