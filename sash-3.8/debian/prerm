@@ -1,0 +1,22 @@
+#!/bin/sh
+# prerm for sash
+# make sure that accounts using sash will
+# at least continue to work after sash is removed...
+
+set -e
+. /usr/share/debconf/confmodule
+
+if [ "$1" = remove ]; then
+    if getent passwd | grep -qs ^sashroot: ; then
+        db_input high sash/sashroot-user-detected || true
+        db_go || true
+    fi
+    for sashacct in $(getent passwd | \
+        awk -F: '{if ($7 == "/bin/sash") {print $1}}'); do
+      chsh -s /bin/bash $sashacct || true
+    done
+fi
+
+#DEBHELPER#
+
+exit 0

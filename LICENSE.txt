@@ -1,3 +1,4 @@
+Except otherwise indicated:
 Copyright (c) 2019 Emmanuel Kasper
 All rights reserved.
 

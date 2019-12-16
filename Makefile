@@ -11,13 +11,17 @@ DISK_IMAGE = ahdi-64M.img
 
 all: xa
 
+sash-3.8/sash:
+	# needs GNU Make
+	make -C sash-3.8 TARGET_OS=FreeMINT CC=m68k-atari-mint-gcc
+
 solo:
 	ansible-playbook solomint.yml --inventory localhost,
 
-text:
+text: sash-3.8/sash
 	ansible-playbook textmint.yml --inventory localhost,
 
-xa:
+xa: sash-3.8/sash
 	ansible-playbook xamint.yml --inventory localhost,
 
 install:
@@ -48,8 +52,9 @@ clean:
 cleanall: clean
 	rm -f resources/disk00 resources/command.tos
 	rm -fr resources/2048_13b_68k.zip resources/2048.68K
-	rm -fr etherne.zip etherne/
+	rm -fr resources/etherne.zip resources/etherne
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
+	make -C sash-3.8 clean
 
 release:
 	cp card.img st_mint-0.8.img

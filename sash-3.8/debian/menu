@@ -1,0 +1,1 @@
+?package(sash):needs="text" section="Applications/Shells" title="Sash" command="/bin/sash"

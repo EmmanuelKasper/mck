@@ -1,0 +1,46 @@
+# Dutch translation of sash debconf templates.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the sash package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sash_3.8-4\n"
+"Report-Msgid-Bugs-To: sash@packages.debian.org\n"
+"POT-Creation-Date: 2017-07-16 19:14+0200\n"
+"PO-Revision-Date: 2017-08-10 21:08+0200\n"
+"Last-Translator: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>\n"
+"Language-Team: Debian Dutch l10n Team <debian-l10n-dutch@lists.debian.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.7\n"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "sashroot user detected"
+msgstr "Gebruiker sashroot aangetroffen"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"Previous versions of sash offered to create a root user with shell set to /"
+"bin/sash.  This system has such a user."
+msgstr ""
+"Eerdere versies van sash boden aan om een root-gebruiker aan te maken die /"
+"bin/sash gebruikt als shell. Dit systeem heeft een dergelijke gebruiker."
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"This can unfortunately not be automatically removed together with the "
+"package, so you need to manually delete the sashroot user."
+msgstr ""
+"Jammer genoeg kan die niet automatisch samen met het pakket verwijderd "
+"worden. U dient de gebruiker sashroot dus handmatig te verwijderen."

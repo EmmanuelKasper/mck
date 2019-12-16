@@ -1,0 +1,18 @@
+From: Helmut Grohne <helmut@subdivi.de>
+Subject: do not strip during build
+
+ * Breaks cross compilation by using the wrong strip
+ * Breaks generation of -dbgsym packages
+
+Index: sash-3.8/Makefile
+===================================================================
+--- sash-3.8.orig/Makefile
++++ sash-3.8/Makefile
+@@ -65,7 +65,6 @@
+ 
+ sash:	$(OBJS)
+ 	$(CC) $(LDFLAGS) -o sash $(OBJS) $(LIBS)
+-	strip sash
+ 
+ clean:
+ 	rm -f $(OBJS) sash

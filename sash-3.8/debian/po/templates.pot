@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the sash package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: sash\n"
+"Report-Msgid-Bugs-To: sash@packages.debian.org\n"
+"POT-Creation-Date: 2017-07-16 19:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "sashroot user detected"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"Previous versions of sash offered to create a root user with shell set to /"
+"bin/sash.  This system has such a user."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"This can unfortunately not be automatically removed together with the "
+"package, so you need to manually delete the sashroot user."
+msgstr ""

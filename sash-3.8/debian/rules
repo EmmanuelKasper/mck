@@ -1,0 +1,22 @@
+#! /usr/bin/make -f
+
+pkgdir := `pwd`/debian/sash
+
+LIBC_DEV := $(shell grep-status -F Provides libc-dev -n -sPackage)
+BUILT_USING := $(shell dpkg-query -f '$${source:Package} (= $${source:Version}), ' -W zlib1g-dev $(LIBC_DEV))
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	dh_auto_build -- OPT="`dpkg-buildflags --get CFLAGS` `dpkg-buildflags --get CPPFLAGS`" LDFLAGS="-static `dpkg-buildflags --get LDFLAGS`"
+
+override_dh_auto_install:
+	make install BINDIR=$(pkgdir)/bin MANDIR=$(pkgdir)/usr/share/man
+
+override_dh_install:
+	dh_install
+	install -m 0644 debian/lintian-overrides $(pkgdir)/usr/share/lintian/overrides/sash
+
+override_dh_gencontrol:
+	dh_gencontrol -- -V"built-using=$(BUILT_USING)"

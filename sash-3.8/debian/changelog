@@ -1,0 +1,446 @@
+sash (3.8-5) unstable; urgency=medium
+
+  * Add German, French, Dutch, Russian and Portuguese Debconf
+    translations. Closes: #869137, #872356, #874282, #883111, #898293
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat, 09 Jun 2018 22:33:23 +0200
+
+sash (3.8-4) unstable; urgency=medium
+
+  * Add debconf warning about sashroot user instead of trying to remove
+    it, since userdel is unable to properly delete it.  Closes: #783031
+  * Let dh_auto_build pass cross compilers.  Thanks to Helmut Grohne for
+    patch.
+  * Stop stripping during build.  Also thanks to Helmut Grohne.
+    Closes: #852771
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 16 Jul 2017 19:13:30 +0200
+
+sash (3.8-3) unstable; urgency=medium
+
+  * Drop support for adosfs, mfs on FreeBSD.
+  * Wrap inclusion on linux/loop.h to fix kFreeBSD build.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat, 19 Jul 2014 11:40:36 +0200
+
+sash (3.8-2) unstable; urgency=medium
+
+  * Use #if instead of #ifdef for HAVE_LINUX_* in sash.c to make this
+    build on kfreebsd.  Closes: #754669
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed, 16 Jul 2014 20:48:59 +0200
+
+sash (3.8-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Use grep-status to pull out package name of what provides libc-dev and
+    use that when filling out built-using.  Closes: #733570
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 20 Apr 2014 08:23:04 +0200
+
+sash (3.7-13) unstable; urgency=low
+
+  * Update to debhelper compat version 9, which adds hardening.
+  * Update to newer Standards-Version, add Built-Using field.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 29 Sep 2013 16:11:22 +0200
+
+sash (3.7-12) unstable; urgency=low
+
+  * Update lintian overrides for new names.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 09 Apr 2012 10:34:04 +0200
+
+sash (3.7-11) unstable; urgency=low
+
+  * Update to dh version 8
+  * Add dh_buildflags support, closes: #654909
+  * Update FreeBSD build patch.  Closes: #565539
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 09 Apr 2012 09:11:01 +0200
+
+sash (3.7-10) unstable; urgency=low
+
+  * Switch to 3.0 (quilt) as the source format and convert patches.
+  * Fix up debian/patches/touch_error_handling to actually update the
+    timestamp of the file, something that has been broken for more than
+    ten years.
+  * Add kFreeBSD build fixes from Axel Beckert. Closes: #565539
+  * When exiting the shell, use the exit status of the last command as our
+    exit status.  Closes: #281728
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 04 Apr 2010 10:25:57 +0200
+
+sash (3.7-9) unstable; urgency=low
+
+  * Drop dependency on lockfile-progs, no longer needed.
+  * Drop versioned dependency on passwd, that version is pre-oldstable
+  * Drop versioned conflicts on fileutils, that version is pre-oldstable.
+  * Move to debhelper 7 instead of cdbs.
+  * Add missing set -e to postrm.
+  * Drop full paths to add-shell and remove-shell.
+  * Add lintian override for embedded zlib.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 09 Oct 2009 09:15:48 +0200
+
+sash (3.7-8) unstable; urgency=medium
+
+  * Get rid of the sashroot account and all debconfiscation (but don't
+    change already-set up systems).
+    Closes: #410758, #400892, #482900, #489380
+  * Unconditionally remove sashroot when removing the package.  
+    Closes: #464610
+  * Call add-shell when upgrading from etch or older.  Closes: #416059.
+  * Remove -s from LDFLAGS.  Closes: #437952
+  * Stop setting PATH in postinst.
+  * Update to newest policy version
+    - Add Homepage field.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 21 Jul 2008 13:45:15 +0200
+
+sash (3.7-7.3) unstable; urgency=low
+
+  * Non-maintainer upload to fix pending l10n issues
+  * Debconf translations:
+    - Dutch. Closes: #414751
+    - Spanish. Closes: #415201
+    - French converted to UTF-8
+    - Finnish. Closes: #472616
+    - Basque. Closes: #475359
+    - Galician. Closes: #475462
+  * [Lintian] Change menu entry to Applications/Shells
+  * Upgrade Standards from 3.6.1 to 3.7.3 (checked)
+
+ -- Christian Perrier <bubulle@debian.org>  Tue, 25 Mar 2008 18:23:28 +0100
+
+sash (3.7-7.2) unstable; urgency=low
+
+  * NMU
+  * Apparently CDBS decided to start overwriting the LDFLAGS setting, which
+    made sash no longer statically linked. Work around this brain-damage.
+    Closes: #403659
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 19 Dec 2006 18:16:21 -0500
+
+sash (3.7-7.1) unstable; urgency=low
+
+  * Non-maintainer upload to fix longstanding l10n issues
+  * Rewrite templates to better fit the Developer's Reference recommendations
+    This also Closes: #368750
+  * Debconf translation updates:
+    - Swedish added. Closes: #338776
+    - French updated. Sent during the call for updates of the NMU campaign.
+    - Vietnamese updated. Sent during the call for updates of the NMU campaign.
+    - Dzongkha added. Sent during the call for updates of the NMU campaign.
+    - German added. Sent during the call for updates of the NMU campaign.
+    - Russian added. Sent during the call for updates of the NMU campaign.
+
+ -- Christian Perrier <bubulle@debian.org>  Wed, 29 Nov 2006 07:40:31 +0100
+
+sash (3.7-7) unstable; urgency=low
+
+  * Remove /usr/doc/sash symlink if it exists.  (closes: #322797)
+  * Fix up debconf dependency, we want debconf | debconf-2.0
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  1 Sep 2005 07:52:20 +0200
+
+sash (3.7-6) unstable; urgency=high
+
+  * Tighten zlib build-deps to fix security issue (closes: #318069)
+  * Add Czech debconf translation (closes: #294777)
+  * Add Vietnamese debconf translation (closes: #317886)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Jul 2005 12:33:51 +0200
+
+sash (3.7-5) unstable; urgency=low
+
+  * Add Japanese debconf translation (closes: #290129)
+  * Add German debconf translation (closes: #266357)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat,  5 Feb 2005 12:57:59 +0100
+
+sash (3.7-4) unstable; urgency=low
+
+  * Add French debconf translation (closes: #232979)
+  * Add lintian override (closes: #235306)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu,  1 Apr 2004 03:42:48 +0200
+
+sash (3.7-3) unstable; urgency=low
+
+  * Use po-debconf.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 10 Feb 2004 03:12:41 +0100
+
+sash (3.7-2) unstable; urgency=low
+
+  * Fix versioned depends on passwd.  (closes: #229192)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 23 Jan 2004 17:57:59 +0100
+
+sash (3.7-1) unstable; urgency=low
+
+  * New upstream release
+    - Fixes (closes: #227164)
+  * Only ask about deleting sashroot account if it's actually
+    created. (closes: #225341)
+  * Ask about removing sashroot user in prerm instead of when
+    installing. (closes: #227637)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 13 Jan 2004 00:41:55 +0100
+
+sash (3.6-5) unstable; urgency=low
+
+  * Remove -m call to useradd.  (closes: #225093)
+  * Up standards-version.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 26 Dec 2003 22:57:29 +0100
+
+sash (3.6-4) unstable; urgency=medium
+
+  * Use chown root:shadow instead of root.shadow in sashconfig
+    (closes: #217395)
+  * Depend on passwd (>= 20000902-12) (closes: #219961)
+  * Use debconf. (closes: #86208, #96566)
+    - Thereby getting rid of sashconfig.  Yay.
+  * Build-dep on e2fslibs-dev, since it seems like libc6 broke us. 
+    (closes: #223203)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Wed, 17 Dec 2003 23:00:13 +0100
+
+sash (3.6-3) unstable; urgency=low
+
+  * .. and add build-deps for debhelper (closes: #216746)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 21 Oct 2003 21:19:54 +0200
+
+sash (3.6-2) unstable; urgency=low
+
+  * Add build-deps for cdbs (closes: #216499)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 19 Oct 2003 12:16:43 +0200
+
+sash (3.6-1) unstable; urgency=low
+
+  * Adopt package (closes: #215544)
+  * New upstream release
+  * Ack NMUs, (closes: #137947, #117065, #91634, #109027, #170081, #125332)
+  * Redo packaging using CDBS.
+  * Remove obsolete emacs vars in changelog.
+  * Ignore -- in option list (closes: #95374)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 17 Oct 2003 13:17:02 +0200
+
+sash (3.4-8.3) unstable; urgency=low
+
+  * NMU
+  * Trivial bugfix for #125332 (Closes: #125332)
+  * debian/rules: must call dpkg-genchanges with -isp, otherwise it
+    won't get into the binary package control files. (Closes: #170081)
+
+ -- Hwei Sheng Teoh <hsteoh@debian.org>  Thu, 21 Nov 2002 13:38:31 -0500
+
+sash (3.4-8.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * debian/control: Build-depend on a version of zlib without the
+    double-free bug (closes: #137947).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 17 Mar 2002 13:58:46 +0000
+
+sash (3.4-8.1) unstable; urgency=low
+
+  * NMU
+  * Make unstable have at least the same rev as stable.  Changelog change only.
+
+ -- LaMont Jones <lamont@debian.org>  Thu, 25 Oct 2001 09:42:55 -0600
+
+sash (3.4-8) stable; urgency=low
+
+  * control file cleanup
+
+ -- Raul Miller <moth@debian.org>  Mon, 21 May 2001 10:42:50 -0400
+
+sash (3.4-7) stable; urgency=low
+
+  * incorporated workaround for dpkg breakage on /usr/doc -> /usr/share/doc
+    (fixes #91634)
+  * adopted adrian bunk's suggestions for build-depends (fixes #94329)
+  * this version being new, will be newer than that in potato (fixes #97561)
+  * no Section: problem was apparently caused by build tools -- a test build
+    shows that 3.4-7 has Section: shells (fixes #84494)
+  * not fixed: no debconf support yet.  I'm still considering legacy issues.
+  * not fixed: support for -- as end of options indicator.  Meaningless,
+    as sash takes no non-options arguments (it's not designed for scripts).
+
+ -- Raul Miller <moth@debian.org>  Sat, 19 May 2001 19:36:52 -0400
+
+sash (3.4-6) stable; urgency=medium
+
+  * incorporated suggestion from Matt Zimmerman <mdz@debian.org>
+    such that clone_root_as_sashroot is properly atomic, even
+    for ownership and permissions.
+
+ -- Raul Miller <moth@debian.org>  Wed, 17 Jan 2001 12:47:42 -0500
+
+sash (3.4-5) stable; urgency=medium
+
+  * fix up /etc/shadow to give group shadow read access
+
+ -- Raul Miller <moth@debian.org>  Tue, 16 Jan 2001 11:47:27 -0500
+
+sash (3.4-4) stable; urgency=high
+
+  * umask 077 before cloning /etc/shadow (fixes #81793)
+    [ouch]
+
+ -- Raul Miller <moth@debian.org>  Wed, 10 Jan 2001 20:42:15 -0500
+
+sash (3.4-3) unstable; urgency=low
+
+  * put back /usr/doc/sash if helper programs fail to provide it
+
+ -- Raul Miller <moth@debian.org>  Fri, 15 Oct 1999 18:55:13 -0400
+
+sash (3.4-2) unstable; urgency=low
+
+  * set permissions on sashconfig from debian/rules (Fixes #47307)
+
+ -- Raul Miller <moth@debian.org>  Wed, 13 Oct 1999 13:16:49 -0400
+
+sash (3.4-1) unstable; urgency=low
+
+  * new upstream version, adds -ar command for debian
+  * cleaned up handling of Q option in prompts, fixes (#46054, #46820)
+  * rewrote README.debian with some minor hints about usage (fixes #45617)
+
+ -- Raul Miller <moth@debian.org>  Thu,  7 Oct 1999 23:10:19 -0400
+
+sash (3.3-7) unstable; urgency=high
+
+  * Re-invented sash config system again.  This time with a rich set of
+    prompts, and the option to record them so they need be answered
+    only once.  (fixes #45617)  This reinstates /var/lib/sash/.
+  * Mentioned init=/bin/sash at boot prompt (fixes #45547)
+  * rm -rf /var/lib/sash/ at package purge time (fixes #27770)
+  * make #include <linux/fs.h> conditional in cmds.c
+
+ -- Raul Miller <moth@debian.org>  Thu, 23 Sep 1999 22:13:43 -0400
+
+sash (3.3-6) unstable; urgency=low
+
+  * rewrote postinst to support NIS (fixes #45467)
+  * removed empty /var/lib/sash/
+  * use -Os (instead of -O3) for smaller footprint
+    [At the moment, this results in no measurable change -- 
+    and most of the footprint is from libc.  I'm leaving it
+    in for documentation purposes.]
+
+ -- Raul Miller <moth@debian.org>  Sun, 19 Sep 1999 08:32:29 -0400
+
+sash (3.3-5) unstable; urgency=low
+
+  * added Depends: lockfile-progs (needed for new postinst/prerm)
+
+ -- Raul Miller <moth@debian.org>  Sun, 19 Sep 1999 01:04:38 -0400
+
+sash (3.3-4) unstable; urgency=low
+
+  * rebuilt using altgcc (cuts executable size ~44%)
+
+ -- Raul Miller <moth@debian.org>  Fri,  3 Sep 1999 18:51:39 -0400
+
+sash (3.3-3) unstable; urgency=low
+
+  * removed yet more junk files from diff
+
+ -- Raul Miller <moth@debian.org>  Fri,  3 Sep 1999 18:51:34 -0400
+
+sash (3.3-2) unstable; urgency=low
+
+  * removed junk file from diff
+
+ -- Raul Miller <moth@debian.org>  Fri,  3 Sep 1999 18:37:33 -0400
+
+sash (3.3-1) unstable; urgency=low
+
+  * new upstream version
+  * use $(CC) in makefile in place of cc (#31220)
+  * completely rewrote postinst and replaced postrm with new prerm (#27632, #41968)
+  * simplified error handling for failed -touch (#43428)
+  * upgraded to upstream version 3.3 (#39145)
+
+ -- Raul Miller <moth@debian.org>  Fri,  3 Sep 1999 18:03:00 -0400
+
+sash (2.1-5) unstable; urgency=low
+
+  * New maintainer done properly
+
+ -- Raul Miller <rdm@test.legislate.com>  Fri,  3 Sep 1999 18:01:14 -0400
+
+sash (2.1-4) unstable; urgency=low
+
+  * Use $PATH in exec [#25034]
+  * New maintainer
+
+ -- Raul Miller <rdm@test.legislate.com>  Thu, 27 Aug 1998 12:19:33 -0400
+
+sash (2.1-3) frozen unstable; urgency=low
+
+  * correct root shell if package is removed
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 20 Mar 1998 14:11:28 +0100
+
+sash (2.1-2) unstable; urgency=low
+
+  * Fixed postinst (#19584)
+  * Added -i option (#19656)
+
+ -- Michael Meskes <meskes@debian.org>  Mon, 16 Mar 1998 15:23:44 +0100
+
+sash (2.1-1) unstable; urgency=low
+
+  * New upstream version: David incorporated most of my changes except that
+    he wants sash to print a message everytime it starts. But he has added
+    an option -q to get it quiet. I hope that solves the problem as well.
+
+ -- Michael Meskes <meskes@debian.org>  Mon,  9 Mar 1998 13:42:33 +0100
+
+sash (2.0-3) unstable; urgency=low
+
+  * corrected argv handling for exec call (#18695)
+  * reworked postinst/prerm to make installation ask less questions
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 27 Feb 1998 08:57:00 +0100
+
+sash (2.0-2) unstable; urgency=low
+
+  * sash no longer prints a message every time you invoke it (#18580)
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 27 Feb 1998 08:57:00 +0100
+
+sash (2.0-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 30 Jan 1998 10:25:59 +0100
+
+sash (1.0-3) unstable; urgency=low
+
+  * Added -c option which fixes the problem with su as well as bug (#17573).
+
+ -- Michael Meskes <meskes@debian.org>  Thu, 29 Jan 1998 09:38:41 +0100
+
+sash (1.0-2) unstable; urgency=low
+
+  * Added section entry.
+
+ -- Michael Meskes <meskes@debian.org>  Tue, 16 Dec 1997 11:05:51 +0100
+
+sash (1.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Michael Meskes <meskes@debian.org>  Tue, 16 Dec 1997 11:05:51 +0100
+
+

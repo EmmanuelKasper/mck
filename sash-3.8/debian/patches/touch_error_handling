@@ -1,0 +1,20 @@
+Subject: Correct error message when touching non-existent file in non-writeable directory
+From: Tollef Fog Heen <tfheen@debian.org>, Raul Miller <moth@debian.org>
+Bug-Debian: #43428
+Last-updated: 2010-04-04
+Index: git/cmds.c
+===================================================================
+--- git.orig/cmds.c	2014-04-20 08:44:47.785146575 +0200
++++ git/cmds.c	2014-04-20 08:44:47.785146575 +0200
+@@ -456,6 +456,11 @@
+ 			continue;
+ 		}
+ 
++		if (errno != EEXIST) {
++			perror(name);
++			continue;
++		}
++
+ 		if (utime(name, &now) < 0)
+ 		{
+ 			perror(name);

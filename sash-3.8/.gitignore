@@ -1,0 +1,15 @@
+cmd_ar.o
+cmd_chattr.o
+cmd_dd.o
+cmd_ed.o
+cmd_file.o
+cmd_find.o
+cmd_grep.o
+cmd_gzip.o
+cmd_ls.o
+cmd_tar.o
+cmds.o
+sash
+sash.o
+utils.o
+.pc

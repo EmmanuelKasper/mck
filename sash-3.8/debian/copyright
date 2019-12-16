@@ -1,0 +1,29 @@
+This package was debianized by Michael Meskes <meskes@debian.org> on
+Tue, 16 Dec 1997 11:05:51 +0100, and is currently being maintained by
+Tollef Fog Heen <tfheen@debian.org>.  Please see the Debian changelog
+for the history of who maintained the package when.
+
+It was downloaded from
+http://www.tip.net.au/~dbell/programs/sash-3.4.tar.gz
+
+New versions will probably be announced at
+http://www.tip.net.au/~dbell/.
+
+Copyright:
+
+ * Copyright (c) 1998 by David I. Bell
+ * Permission is granted to use, distribute, or modify this source,
+ * provided that this copyright notice remains intact.
+
+The code for the internal ar command has the copyright:
+
+ * Original:
+ * Copyright (c) 1999 by Aaron R. Crane.
+ * Permission is granted to use, distribute, or modify this source,
+ * provided that this copyright notice remains intact.
+ *
+ * Modified:
+ * Copyright (c) 1999 by David I. Bell
+ * Permission is granted to use, distribute, or modify this source,
+ * provided that this copyright notice remains intact.
+

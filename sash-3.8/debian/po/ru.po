@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the sash package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sash\n"
+"Report-Msgid-Bugs-To: sash@packages.debian.org\n"
+"POT-Creation-Date: 2017-07-16 19:14+0200\n"
+"PO-Revision-Date: 2017-11-30 00:34+0500\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.4\n"
+"Last-Translator: Lev Lamberov <dogsleg@debian.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru\n"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "sashroot user detected"
+msgstr "Обнаружен пользователь sashroot"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"Previous versions of sash offered to create a root user with shell set to /"
+"bin/sash.  This system has such a user."
+msgstr ""
+"Предыдущие версии sash предлагали создать суперпользователя, для которого "
+"в качестве командной оболочки выбиралась /bin/sash. В данной системе такой "
+"пользователь имеется."
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"This can unfortunately not be automatically removed together with the "
+"package, so you need to manually delete the sashroot user."
+msgstr ""
+"К сожалению, этот пользователь не может быть автоматически удалён при "
+"удалении данного пакета, поэтому вам следует удалить пользователя sashroot "
+"вручную."

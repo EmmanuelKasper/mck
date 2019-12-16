@@ -1,0 +1,8 @@
+Template: sash/sashroot-user-detected
+Type: error
+_Description: sashroot user detected
+ Previous versions of sash offered to create a root user with shell
+ set to /bin/sash.  This system has such a user.
+ .
+ This can unfortunately not be automatically removed together with the
+ package, so you need to manually delete the sashroot user.

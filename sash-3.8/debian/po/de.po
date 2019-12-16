@@ -1,0 +1,45 @@
+# German debconf translation of the sash package.
+# Copyright (C) 1998 by David I. Bell.
+# This file is distributed under the same license as the sash package.
+# Copyright of this file © 2017 Chris Leick <c.leick@vollbio.de>.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sash 3.8-4\n"
+"Report-Msgid-Bugs-To: sash@packages.debian.org\n"
+"POT-Creation-Date: 2017-07-16 19:14+0200\n"
+"PO-Revision-Date: 2017-07-19 19:13+0100\n"
+"Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
+"Language-Team: German <debian-l10n-german@lists.debian.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "sashroot user detected"
+msgstr "Benutzer »sashroot« gefunden"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"Previous versions of sash offered to create a root user with shell set to /"
+"bin/sash.  This system has such a user."
+msgstr ""
+"Vorhergehende Versionen von Sash boten an, einen Root-Benutzer zu erstellen, "
+"dessen Shell auf /bin/sash gesetzt ist. Dieses System verfügt über einen "
+"derartigen Benutzer."
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"This can unfortunately not be automatically removed together with the "
+"package, so you need to manually delete the sashroot user."
+msgstr ""
+"Dieser kann unglücklicherweise nicht automatisch zusammen mit dem Paket "
+"entfernt werden, daher müssen Sie den Benutzer »sashroot« manuell löschen."

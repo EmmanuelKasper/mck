@@ -1,0 +1,125 @@
+Subject: Build fixes for Debian GNU/kFreeBSD
+From: Axel Beckert <abe@debian.org>
+Bug-Debian: #565539
+Last-updated: 2010-04-04
+Index: git/Makefile
+===================================================================
+--- git.orig/Makefile
++++ git/Makefile
+@@ -19,6 +19,7 @@
+ #
+ 
+ HAVE_GZIP		= 1
++ifeq (Linux,$(shell uname -s))
+ HAVE_LINUX_ATTR		= 1
+ HAVE_LINUX_CHROOT	= 1
+ HAVE_LINUX_LOSETUP	= 1
+@@ -26,6 +27,16 @@ HAVE_LINUX_PIVOT	= 1
+ HAVE_LINUX_MOUNT	= 1
+ HAVE_BSD_MOUNT		= 0
+ MOUNT_TYPE		= '"ext3"'
++endif
++ifeq (GNU/kFreeBSD,$(shell uname -s))
++HAVE_LINUX_ATTR	= 0
++HAVE_LINUX_CHROOT	= 0
++HAVE_LINUX_LOSETUP	= 0
++HAVE_LINUX_PIVOT	= 0
++HAVE_LINUX_MOUNT	= 0
++HAVE_BSD_MOUNT		= 1
++MOUNT_TYPE		= '"ufs"'
++endif
+ 
+ OPT = -O3
+ 
+Index: git/cmds.c
+===================================================================
+--- git.orig/cmds.c
++++ git/cmds.c
+@@ -19,8 +19,13 @@
+ 
+ #if	HAVE_LINUX_MOUNT
+ #include <linux/fs.h>
++#elif	HAVE_BSD_MOUNT
++#include <ufs/ufs/ufsmount.h>
++#include <fs/cd9660/cd9660_mount.h>
++#include <fs/msdosfs/msdosfsmount.h>
+ #endif
+ 
++#if    HAVE_LINUX_LOSETUP
+ /* Need to tell loop.h what the actual dev_t type is. */
+ #undef dev_t
+ #if defined(__alpha) || (defined(__sparc__) && defined(__arch64__))
+@@ -31,7 +36,7 @@
+ #include <linux/loop.h>
+ #undef dev_t
+ #define dev_t dev_t
+-
++#endif
+ 
+ int
+ do_echo(int argc, const char ** argv)
+@@ -753,9 +758,7 @@ do_mount(int argc, const char ** argv)
+ #elif	HAVE_BSD_MOUNT
+ 	{
+ 		struct	    ufs_args ufs;
+-		struct	    adosfs_args adosfs;
+ 		struct	    iso_args iso;
+-		struct	    mfs_args mfs;
+ 		struct	    msdosfs_args msdosfs;
+ 		void *	    args;
+ 
+@@ -764,23 +767,11 @@ do_mount(int argc, const char ** argv)
+ 			ufs.fspec = (char*) argv[0];
+ 			args = &ufs;
+ 		}
+-		else if (!strcmp(type, "adosfs"))
+-		{
+-			adosfs.fspec = (char*) argv[0];
+-			adosfs.uid = 0;
+-			adosfs.gid = 0;
+-			args = &adosfs;
+-		}
+ 		else if (!strcmp(type, "cd9660"))
+ 		{
+ 			iso.fspec = (char*) argv[0];
+ 			args = &iso;
+ 		}
+-		else if (!strcmp(type, "mfs"))
+-		{
+-			mfs.fspec = (char*) argv[0];
+-			args = &mfs;
+-		}
+ 		else if (!strcmp(type, "msdos"))
+ 		{
+ 			msdosfs.fspec = (char*) argv[0];
+Index: git/sash.c
+===================================================================
+--- git.orig/sash.c
++++ git/sash.c
+@@ -107,7 +107,7 @@ static const CommandEntry	commandEntryTa
+ 		"srcName ... destName"
+ 	},
+ 
+-#ifdef	HAVE_LINUX_CHROOT
++#if	HAVE_LINUX_CHROOT
+ 	{
+ 		"-chroot",	do_chroot,	2,	2,
+ 		"change root file system",
+@@ -189,7 +189,7 @@ static const CommandEntry	commandEntryTa
+ 		"[-sig] pid ..."
+ 	},
+ 
+-#ifdef	HAVE_LINUX_LOSETUP
++#if	HAVE_LINUX_LOSETUP
+ 	{
+ 		"-losetup",	do_losetup,	3,	3,
+ 		"Associate a loopback device with a file",
+@@ -253,7 +253,7 @@ static const CommandEntry	commandEntryTa
+ 		"srcName ... destName"
+ 	},
+ 
+-#ifdef	HAVE_LINUX_PIVOT
++#if	HAVE_LINUX_PIVOT
+ 	{
+ 		"-pivot_root",	do_pivot_root,	3,	3,
+ 		"pivot the root file system",

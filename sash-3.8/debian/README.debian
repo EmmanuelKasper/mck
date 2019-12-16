@@ -1,0 +1,49 @@
+sash for DEBIAN
+--------------------------
+[random tips and comments]
+--------------------------
+
+In an emergency, you can run linux (just barely) with just the linux
+kernel, a boot loader (such as lilo), and /bin/sash. Use the boot loader
+to start linux with the option: init=/bin/sash
+
+For a list of built-in sash commands, type help
+
+You may or may not be able to log in using sash on a damaged system.
+People with real experience on damaged systems who have simple
+suggestions on how sash could be made more robust in this circumstance
+are invited to file wishlist bugs against the sash package.
+
+If you wish to avoid the overhead of rebooting in an emergency the best
+option is probably to keep a sash root account always logged in. This
+can be a security problem unless you lock the session with a program
+such as vlock. At the moment, vlock is only useful at the linux console.
+
+
+--------------------------
+
+To take apart a debian .deb file with sash, use
+-ar x filename.deb
+
+This will create three files:
+control.tar.gz data.tar.gz debian-binary
+
+See section 7 of the debian FAQ (and the documentation it references)
+for more details on the contents of the two tar.gz files (a copy of the
+debian FAQ is supplied in the doc-debian package).
+
+
+--------------------------
+
+If you plan on being able to use sash for emergency repair work, make
+sure that you understand what each of the built in commands does. This
+is best accomplished by reading the manual page for the full featured
+counterpart, and performing some controlled tests under non-emergency
+conditions.
+
+It's probably a also good idea to have a small partition with a copy
+of the debian base system on it. There are some good low-level tools
+for creating/repairing file systems, sash doesn't substitute for these.
+Also, sash doesn't provide any networking tools. It's a good idea to
+have a stock of rescue floppies, and distribution cdroms. And none of
+these precautions substitute for decent backups.
