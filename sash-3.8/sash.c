@@ -575,8 +575,8 @@ main(int argc, const char ** argv)
 	if (cp)
 	{
 		strcpy(buf, cp);
-		strcat(buf, "/");
-		strcat(buf, ".aliasrc");
+		strcat(buf, "/defaults/");
+		strcat(buf, "sash.cfg");
 
 		if ((access(buf, 0) == 0) || (errno != ENOENT))
 			readFile(buf);
