@@ -54,6 +54,7 @@ cleanall: clean
 	rm -f resources/disk00 resources/command.tos
 	rm -fr resources/2048_13b_68k.zip resources/2048.68K
 	rm -fr resources/etherne.zip resources/etherne
+	rm -fr resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2 resources/coreutils
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 	make -C sash-3.8 clean
 
