@@ -7,7 +7,7 @@ SHELL = ksh
 .PHONY: clean cleanall install test
 
 IMAGE_MOUNT_POINT = /mnt/loop0
-DISK_IMAGE = ahdi-64M.img
+DISK_IMAGE = ahdi-128M.img
 VERSION = 1.0
 
 all: xa

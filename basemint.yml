@@ -75,19 +75,29 @@
           aliasall
           prompt #
 
-    # - name: download GNU coreutils for FreeMiNT
-    #   get_url:
-    #     url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/coreutils/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
-    #     dest: resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
-    #     force: no
+
+    - name: download GNU coreutils for FreeMiNT
+      get_url:
+        url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/coreutils/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
+        dest: resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
+        force: no
 
     # ignore warning to use the unarchive module, as it fails with
     # 'failed to find handler for 5380204-142837785679065/source'
-    # - name: unarchive coreutils
-    #   command: tar -C resources/coreutils -xaf resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
-    #   args:
-    #     creates: resources/coreutils/usr/bin/uname
-    #     warn: false
+    - name: untar coreutils
+      command: >
+        tar -C build/mint/{{ version }}/sys-root/
+          -xaf resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
+        usr/bin
+      args:
+        creates: resources/coreutils/usr/bin/uname
+        warn: false
+
+    - name: create a symlink for having the coreutils in /usr/bin
+      replace:
+        path: "build/mint/{{ version }}/mint.cnf"
+        regexp : '^#sln e:/usr      u:/usr$'
+        replace: 'sln c:/mint/1-19-4d2/sys-root/usr      u:/usr'
 
     - name: download ethernec driver
       get_url:
