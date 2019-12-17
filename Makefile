@@ -26,7 +26,7 @@ xa: sash-3.8/sash
 	ansible-playbook xamint.yml --inventory localhost,
 
 install:
-	./helpers/mount-image.py $(DISK_IMAGE) > /dev/null 2>&1
+	./helpers/mount-image.py $(DISK_IMAGE) 0 > /dev/null 2>&1
 	mount $(IMAGE_MOUNT_POINT)
 	rm -fr $(IMAGE_MOUNT_POINT)/{auto,extra,mint}
 	(cd build; tar cf - *) | (cd $(IMAGE_MOUNT_POINT); tar xf -)
