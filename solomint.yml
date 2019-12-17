@@ -11,12 +11,12 @@
 
     - name: use the ROM AES
       replace:
-        path: "build/mint/{{ version }}/mint.cnf"
+        path: build/mint/{{ version }}/mint.cnf
         regexp: '^#GEM=ROM$'
         replace: 'GEM=ROM'
 
     - name: copy nohog.acc to fix keyboard input
       copy:
-        src: "build/mint/{{ version }}/sys-root/opt/GEM/nohog2/nohog2.acc"
+        src: build/mint/{{ version }}/sys-root/opt/GEM/nohog2/nohog2.acc
         dest: build
 

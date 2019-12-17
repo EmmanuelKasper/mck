@@ -33,13 +33,13 @@
 
     - name: remove default hostname
       replace:
-        path: "build/mint/{{ version }}/mint.cnf"
+        path: build/mint/{{ version }}/mint.cnf
         regexp : '^setenv HOSTNAME saturn$'
         replace: 'setenv HOSTNAME stmint'
 
     - name: set kernel debug level to alert
       replace:
-        path: "build/mint/{{ version }}/mint.cnf"
+        path: build/mint/{{ version }}/mint.cnf
         regexp : '^#KERN_DEBUG_LEVEL=1$'
         replace: 'KERN_DEBUG_LEVEL=1'
 
@@ -58,7 +58,7 @@
 
     - name: set sash as the default root shell
       copy:
-        dest: "build/mint/{{ version }}/sys-root/etc/passwd"
+        dest: build/mint/{{ version }}/sys-root/etc/passwd
         content: |
           root:x:0:0::/root:/bin/sash
 
@@ -70,7 +70,7 @@
 
     - name: use all builtins by default, and set a root prompt
       copy:
-        dest: "build/mint/{{ version }}/sys-root/root/defaults/sash.cfg"
+        dest: build/mint/{{ version }}/sys-root/root/defaults/sash.cfg
         content: |
           aliasall
           prompt #
@@ -95,7 +95,7 @@
 
     - name: create a symlink for having the coreutils in /usr/bin
       replace:
-        path: "build/mint/{{ version }}/mint.cnf"
+        path: build/mint/{{ version }}/mint.cnf
         regexp : '^#sln e:/usr      u:/usr$'
         replace: 'sln c:/mint/1-19-4d2/sys-root/usr      u:/usr'
 
