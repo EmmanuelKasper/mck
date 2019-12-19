@@ -13,7 +13,7 @@ VERSION = 1.1
 all: xa
 
 sash-3.8/sash:
-	# needs GNU Make
+	# sash with debian patches need GNU Make
 	make -C sash-3.8 TARGET_OS=FreeMINT CC=m68k-atari-mint-gcc
 
 solo:
