@@ -13,11 +13,11 @@
     - name: disable xaaes startup
       replace:
         path: build/mint/{{ version }}/mint.cnf
-        regexp : 'GEM=u:/c/mint/{{ version }}/xaaes/xaloader.prg'
+        regexp : '^GEM=u:/c/mint/{{ version }}/xaaes/xaloader.prg$'
         replace: '#GEM=u:/c/mint/{{ version }}/xaaes/xaloader.prg'
     
     - name: start bash shell after boot
       replace:
         path: build/mint/{{ version }}/mint.cnf
-        regexp: '#INIT=u:/c/mint/init.prg'
+        regexp: '^#INIT=u:/c/mint/init.prg$'
         replace: 'INIT=u:/bin/bash'

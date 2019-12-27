@@ -2,6 +2,7 @@ build/auto
 build/distrib
 build/extra/
 build/mint
+build/nohog2.acc
 target
 freemint
 freemint-1.18.0.tar.bz2

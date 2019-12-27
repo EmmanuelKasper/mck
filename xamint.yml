@@ -76,11 +76,18 @@
         dest: "{{ playbook_dir }}/resources"
         creates: "{{ playbook_dir }}/resources/2048.68K/2048.APP"
 
+    - name: test if extracted 2048 files are readable
+      command: test -r {{ playbook_dir }}/resources/2048.68K/2048.APP
+      register: app_is_readable
+      changed_when: app_is_readable.rc != 0
+      ignore_errors: true
+
       # ignore warning to use the ansible file module, as it does not support recursion
     - name: fix 2048 zip permissions
       command: chmod -R ug+rw resources/2048.68K/
       args:
         warn: false
+      when: app_is_readable.rc != 0
 
     - name : copy 2048
       command: cp -r resources/2048.68K build/extra/

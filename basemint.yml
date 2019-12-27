@@ -90,7 +90,7 @@
           -xaf resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
         usr/bin
       args:
-        creates: resources/coreutils/usr/bin/uname
+        creates: build/mint/{{ version }}/sys-root/usr/bin/uname
         warn: false
 
     - name: create a symlink for having the coreutils in /usr/bin
