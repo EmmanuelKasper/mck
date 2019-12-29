@@ -18,7 +18,7 @@ make
 To copy all the stuff in the first partition of a TOS/DOS disk image named 1GB.img, call
 
 ```
-make imageinstall
+make install
 ```
 
 To copy all the stuff in a partition mounted on /stmint, call
