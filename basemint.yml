@@ -43,13 +43,28 @@
         regexp : '^#KERN_DEBUG_LEVEL=1$'
         replace: 'KERN_DEBUG_LEVEL=1'
 
-    - name: disable unused drivers
+    - name: disable unused filesystems
       command: mv build/mint/{{ version }}/{{ item }}.xfs build/mint/{{ version }}/{{ item }}.xfx
       args:
         creates: build/mint/{{ version }}/{{ item }}.xfx
       loop:
         - ext2
         - nfs
+
+    - name: disable unused device drivers
+      command: mv build/mint/{{ version }}/{{ item }}.xdd build/mint/{{ version }}/{{ item }}.xdx
+      args:
+        creates: build/mint/{{ version }}/{{ item }}.xdx
+      loop:
+        - audiodev
+        - flop_raw
+
+    - name: disable unused network interface drivers
+      command: mv build/mint/{{ version }}/{{ item }}.xif build/mint/{{ version }}/{{ item }}.xix
+      args:
+        creates: build/mint/{{ version }}/{{ item }}.xix
+      loop:
+        - plip
 
     - name: copy sash sell
       copy:
