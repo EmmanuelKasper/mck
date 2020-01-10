@@ -45,7 +45,6 @@ test:
 	hatari --acsi $(DISK_IMAGE) &
 
 clean:
-	rm -fr OKAMI_SH.ELL
 	rm -fr build/*
 	rm -fr freemint
 	rm -f *.retry
