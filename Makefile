@@ -27,7 +27,7 @@ xa: sash-3.8/sash
 
 install:
 	./helpers/mount-image.py $(DISK_IMAGE) 0 > /dev/null 2>&1
-#	mount $(IMAGE_MOUNT_POINT)
+	mount $(IMAGE_MOUNT_POINT)
 	rm -fr $(IMAGE_MOUNT_POINT)/{auto,extra,mint,nohog2.acc}
 	(cd build; tar --owner=0 --group=0 -cf - *) | (cd $(IMAGE_MOUNT_POINT); tar xf -)
 	umount $(IMAGE_MOUNT_POINT)
