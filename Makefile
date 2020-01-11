@@ -16,13 +16,19 @@ sash-3.8/sash:
 	# sash with debian patches need GNU Make
 	make -C sash-3.8 TARGET_OS=FreeMINT CC=m68k-atari-mint-gcc
 
+mksh/mksh:
+	export TARGET_OS=FreeMiNT CC=m68k-atari-mint-gcc MKSH_SMALL=1;\
+		cd mksh; ./Build.sh
+	m68k-atari-mint-size $@
+	m68k-atari-mint-strip $@
+
 solo:
 	ansible-playbook solomint.yml --inventory localhost,
 
-text: sash-3.8/sash
+text: sash-3.8/sash mksh/mksh
 	ansible-playbook textmint.yml --inventory localhost,
 
-xa: sash-3.8/sash
+xa: sash-3.8/sash mksh/mksh
 	ansible-playbook xamint.yml --inventory localhost,
 
 install:
@@ -55,6 +61,7 @@ cleanall: clean
 	rm -fr resources/etherne.zip resources/etherne
 	rm -fr resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2 resources/coreutils
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
+	rm mksh/mksh
 	make -C sash-3.8 clean
 
 release:
