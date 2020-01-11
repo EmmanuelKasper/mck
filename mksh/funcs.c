@@ -889,7 +889,7 @@ c_alias(const char **wp)
 			}
 			/* ignore values for -t (AT&T ksh does this) */
 			newval = tflag ?
-			    search_path(alias, path, X_OK, NULL) :
+			    search_path(alias, path, R_OK, NULL) :
 			    val;
 			if (newval) {
 				strdupx(ap->val.s, newval, APERM);

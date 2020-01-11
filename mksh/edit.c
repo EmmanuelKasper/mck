@@ -827,10 +827,10 @@ glob_path(int flags, const char *pat, XPtrV *wp, const char *lpath)
 		glob_str(Xstring(xs, xp), wp, true);
 		newsize = XPsize(*wp);
 
-		/* Check that each match is executable... */
+		/* Check that each match is at least readble ... */
 		words = (char **)XPptrv(*wp);
 		for (i = j = oldsize; i < newsize; i++) {
-			if (ksh_access(words[i], X_OK) == 0) {
+			if (ksh_access(words[i], R_OK) == 0) {
 				words[j] = words[i];
 				if (!(flags & XCF_FULLPATH))
 					memmove(words[j], words[j] + pathlen,

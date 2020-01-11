@@ -887,7 +887,7 @@ scriptexec(struct op *tp, const char **ap)
 
 	sh = str_val(global(TEXECSHELL));
 	if (sh && *sh)
-		sh = search_path(sh, path, X_OK, NULL);
+		sh = search_path(sh, path, R_OK, NULL);
 	if (!sh || !*sh)
 		sh = MKSH_DEFAULT_EXECSHELL;
 
@@ -1209,7 +1209,7 @@ findcom(const char *name, int flags)
 	if (!tp && (flags & FC_PATH) && !(flags & FC_DEFPATH)) {
 		tp = ktsearch(&taliases, name, h);
 		if (tp && (tp->flag & ISSET) &&
-		    ksh_access(tp->val.s, X_OK) != 0) {
+		    ksh_access(tp->val.s, R_OK) != 0) {
 			if (tp->flag & ALLOC) {
 				tp->flag &= ~ALLOC;
 				afree(tp->val.s, APERM);
@@ -1234,7 +1234,7 @@ findcom(const char *name, int flags)
 		}
 		npath.ro = search_path(name,
 		    (flags & FC_DEFPATH) ? def_path : path,
-		    X_OK, &tp->u2.errnov);
+		    R_OK, &tp->u2.errnov);
 		if (npath.ro) {
 			strdupx(tp->val.s, npath.ro, APERM);
 			if (npath.ro != name)
