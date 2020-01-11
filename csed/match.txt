@@ -1,0 +1,296 @@
+TRY abc <abc>
+TRY abc xbc
+TRY abc axc
+TRY abc abx
+TRY abc x<abc>y
+TRY abc ab<abc>
+
+TRY b* <>c
+TRY b* <b>c
+TRY b* <bb>c
+TRY ^b* <>a
+TRY ^b* <b>c
+TRY ^b* <bb>c
+TRY ab* <a>c
+TRY ab* <ab>c
+TRY ab* <abb>c
+TRY a*b* <>c
+TRY a*b* <a>c
+TRY a*b* <b>c
+TRY a*b* <ab>c
+TRY a*b* <aabb>c
+TRY a*b* <aabb>ac
+
+TRY ab*c <ac>
+TRY ab*c <abc>
+TRY ab*c <abbc>
+TRY ab*bc <abc>
+TRY ab*bc <abbc>
+TRY ab*bc <abbbbc>
+TRY ab\+c <abbc>
+TRY ab\+c <abc>
+TRY ab\+c abq
+TRY ab\+bc <abbbbc>
+TRY ab\{1,\}c <abbc>
+TRY ab\{1,\}c <abc>
+TRY ab\{1,\}c abq
+TRY ab\{1,\}bc <abbbbc>
+TRY ab\?bc <abbc>
+TRY ab\?bc <abc>
+TRY ab\?bc abbbbc
+TRY ab\?c <abc>
+TRY ab\?c <ac>
+TRY ab\{0,1\}bc <abbc>
+TRY ab\{0,1\}bc <abc>
+TRY ab\{0,1\}bc abbbbc
+TRY ab\{0,1\}c <abc>
+TRY ab\{0,1\}c <ac>
+FAIL b\{0\}
+FAIL b\{0,0\}
+FAIL b\{1,0\}
+
+TRY ab\{2,4\} abc
+TRY ab\{2,4\} <abb>c
+TRY ab\{2,4\} <abbb>c
+TRY ab\{2,4\} <abbbb>c
+TRY ab\{2,4\} <abbbb>bc
+
+TRY ^[^_]*_ <abc_>def
+TRY [^_]*_ <abc_>def
+TRY ^[^_]* <abc>_def
+TRY [^_]* <abc>_def
+
+TRY ^abc$ <abc>
+TRY ^abc$ abcc
+TRY ^abc <abc>c
+TRY ^abc$ aabc
+TRY abc$ a<abc>
+TRY ^ <>abc
+TRY $ abc<>
+TRY a.c <abc>
+TRY a.c <axc>
+TRY a.*c <ac>
+TRY a.*c <axyzc>
+TRY a.*c axyzd
+TRY a[bc]d abc
+TRY a[bc]d <abd>
+TRY a[b-d]e abd
+TRY a[b-d]e <ace>
+TRY a[b-d] a<ac>
+TRY a[-b] <a->
+TRY a[b-] <a->
+FAIL a[b-a] 
+FAIL a[]b 
+FAIL a[ 
+TRY a] <a]>
+
+# [...]
+TRY [[.[.]] a<[>b
+TRY [[.[.][.[.]] a<[>b
+TRY [[] a<[>b
+TRY [[=[=]] a<[>b
+TRY [[:alpha:]] <a>[b
+TRY [^[:alpha:]] <[>ab
+TRY [[.\.]n] <\>[b
+TRY [[.a.]] <a>[b
+TRY [[=a=]] <a>[b
+TRY [aaa[.a.][=a=]] <a>[b
+TRY [[.a.]-c] Z<b>cd
+TRY [[.a.]-[.c.]] Z<b>cd
+TRY [a-[.c.]] Z<b>cd
+TRY [[=a=]] <a>[b
+FAIL [[=a=]-z]
+FAIL [a-[=z=]]
+FAIL [a-[:alpha:]]]
+FAIL [[:alpha:]-z]]
+FAIL [[:alpha:]-[:punct:]]
+FAIL [[:alpha:]-[=z=]]
+FAIL [[=z=]-[:punct:]]
+FAIL [z-a]
+FAIL [a-c-e]
+TRY [a-c-]* <-abc>d
+TRY [-a-c]* <-abc>d
+TRY [-a-c-]* <-abc>d
+TRY [a[.-.]c]* <a-c>b
+TRY []-b]* <ab]>c
+TRY [^]-b] ab<c>
+TRY [%--] <,>
+TRY [--[] <A>
+TRY [][.-.]-0]* <]./0>1
+FAIL [
+FAIL [[
+FAIL [[.
+FAIL [[.x
+FAIL [[.x=]]
+FAIL [[.xy.]]
+FAIL [[.x.
+FAIL [[.x.]
+FAIL [[=
+FAIL [[=x
+FAIL [[=xy
+FAIL [[=xy=]]
+FAIL [[:foo:]]
+FAIL [[:foo:]
+FAIL [[:foo:
+FAIL [[:foo
+FAIL [[:
+
+TRY [\] <\>
+TRY [\/]* <\/>
+
+
+# [x] tests
+TRY a[]]b <a]b>
+TRY a[]]\+b <a]b>
+TRY a[]]\+b <a]]b>
+TRY a[]]\+b ab
+TRY a[]]*b <ab>
+TRY a[]]*b <a]b>
+TRY a[]]*b <a]]b>
+
+TRY a[[]b <a[b>
+TRY a[[]\+b <a[b>
+TRY a[[]\+b <a[[b>
+TRY a[[]\+b ab
+TRY a[[]*b <ab>
+TRY a[[]*b <a[b>
+TRY a[[]*b <a[[b>
+
+TRY a[x]b <axb>
+TRY a[x]\+b <axb>
+TRY a[x]\+b <axxb>
+TRY a[x]\+b ab
+TRY a[x]*b <ab>
+TRY a[x]*b <axb>
+TRY a[x]*b <axxb>
+
+# [^x]
+TRY a[^]]b ab
+TRY a[^]]b a]b
+TRY a[^]]b <axb>
+TRY a[^]]\+b <axb>
+TRY a[^]]\+b <axyb>
+TRY a[^]]\+b ab
+TRY a[^]]*b <ab>
+TRY a[^]]*b <axb>
+TRY a[^]]*b <axyb>
+TRY a[^]]*b a]ba]]b<axyb>
+
+TRY a[^[]b <axb>
+TRY a[^[]\+b <axb>
+TRY a[^[]\+b <axyb>
+TRY a[^[]\+b ab
+TRY a[^[]*b <ab>
+TRY a[^[]*b <axb>
+TRY a[^[]*b <axyb>
+
+TRY a[^x]b <aob>
+TRY a[^x]\+b <aob>
+TRY a[^x]\+b <aoob>
+TRY a[^x]\+b ab
+TRY a[^x]*b <ab>
+TRY a[^x]*b <aob>
+TRY a[^x]*b <aoob>
+
+# TODO, more systematic test of all combinations
+TRY a[]]\+b ab
+TRY a[]c[]b <a]b>
+TRY a[]c[]b <acb>
+TRY a[]c[]b <a[b>
+TRY a[^bc]d <aed>
+TRY a[^bc]d abd
+TRY a[^-b]c <adc>
+TRY a[^-b]c a-c
+TRY a[^]b]c a]c
+TRY a[^]b]c <adc>
+TRY a[b^]c <abc>
+TRY a[b^]c <a^c>
+TRY a[]b^[]c <a]c>
+TRY a[]b^[]c <abc>
+TRY a[]b^[]c <a^c>
+TRY a[]b^[]c <a[c>
+TRY \(\)ef d<ef>
+# TODO, check
+TRY \(\)* <>-
+TRY \(\)*$ -<>
+TRY $b b
+TRY $b a<$b>c
+TRY ^b <b>c
+TRY ^b abc
+TRY a^b <a^b>c
+TRY \^b <^b>c
+TRY \^b a<^b>c
+TRY \^b bc
+FAIL a\
+TRY a(b <a(b>
+TRY a(*b <ab>
+TRY a(*b <a((b>
+FAIL a\x
+FAIL abc\) 
+FAIL \(abc 
+TRY \(\(a\)\) <a>bc
+TRY \(a\)b\(c\) <abc>
+TRY \(a\)\(c\) <ac>
+TRY a*b*c aabb<abc>
+TRY a\+b\+c aabb<abc>
+### multiple asterisks or interval unspecified according to POSIX.
+# This implementation just treats excess multiplier as litteral
+TRY a** <*>
+TRY a*** <***>
+TRY a*\{2 <a{2>
+TRY a\{2\}* <aa*>
+TRY a\{2\}\{3 <aa{3>
+TRY a* <>b
+## 
+TRY \(a*\)* <>-
+TRY \(a*\)* <a>b
+TRY \(a*b\)* <>-
+TRY \(a*b\)* <b>a-
+TRY \(a*b\)* <ab>-
+TRY \(a*b\)* <abb>-
+TRY \(a*b\)* <abab>-
+TRY \(a*b\)* <bb>-
+TRY \(a*b\)* <bab>-
+TRY \(a*b\)* <aabb>a-
+TRY \(a*b\)* <abaab>a-
+TRY \(a*b\)* <baab>a-
+TRY \(a*b\)* <>-ba-
+
+TRY \(a\)b\1* <ab>
+TRY \(a\)b\1* <aba>
+TRY \(a\)b\1* <abaa>
+TRY \(a*\)b\1\1 <b>
+TRY \(a*\)b\1\1 a<b>
+TRY \(a*\)b\1\1 <b>a
+TRY \(a*\)b\1\1 a<b>a
+TRY \(a*\)b\1\1 <abaa>
+TRY \(a*\)b\1\1 a<abaa>
+TRY \(a*\)b\1\1 a<abaa>a
+TRY \(a*\)b\1\1 <aabaaaa>
+
+TRY \(a*\)\+ <aa>-
+
+TRY a\{0,\} <>-
+TRY a\{0,\} <aa>-
+
+
+TRY \(a\(b*\)c\2\)* <acac>b
+TRY \(a\(b*\)c\2\)* <abcb>ab
+TRY \(a\(b*\)c\2\)* <abbcbb>b
+TRY \(a\(b*\)c\2\)* <abcbabbcbbacac>c
+TRY \(a\(b*\)c\2\)* <>abcabbcbaacaa
+TRY \(a\(b*\)c\2\)\{1,\} abcabbcba<ac>aa
+
+TRY *  a<*>
+TRY ^*  <*>
+TRY a\(*\) <a*>
+TRY \{2 a<{2>
+TRY \(\{\) <{>
+
+# backtracking
+  
+TRY a.*aaa ...<a.....aaa>.... 
+TRY a*aaa ....aa..<aaa>.aaaa
+TRY \(a\{1,2\},\)*a,a,a,a,a  <a,aa,a,a,a,a,aa,a,a,a,a,a>,
+TRY \(a\{1,2\},\)*a,a,a,a,a  <a,aa,a,a,a,a,aa,a,a,a,a,a>,
+

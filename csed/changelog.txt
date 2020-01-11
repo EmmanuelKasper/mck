@@ -1,0 +1,219 @@
+2003-08-15
+- *, \+, \?, \{... treated as \*, +, ?, { when not following a 
+  repeatable expression.
+- implemented [.a.], [=a=] and [:alpha:] for the POSIX locale only; 
+  numerous improvements in the bracket expression compiler.
+- removed the bug-o-matic files, put them in another project.
+- \< and \> no longer look outside allocated memory.
+- reorganised the todo list.
+- updated the README.
+- added a copy of the GPL; added GPL ritual invocations on top of files.
+
+2003-08-14
+- made buffers, compiled commands and labels dynamically allocated. This
+  was a rather big change, but I really wanted to remove size limitations. 
+  Speed does not seem to be affected.
+- changed the way script lines are read: only one cmdline() function now,
+  allowing cleaner script line handling.
+- location of syntax errors reported
+- command encoding changed: number of line addresses no longer limited; 
+  N flag to s/// no longer limited to 4096.
+- selected() entirely rewriten: now at last I understand how it works.
+- PLUS address feature removed
+- rewrote getline() to no longer use fgets()
+- unlimited number of appends (from a\ and r commands)
+- reworked test mechanisms: adding a new test file no longer re-tests all.
+- addr.t - added address range tests
+- made { ... } identical to a branch (previously skipping a {...} group
+  would reinitialize the 'inrange' state of skipped range addresses)
+- run-time error report includes script location when relevant
+
+2003-08-13
+- started breaking everything to add dynamic memory allocation...
+
+2003-03-27
+- error messages now moved directly where they're used in the code.
+- better usage()
+- removed last remaining /*hh NN */ comments, that did not mean anything
+  any more after the code was indented and further modified by me.
+
+2003-03-26
+- test/8bit.sh - now uses the same convention of *.tmp and tmp.* for temp 
+  files
+- rewrote getline() with fgets() instead of gets: sed is now less likely
+  to dump core when reading a too long input line.
+- misc.t - more misc. tests
+- gratuitiously reworked rhscomp()
+- gettext split in two different functions (one for labels and filenames,
+  one for the text argument of a\, c\, and i\ command) - the text after a\
+  now corectly keeps its initial space.
+- fixquote() reworked to have a more intuitive interface
+- test.sed altered so that text out of entries must begin with '#'.
+- *.t - modified to comply to the new test.sed syntax
+- fixed //\2/ again (the previous test was badly processed by test.sed)
+- misc.t - added test for i\ and for branching commands b and t
+
+2003-03-25
+- s//\1/ now allowed. The check is still made at compile time in cases
+  like s/\(.\)/\1/, but the the RE is empty the test is made instead
+  at runtime. 
+- test/misc.t - test for dynamic // handling; test for s//\1/
+
+2003-03-24
+- guard.c: runs a program and kill it after a few seconds (to guard against
+  infinite loops when testing)
+- played with a.sh, the shell running the random tests
+
+2003-03-23
+- temporarily removed numbered subst from the grammar, as they 
+  did raise too many times the same GNU sed bug
+- a.sh - tried to find a way to determine if the sed command
+  runs correctly, or fails, or crashes, or loops forever (and if so, kill 
+  it after 5 seconds), but this doesn't work yet.
+
+2003-03-22
+- added an awk program that generates random sed tests.
+- nested brackets like \(a\(b\)c\2\) now allowed.
+- updated match.txt to cover nested brackets like \(a\(b\)c\2\)
+
+2003-03-21
+- \{0,\} now allowed as synonym to *
+- fixed the Makefile
+- \)* is now CMKET instead of CKET|STAR
+- sedexec.c - removed macro GETNUM; tried some silly micro-optimisations
+- sedexec.c :: substitute() - simplified code; took into account the fact 
+  that s///3g is now forbidden; null matches now correctly handled: 
+  s/b*/x/g gives xaxcx on abc
+- sedcomp.c - removed place() for faster replacements
+- sedcomp.c - better error message for s///2g; also disallowed s///2p3
+- sedexec.c - fixed t command (used to only consider the very latest subst)
+  -> dc.sed runs correctly now
+- README - corrected thanks and authors sections
+- *.c - moved record of changes as comments to the changelog
+- *.[ch] - edited comments so that line are shorter than 80 chars
+- formatted the fearsome cmdmask[] table and protected it from indent
+
+2003-03-19
+- allowed \{0,n\}
+- added \? as a shortcut for \{0,1\}
+- implemented repeated grouping \(...\)\{...\} and started some testing
+- DEBUG option: -d option and #d as first comment
+- removed illegal syntax /a/;/b/ that was redundant with /a/,/b/
+- command lines are rejected if too long when read from files
+- rewrote compile(): solved s///10;; bug and disallow s///10g or s///g10
+- added #n in some scripts of the GNU test suite for convenience
+- commented out madding test
+- s/\(\)//g and s/\</x/g no longer loop forever
+- \1* correctly handled when \1 is null
+
+2003-03-17
+- added a kind of README
+- sedexec.c - removed silly macro IFEQ
+- proper handling of multiple '!'s: /foo/!!!!d is the same as /foo/!d
+- # made only valid after a command
+- unified the way \{...\} and * are handled: the code is now more complex 
+  when compiling, but smaller when executing (perhaps marginally slower)
+  also started providing support for repeated grouping.
+- added a test suite derived from that of GNU sed 4.0.5
+- test.sed - new version with a syntax adapted so that it doesn't clash
+  with the GNU test suite
+  
+2003-03-13
+- revised RE and addresses encoding, separating them using different
+  symbol names.
+- bug solved: a*\1 was wrong when \1 was null
+- // now refers to the last RE used (dynamically) instead of the
+  last RE compiled.
+- Makefile - adapted to work on both cygwin and Unix
+
+2003-03-12
+- used stdlib function instead of private smemcmp
+- used unsigned chars everywhere internally
+- numbers in \{n,m\} can now grow up to 32767 (previously <= 255)
+- lastrhs misfeature removed 
+  (s/foo/bar/;s/b/%/ used to be a shortcut for s/foo/bar/;s/b/bar/)
+- test.sed - easier editing of test files
+
+2003-03-11
+- added 8bit test file
+- removed 'lw file' extension
+- POSIXified 'l' command (octal dump, not hex, and '$' at eol)
+- \x80 char now allowed (used to be used as marker in RHS)
+- started systematic testing of pattern matching
+- marginally faster replacement
+- \n always added in G and H
+- removed option -g
+- [x] handled as x, [^x] handled specially (smaller and faster)
+
+2003-03-07
+- took HHsed v1.5 source
+- Makefile - tgz, gcc, max warning levels, expand, indent
+- *.[ch] - expanded and indented
+- commented out the max loop test
+- turned function syntax to C89
+- removed PASS(), mybcheck()
+- renamed Copy -> COPY
+- removed capital P flag to s/// command
+- removed capital W command?
+- removed capital T command
+- s/a/b/4095 now possible
+- replaced '+' by '\+' in REs
+- set buffer size to 8192
+
+1991-10-02
+- final release of HHSED (1.5)
+
+1991-09-22
+- txt and TeX documentation by Howard Helman
+
+1991-09-20
+- Howard Helman fixes for version 1.4, documented thus (used to be in
+  sedcomp.c): 
+  (those marked **** were critical)
+   1. l command cleanup (indexing and quoting)
+   2. first line problem (should have been delete FALSE) ****
+   3. y command compile funny BC++ problem with chars and ints
+   4. fixed `\' escapes in patterns
+   5. fixed `\' escapes in rhs
+   6. fixed `\' escapes in y strings 
+   7. fixed `\' escapes in inserted text
+   8. fixed `\' in sets  (all fixed by fixquote routine)
+   9. RE bad looping on error message   *****
+  10. reworked entire selected routine
+  11. spaces after -e -f and nothing after -g -n
+  12. errors to stderr and general error message fixups
+  13. usage message when no args
+  14. Make it compile under Sun Unix with minimum lint complaints
+  15. Make it compile under BC++ 2.0   *****
+  16. Fix recognition of last line to edit
+  17. ; # and initial space clean ups
+  18. No `\` escapes in file names or labels
+  19. Last line may not have \n in commands
+  20. 256 bit characters in all contexts
+  21. Add + option to second address
+  22. allow \{m,n\} RE's including after \1 as for *; + now \{1,\}
+  23. allow \<  and \> RE's
+  24. Genbuf now extremly long to hold everything(was 71!!) *****
+  25. Misc cleanups for n, N, & D commands range checks cleaned up.
+  26. Reset inrange flag on exit from {} nesting
+  27. Blanks after : (actually all of label processing fixed up
+  28. - in character character sets now works for ranges
+  29. g flag in s command cleanup used ++ instead of = 1
+  30. made separate -e and -f input routines and fixed up gettext
+  31. RELIMIT replaced by poolend  allows REs to be of any size
+  32. \0 character is now an error in an RE body
+  33. address of 000 now illegal
+  34. trailing arguments of s command handled properly
+  35. & substitutions fixed(previously could not escape)
+  36. handling of lastre
+  37. % as repeat last rhs added
+  38. nth substitution only added to s command
+  39. \?RE? in addresses added
+  40. No range on { command
+
+1991-06-19:
+- Toad Hall Tweak documented as follows (used to be in sedcomp.c)
+  - Mostly minor tweaks to make it compile with Borland's TC v2.0.
+  - No more feelthy debug.
+  - We're prototyping now.
+

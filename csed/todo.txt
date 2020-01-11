@@ -1,0 +1,69 @@
+
+Todo list for CheapSed
+
+Bugs
+----
+
+(none currently identified)
+
+Documentation/packaging
+-----------------------
+
+- document internal implementation of how REs are encoded
+- remove some of the debugging stuff
+
+Testing
+-------
+
+- tests should print errors immediately
+- move the testing suite in another directory
+- test \t, ...
+- test writeout
+- test the testing mechanism; test the testing suite against GNU sed
+- test lastline with several files
+- test error reports
+- finish adapting the GNU test suite
+- test more scripts from the grabbag
+- check systematically cases of \1 being null
+- test multiple for the whole range of repeatable expressions, not only CCHR.
+
+
+Optimisation/Improvement
+------------------------
+
+- optimize s///g by appending to the genbuf
+- give better regexp compilation errors
+- optional warnings when non-portable constructs are used ?
+- optimize ... $/ matches? 
+- optimize ... .*/ matches and ... .*\)/ matches?
+- cache looking for the first char?
+- add warnings if labels contain trailing spaces
+- examine if it is needed to copy anything from a -e expr.
+  (it could be assumed in sedcomp that a line ends with 0 or \n)
+- replace ... & i2 by i2 & ... for speed ?
+
+C language issues
+-----------------
+
+- use fwrite instead of puts when the length is known?
+- "t" flag in fopen() ???
+- check if errno is set when printing strerror(errno)
+- understand why &0x80 and >127 are not the same
+- compile under other compilers and check warnings
+- use autoconf ?
+
+POSIX conformance
+-----------------
+
+- check in POSIX if it is an error to reference a non-existing \1 in the RHS.
+- s/\($\)/u/  on fo$o  yields fo$ou in gsed, and here yields fouo
+  -> check what is the correct behaviour, and fix if needed.
+- ask whether s(o\((u( is allowed. same for s+o\++u+
+  -> POSIX is not explicit about it, but for y///, it is said that
+  \n mean newlines always, and \x means the the delimiter x only when
+  x is not n, so by extension I suppose it means that s(o\((u( is not
+  allowed.
+- tell the explanation above on the mailing list
+- labels > 8 chars: unspecified whether error or silent truncation
+- remove \t, ... feature/make it conditional?
+

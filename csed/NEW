@@ -1,0 +1,129 @@
+CSed - a cheap sed implementation
+
+This is yet another descendent of the small-sed written ages ago by 
+Eric S. Raymond.  He described the original version thus:
+
+  This is a smaller, cheaper, faster SED utility.  Minix uses it.  GNU used
+  to use it, until they built their own sed around an extended (some would
+  say over-extended) regexp package.
+
+While trying to keep it small, cheap and fast, my goals were to:
+- convert it to a more modern C dialect
+- be compliant with the modern POSIX sed recommendation
+I started from HHSed (also known as sed 1.5), the last known descendant of 
+small-sed at the time. It turns out that I had to remove a number of HHsed
+'extensions' that I personnally consider either useless or harmful. I hope I
+haven't betrayed the intentions of the original authors in doing so.
+
+Laurent Vogel, August 2003  
+
+
+Licence
+-------
+
+This is distributed under the GPL version 2 or later at your option.
+(see http://www.gnu.org/copyleft/gpl.html)
+It seems to me that doing this is coherent with 
+1) the fact that Sed-1.3 itself was released under the GPL in 1998;
+2) the wishes of authors of HHsed:
+
+  You, Dear Reader, may do *anything* you wish with it except steal it.
+
+  Copyright (c) 1991 Eric S. Raymond, David P Kirschbaum & Howard L. Helman
+  All Rights Reserved
+
+Features
+--------
+
+I've tried to remove as many extensions to POSIX as I could. 
+Remaining differences are:
+- \t, \n, \a, \b, ..., \xdd are recognised in REs (including in bracket 
+  expressions), the RHS of substitutions, text argument of i\, a\, c\, 
+  and y command.
+- \+ in a RE is a synonym of \{1,\}, \? a synonym for \{0,1\}
+- \< and \> match beginning and end of word respectively
+- collation-related bracket symbols (like [:digit:], [=a=] and [.[.] 
+  in bracket expressions) are not recognised
+Optional behaviour:
+- sub-expressions are not anchored: /\(^a\)/ does match /\^a/, not /^a/
+- "a**" is considered as "a*\*", "a*\{2\}" as "a*{2}"
+
+Limitations
+-----------
+
+I'm currently removing as many limitations as I can. Still the current version
+handles:
+- no more that 20 levels of { ... } nesting
+- less than 10 writeout files
+- in "\{n\}", "\{n,\}" and "\{n,m\}" n and m must be <= 32767
+- matched \( ... \), when repeated, must be less than 32767 bytes away in
+  compiled form.
+
+Bug reports are welcome by mail at <lvl@club-internet.fr>.
+
+
+How to install
+--------------
+
+1) edit the Makefile to select your C compiler
+2) type "make". This should build a sed executable called sed in
+   the curent directory.
+optional:
+3) type "make test". If nothing but "Testing foo" prints, the test foo 
+   runs successfully (else a copy of the failure report is in foo.log)
+4) copy the sed executable at your preferred location
+
+That's it for documentation! I didn't include other HHsed files as
+I didn't have time to maintain them and as there is plenty of accurate
+documentation available elsewhere, including the POSIX specs for free.
+
+Changes from HHsed
+------------------
+
+(see the changelog)
+
+A bit of history
+----------------
+
+August 2003
+  CSed 
+1998
+  sed 1.3 put under the GPL
+october 1995
+  manpage for sed 1.3 (?) written by Eric S. Raymond
+october 1991
+  sed 1.5 more changes from Howard L. Helman, published by David Kirschbaum
+september 1991
+  sed 1.4 (aka HHsed) a massive rewrite of sed 1.2 by Howard L. Helman,
+  distributed by David Kirschbaum
+around 1991?
+  sed 1.2 for MSDOS (ported to Turbo C 2.0) published by David Kirschbaum
+1991
+  sed 1.3 (aka small-sed) 
+before 1988? (from a date in the sedmod readme file)
+  sed 1.0 written by Eric S. Raymond. 
+
+Authors
+-------
+
+(in chronological order)
+Eric S. Raymond
+David Kirschbaum
+Howard L. Helman
+Laurent Vogel
+
+Danke go to
+------------
+
+- the Online group for releasing the POSIX spec free of charge.
+- Eric S. Pement for the sed FAQ and for hosting a copy of hhsed source.
+- Aurelio ? for the sed.sf.net site.
+- Jason Molenda for adding a testsuite in GNU sed (which I stole partly).
+- Ken Pizzini and Paulo Bonzini for maintaining the GNU sed testsuite.
+- Greg Ubben for dc.sed.
+- members of the seders mailing lists for discussing portability issues.
+
+Historical files also record contributions from (in alphabetic order):
+Mark Adler, Robin Cover, John Hollow, Michael D. Lawler, James McNealy
+Tom Oehser.
+

@@ -9,26 +9,30 @@ SHELL = ksh
 IMAGE_MOUNT_POINT = /mnt/loop0
 DISK_IMAGE = ahdi-128M.img
 VERSION = 1.1
+CC = m68k-atari-mint-gcc
 
 all: xa
 
 sash-3.8/sash:
 	# sash with debian patches need GNU Make
-	make -C sash-3.8 TARGET_OS=FreeMINT CC=m68k-atari-mint-gcc
+	make -C sash-3.8 TARGET_OS=FreeMINT CC=$(CC)
 
 mksh/mksh:
-	export TARGET_OS=FreeMiNT CC=m68k-atari-mint-gcc MKSH_SMALL=1;\
+	export TARGET_OS=FreeMiNT CC=$(CC) MKSH_SMALL=1;\
 		cd mksh; ./Build.sh
 	m68k-atari-mint-size $@
 	m68k-atari-mint-strip $@
 
+csed/sed:
+	make -C csed CC=$(CC)
+
 solo:
 	ansible-playbook solomint.yml --inventory localhost,
 
-text: sash-3.8/sash mksh/mksh
+text: sash-3.8/sash mksh/mksh csed/sed
 	ansible-playbook textmint.yml --inventory localhost,
 
-xa: sash-3.8/sash mksh/mksh
+xa: sash-3.8/sash mksh/mksh csed/sed
 	ansible-playbook xamint.yml --inventory localhost,
 
 install:
@@ -61,7 +65,8 @@ cleanall: clean
 	rm -fr resources/etherne.zip resources/etherne
 	rm -fr resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2 resources/coreutils
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
-	rm mksh/mksh
+	rm -f mksh/mksh
+	make -C csed clean distclean
 	make -C sash-3.8 clean
 
 release:
