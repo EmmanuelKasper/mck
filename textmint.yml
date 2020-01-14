@@ -16,8 +16,8 @@
         regexp : '^GEM=u:/c/mint/{{ version }}/xaaes/xaloader.prg$'
         replace: '#GEM=u:/c/mint/{{ version }}/xaaes/xaloader.prg'
     
-    - name: start bash shell after boot
+    - name: start mksh shell after boot
       replace:
         path: build/mint/{{ version }}/mint.cnf
         regexp: '^#INIT=u:/c/mint/init.prg$'
-        replace: 'INIT=u:/bin/bash'
+        replace: 'INIT=u:/bin/mksh'

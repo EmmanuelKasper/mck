@@ -30,6 +30,11 @@
         src: resources/XAAES.INF
         dest: build/mint/{{ version }}/xaaes/XAAES.INF
 
+    - name: create defaults directory
+      file:
+        path: build/mint/{{ version }}/sys-root/root/defaults
+        state: directory
+
     - name: copy a configuration file for tos2win with tw52 as the default terminal type
       copy:
         src: resources/TOSWIN2.CFG

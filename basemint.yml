@@ -66,30 +66,21 @@
       loop:
         - plip
 
-    - name: copy sash sell
+    - name: copy mksh sell
       copy:
-        src: sash-3.8/sash
+        src: mksh/mksh
         dest: build/mint/{{ version }}/sys-root/bin
 
-    - name: set sash as the default root shell
+    - name: copy minimal profile
+      copy:
+        src: mksh/profile
+        dest: build/mint/{{ version }}/sys-root/etc/profile
+
+    - name: set mksh as the default root shell
       copy:
         dest: build/mint/{{ version }}/sys-root/etc/passwd
         content: |
-          root:x:0:0::/root:/bin/sash
-
-
-    - name: create defaults directory
-      file:
-        path: build/mint/{{ version }}/sys-root/root/defaults
-        state: directory
-
-    - name: use all builtins by default, and set a root prompt
-      copy:
-        dest: build/mint/{{ version }}/sys-root/root/defaults/sash.cfg
-        content: |
-          aliasall
-          prompt #
-
+          root:x:0:0::/root:/bin/mksh
 
     - name: download GNU coreutils for FreeMiNT
       get_url:
@@ -113,6 +104,11 @@
         path: build/mint/{{ version }}/mint.cnf
         regexp : '^#sln e:/usr      u:/usr$'
         replace: 'sln c:/mint/1-19-4d2/sys-root/usr      u:/usr'
+
+    - name: copy csed the cheap sed
+      copy:
+        src: csed/sed
+        dest: build/mint/{{ version }}/sys-root/usr/bin/sed
 
     - name: download ethernec driver
       get_url:
