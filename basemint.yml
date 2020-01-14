@@ -12,8 +12,7 @@
         - freemint
         - build/auto
         - build/extra
-        - resources/etherne/
-        - resources/coreutils
+        - resources/etherne
 
     - name: unpack freemint archive
       unarchive:
@@ -99,7 +98,28 @@
         creates: build/mint/{{ version }}/sys-root/usr/bin/uname
         warn: false
 
-    - name: create a symlink for having the coreutils in /usr/bin
+    - name: download ncurses-bin for FreeMiNT
+      get_url:
+        url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/ncurses/ncurses-5.9-bin-mint-20131105.tar.bz2
+        dest: resources/ncurses-5.9-bin-mint-20131105.tar.bz2
+        force: no
+
+    # ignore warning to use the unarchive module, as it fails with
+    # 'failed to find handler for 5380204-142837785679065/source'
+    - name: untar coreutils
+      command: >
+        tar -C build/mint/{{ version }}/sys-root/
+          -xaf resources/ncurses-5.9-bin-mint-20131105.tar.bz2
+          usr/bin
+          usr/share/terminfo/t/tw52
+          usr/share/terminfo/t/tw52-m
+          usr/share/terminfo/t/tw100
+
+      args:
+        creates: build/mint/{{ version }}/sys-root/usr/bin/clear
+        warn: false
+
+    - name: create a symlink for accessing /usr/bin
       replace:
         path: build/mint/{{ version }}/mint.cnf
         regexp : '^#sln e:/usr      u:/usr$'
