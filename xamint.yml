@@ -53,7 +53,7 @@
 
     - name: download command.tos minix disk image
       get_url:
-        url: http://download.minix3.org/previous-versions/Atari/disk00
+        url: https://www.minix-vmd.org/cgi-bin/raw/pub/minix/atari/disk00
         dest: "{{ playbook_dir }}/resources/disk00"
         force: no
 
