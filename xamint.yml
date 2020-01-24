@@ -58,7 +58,7 @@
         force: no
 
     - name: extract command.tos shell
-      command: mcopy -i resources/disk00 ::command.tos resources/command.tos
+      shell: MTOOLS_SKIP_CHECK=1 mcopy -i resources/disk00 ::command.tos resources/command.tos
       args:
         creates: resources/command.tos
 
