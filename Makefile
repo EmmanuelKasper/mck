@@ -8,7 +8,7 @@ SHELL = ksh
 
 IMAGE_MOUNT_POINT = /mnt/loop0
 DISK_IMAGE = ahdi-128M.img
-VERSION = 1.1
+VERSION = 1.2
 CC = m68k-atari-mint-gcc
 
 all: xa
