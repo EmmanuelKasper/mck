@@ -4,7 +4,7 @@
 # gnu make
 SHELL = ksh
 
-.PHONY: clean cleanall install test
+.PHONY: clean cleanall install test solo text xa cardinstall demount
 
 IMAGE_MOUNT_POINT = /mnt/loop0
 DISK_IMAGE = ahdi-128M.img
@@ -18,8 +18,7 @@ sash-3.8/sash:
 	make -C sash-3.8 TARGET_OS=FreeMINT CC=$(CC)
 
 mksh/mksh:
-	export TARGET_OS=FreeMiNT CC=$(CC) MKSH_SMALL=1;\
-		cd mksh; ./Build.sh
+	cd mksh; TARGET_OS=FreeMiNT CC=$(CC) MKSH_SMALL=1 ./Build.sh
 	m68k-atari-mint-size $@
 	m68k-atari-mint-strip $@
 
@@ -29,14 +28,18 @@ csed/sed:
 solo:
 	ansible-playbook solomint.yml --inventory localhost,
 
-text: sash-3.8/sash mksh/mksh csed/sed
+text: mksh/mksh csed/sed
 	ansible-playbook textmint.yml --inventory localhost,
 
-xa: sash-3.8/sash mksh/mksh csed/sed
+xa: mksh/mksh csed/sed
 	ansible-playbook xamint.yml --inventory localhost,
 
-install:
-	./helpers/mount-image.py $(DISK_IMAGE) 0 > /dev/null 2>&1
+$(DISK_IMAGE):
+	unzip resources/$(DISK_IMAGE).zip
+
+install: $(DISK_IMAGE)
+	#'Permission denied' messages of libgparted are harmless 
+	./helpers/mount-image.py $(DISK_IMAGE) 0
 	mount $(IMAGE_MOUNT_POINT)
 	rm -fr $(IMAGE_MOUNT_POINT)/{auto,extra,mint,nohog2.acc}
 	cp -r --dereference build/* $(IMAGE_MOUNT_POINT)
@@ -70,13 +73,14 @@ cleanall: clean
 	rm -fr resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2 resources/coreutils
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 	rm -f mksh/mksh
+	rm -f $(DISK_IMAGE)
 	make -C csed clean distclean
 	make -C sash-3.8 clean
 
 release:
 	cp $(DISK_IMAGE) st_mint-$(VERSION).img
 	zip st_mint-$(VERSION).img.zip st_mint-$(VERSION).img
-	scp st_mint-$(VERSION).img.zip manu@ada:/srv/www/subsole.org/static/retrocomputing
+	scp st_mint-$(VERSION).img.zip $${USER}@ada:/srv/www/subsole.org/static/retrocomputing
 	rm st_mint-$(VERSION).img
 
 include make.mk
