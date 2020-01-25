@@ -65,6 +65,11 @@
       loop:
         - plip
 
+    - name: copy mint.ini with boot log enabled
+      copy:
+        src: resources/mint.ini
+        dest: build/mint/{{ version }}
+
     - name: copy mksh sell
       copy:
         src: mksh/mksh
