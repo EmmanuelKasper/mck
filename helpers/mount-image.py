@@ -6,6 +6,7 @@ import pathlib
 from time import sleep
 # 512 bytes per sector
 SECTOR_SIZE = 512
+LOOP_DEVICE = '/dev/loop0'
 
 disk_image = sys.argv[1]
 partition_index = int(sys.argv[2])
@@ -15,6 +16,12 @@ try:
   disk = parted.newDisk(device)
 except parted._ped.DiskException:
   print(f"{disk_image} doesn't look like a disk image ...")
+  sys.exit(1)
+
+rc = subprocess.run(['losetup', LOOP_DEVICE], stdout=subprocess.DEVNULL,
+  stderr=subprocess.DEVNULL).returncode
+if (rc == 0):
+  print(f"{LOOP_DEVICE} already associated with a disk image, exiting ...")
   sys.exit(1)
 
 offsets = []

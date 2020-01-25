@@ -43,6 +43,10 @@ install:
 	umount $(IMAGE_MOUNT_POINT)
 	udisksctl loop-delete --block-device $$(losetup --list --noheadings --output NAME  --associated $(DISK_IMAGE))
 
+demount:
+	-umount $(IMAGE_MOUNT_POINT)
+	-udisksctl loop-delete --block-device $$(losetup --list --noheadings --output NAME  --associated $(DISK_IMAGE))
+
 cardinstall:
 	mount /stmint
 	rm -fr /stmint/{auto,extra,mint}
