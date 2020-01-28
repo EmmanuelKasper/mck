@@ -35,7 +35,7 @@
         path: build/mint/{{ version }}/sys-root/root/defaults
         state: directory
 
-    - name: copy a configuration file for tos2win with tw52 as the default terminal type
+    - name: copy a configuration file for tos2win with tw100 as the default terminal type
       copy:
         src: resources/TOSWIN2.CFG
         dest: build/mint/{{ version }}/sys-root/root/defaults/TOSWIN2.CFG

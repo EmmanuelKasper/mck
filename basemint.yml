@@ -119,6 +119,8 @@
           usr/share/terminfo/t/tw52
           usr/share/terminfo/t/tw52-m
           usr/share/terminfo/t/tw100
+          usr/share/terminfo/s/st52
+          usr/share/terminfo/s/st52-color
 
       args:
         creates: build/mint/{{ version }}/sys-root/usr/bin/clear
