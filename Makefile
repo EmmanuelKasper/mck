@@ -59,7 +59,7 @@ cardinstall:
 	umount /stmint
 
 test:
-	hatari --acsi $(DISK_IMAGE) &
+	hatari --acsi $(DISK_IMAGE) 2> /tmp/hatari.log --conout 2
 
 clean:
 	rm -fr build/*
