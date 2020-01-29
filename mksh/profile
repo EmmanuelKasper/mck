@@ -1,5 +1,8 @@
 PS1='$USER@${HOSTNAME%%.*}:$PWD>'
 export TERM=tw100
-function grep { 
-	sed -n -e "\,$1,p" $2 
+
+function grep {
+	local expr="\,$1,p"
+	shift
+	sed -n "$expr" "$@"
 }
