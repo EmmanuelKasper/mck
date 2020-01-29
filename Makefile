@@ -18,7 +18,8 @@ sash-3.8/sash:
 	make -C sash-3.8 TARGET_OS=FreeMINT CC=$(CC)
 
 mksh/mksh:
-	cd mksh; TARGET_OS=FreeMiNT CC=$(CC) MKSH_SMALL=1 ./Build.sh
+	cd mksh; \
+	TARGET_OS=FreeMiNT CC=$(CC) CPPFLAGS="$$CPPFLAGS -DMKSH_SMALL" ./Build.sh
 	m68k-atari-mint-size $@
 	m68k-atari-mint-strip $@
 
