@@ -6,7 +6,6 @@ SHELL = ksh
 
 .PHONY: clean cleanall install test solo text xa cardinstall demount
 
-IMAGE_MOUNT_POINT = /mnt/loop0
 DISK_IMAGE = ahdi-128M.img
 VERSION = 1.2
 CC = m68k-atari-mint-gcc
@@ -38,18 +37,9 @@ xa: mksh/mksh csed/sed
 $(DISK_IMAGE):
 	unzip resources/$(DISK_IMAGE).zip
 
-install: $(DISK_IMAGE)
-	#'Permission denied' messages of libgparted are harmless 
-	./helpers/mount-image.py $(DISK_IMAGE) 0
-	mount $(IMAGE_MOUNT_POINT)
-	rm -fr $(IMAGE_MOUNT_POINT)/{auto,extra,mint,nohog2.acc}
-	cp -r --dereference build/* $(IMAGE_MOUNT_POINT)
-	umount $(IMAGE_MOUNT_POINT)
-	udisksctl loop-delete --block-device $$(losetup --list --noheadings --output NAME  --associated $(DISK_IMAGE))
-
-demount:
-	-umount $(IMAGE_MOUNT_POINT)
-	-udisksctl loop-delete --block-device $$(losetup --list --noheadings --output NAME  --associated $(DISK_IMAGE))
+install: $(DISK_IMAGE) # first partition start at 1024th byte
+	-mdeltree -i $(DISK_IMAGE)@@1024 ::{auto,extra,mint}
+	-mcopy -s -i $(DISK_IMAGE)@@1024 build/* ::
 
 cardinstall:
 	mount /stmint
