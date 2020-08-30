@@ -42,9 +42,9 @@ $(DISK_IMAGE):
 # /dev/loop0 /mnt/loop0 vfat defaults,user 0 0 in /etc/fstab
 
 # mount $(IMAGE_MOUNT_POINT) should be replaced with
-# udisksctl mount --filesystem-type msdos --block-device /dev/loop0
+# udisksctl mount --filesystem-type vfat --block-device /dev/loop0
 # but udisksctl bombs out an error: Object /org/freedesktop/UDisks2/block_devices/loop0 is not a mountable filesystem.
-# TODO: report this to udev maitainers
+# TODO: report this to udev maintainers
 install: $(DISK_IMAGE)
 	#'Permission denied' messages of libgparted are harmless 
 	./helpers/mount-image.py $(DISK_IMAGE) 0
