@@ -1,0 +1,3 @@
+[submodule "minix"]
+	path = minix
+	url = git@github.com:EmmanuelKasper/minix.git
