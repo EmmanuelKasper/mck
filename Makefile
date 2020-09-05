@@ -13,10 +13,6 @@ CC = m68k-atari-mint-gcc
 
 all: xa
 
-sash-3.8/sash:
-	# sash with debian patches need GNU Make
-	make -C sash-3.8 TARGET_OS=FreeMINT CC=$(CC)
-
 mksh/mksh:
 	cd mksh; \
 	TARGET_OS=FreeMiNT CC=$(CC) CPPFLAGS="$$CPPFLAGS -DMKSH_SMALL" ./Build.sh
@@ -83,7 +79,6 @@ cleanall: clean
 	rm -f mksh/mksh
 	rm -f $(DISK_IMAGE)
 	make -C csed clean distclean
-	make -C sash-3.8 clean
 
 release:
 	cp $(DISK_IMAGE) st_mint-$(VERSION).img

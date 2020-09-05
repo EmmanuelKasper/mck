@@ -1,2 +1,0 @@
-sash: statically-linked-binary bin/sash
-sash: embedded-library bin/sash: zlib
