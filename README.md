@@ -8,10 +8,11 @@ Freemint is an Unix-like kernel for the Atari ST, see https://freemint.github.io
 See http://www.subsole.org/st_mint
 
 ## Dependencies
-You will need the following packages installed:
+You will need a Linux system the following packages installed:
 - ansible
 - mtools
-- GNU make or the bsd make `pmake` package
+- pmake
+- mksh (or maybe ksh)
 from the Debian / Ubuntu archive
 
 and
@@ -30,18 +31,18 @@ git submodule update --init
 To build the distribution:
 
 ```
-make
+pmake
 ```
 
-To copy all the stuff in the first partition of a TOS/DOS disk image named 1GB.img:
+To create an Atari AHDI partitioned disk image with the distribution
 
 ```
-make install
+pmake install
 ```
 
-To copy all the stuff in a partition mounted on /stmint, call
+To copy the distribution in a partition mounted on /stmint, call
 ```
-make cardinstall
+pmake cardinstall
 ```
 
 ## Roadmap / Status

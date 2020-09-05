@@ -1,8 +1,8 @@
-# need at leash ksh for this makefile, as we do brace expansion
-# bsd make
+# this make file needs bsd make
+# MAKE = pmake
+# needs ksh or bash for this makefile, as we do brace expansion
 .SHELL: name=ksh
-# gnu make
-SHELL = ksh
+
 
 .PHONY: clean cleanall install test solo text xa cardinstall demount
 
@@ -19,8 +19,11 @@ mksh/mksh:
 	m68k-atari-mint-size $@
 	m68k-atari-mint-strip $@
 
+minix/commands/term:
+	$(MAKE) -C minix/commands
+
 csed/sed:
-	make -C csed CC=$(CC)
+	$(MAKE) -C csed CC=$(CC)
 
 solo:
 	ansible-playbook solomint.yml --inventory localhost,
@@ -46,7 +49,7 @@ install: $(DISK_IMAGE)
 	./helpers/mount-image.py $(DISK_IMAGE) 0
 	mount $(IMAGE_MOUNT_POINT)
 	rm -fr $(IMAGE_MOUNT_POINT)/{auto,extra,mint,nohog2.acc}
-	cp -r --dereference build/* $(IMAGE_MOUNT_POINT)
+	cp -rv --dereference build/* $(IMAGE_MOUNT_POINT)
 	umount $(IMAGE_MOUNT_POINT)
 	udisksctl loop-delete --block-device $$(losetup --list --noheadings --output NAME  --associated $(DISK_IMAGE))
 
@@ -78,7 +81,8 @@ cleanall: clean
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 	rm -f mksh/mksh
 	rm -f $(DISK_IMAGE)
-	make -C csed clean distclean
+	$(MAKE) -C csed clean distclean
+	$(MAKE) -C minix/commands clean
 
 release:
 	cp $(DISK_IMAGE) st_mint-$(VERSION).img
