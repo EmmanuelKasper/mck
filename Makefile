@@ -49,7 +49,7 @@ install: $(DISK_IMAGE)
 	./helpers/mount-image.py $(DISK_IMAGE) 0
 	mount $(IMAGE_MOUNT_POINT)
 	rm -fr $(IMAGE_MOUNT_POINT)/{auto,extra,mint,nohog2.acc}
-	cp -rv --dereference build/* $(IMAGE_MOUNT_POINT)
+	cp -r --dereference build/* $(IMAGE_MOUNT_POINT)
 	umount $(IMAGE_MOUNT_POINT)
 	udisksctl loop-delete --block-device $$(losetup --list --noheadings --output NAME  --associated $(DISK_IMAGE))
 
