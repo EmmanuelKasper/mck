@@ -11,7 +11,7 @@ See http://www.subsole.org/st_mint
 You will need the following packages installed:
 - ansible
 - mtools
-- make
+- GNU make or the bsd make `pmake` package
 from the Debian / Ubuntu archive
 
 and
@@ -20,6 +20,12 @@ and
 from Vincent Rivière's m68k-atari-mint cross-tools
 
 ## Usage
+
+First make sure you pulled the minix git submodule:
+
+```
+git submodule update --init
+```
 
 To build the distribution:
 
