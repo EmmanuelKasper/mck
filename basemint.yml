@@ -130,12 +130,20 @@
       replace:
         path: build/mint/{{ version }}/mint.cnf
         regexp : '^#sln e:/usr      u:/usr$'
-        replace: 'sln c:/mint/1-19-4d2/sys-root/usr      u:/usr'
+        replace: 'sln c:/mint/{{ version }}/sys-root/usr      u:/usr'
 
     - name: copy csed the cheap sed
       copy:
         src: csed/sed
         dest: build/mint/{{ version }}/sys-root/usr/bin/sed
+
+    - name: copy minix userland commands
+      copy:
+        src: minix/commands/{{ item }}/{{ item }}
+        dest: build/mint/{{ version }}/sys-root/usr/bin/{{ item }}
+      loop:
+        - grep
+        - term
 
     - name: download ethernec driver
       get_url:

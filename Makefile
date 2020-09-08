@@ -19,7 +19,7 @@ mksh/mksh:
 	m68k-atari-mint-size $@
 	m68k-atari-mint-strip $@
 
-minix/commands/term:
+minix/commands/term/term:
 	$(MAKE) -C minix/commands
 
 csed/sed:
@@ -28,10 +28,10 @@ csed/sed:
 solo:
 	ansible-playbook solomint.yml --inventory localhost,
 
-text: mksh/mksh csed/sed
+text: mksh/mksh csed/sed minix/commands/term/term
 	ansible-playbook textmint.yml --inventory localhost,
 
-xa: mksh/mksh csed/sed
+xa: mksh/mksh csed/sed minix/commands/term/term
 	ansible-playbook xamint.yml --inventory localhost,
 
 $(DISK_IMAGE):
