@@ -55,7 +55,7 @@
       args:
         creates: build/mint/{{ version }}/{{ item }}.xdx
       loop:
-        - audiodev
+
         - flop_raw
 
     - name: disable unused network interface drivers
