@@ -3,7 +3,6 @@ MAKE = pmake
 # needs ksh or bash for this makefile, as we do brace expansion
 .SHELL: name=ksh
 
-
 .PHONY: clean cleanall install test solo text xa cardinstall demount
 
 IMAGE_MOUNT_POINT = /mnt/loop0
@@ -43,7 +42,8 @@ $(DISK_IMAGE):
 # mount $(IMAGE_MOUNT_POINT) should be replaced with
 # udisksctl mount --filesystem-type vfat --block-device /dev/loop0
 # but udisksctl bombs out an error: Object /org/freedesktop/UDisks2/block_devices/loop0 is not a mountable filesystem.
-# TODO: report this to udev maintainers
+# this is a problem with libblkid not recognizing Atari FAT16 variant,
+# reported in https://www.spinics.net/lists/util-linux-ng/msg16472.html
 install: $(DISK_IMAGE)
 	#'Permission denied' messages of libgparted are harmless 
 	./helpers/mount-image.py $(DISK_IMAGE) 0
