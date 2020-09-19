@@ -145,6 +145,11 @@
         - grep
         - term
 
+    - name: create path for term command lock directory
+      file:
+        path: build/mint/{{ version }}/sys-root/usr/spool/locks
+        state: directory
+
     - name: download ethernec driver
       get_url:
         url: http://web222.webclient5.de/prj/atari/download/etherne.zip
