@@ -55,8 +55,17 @@
       args:
         creates: build/mint/{{ version }}/{{ item }}.xdx
       loop:
-
         - flop_raw
+
+    - name: disable non working serial port mfp driver
+      command: mv build/mint/{{ version }}/{{ item }}/mfp.xdd build/mint/{{ version }}/{{ item }}/mfp.xdx
+      args:
+        creates: build/mint/{{ version }}/{{ item }}mfp.xdx
+      loop:
+        - st
+        - ste
+        - megast
+        - megaste
 
     - name: disable unused network interface drivers
       command: mv build/mint/{{ version }}/{{ item }}.xif build/mint/{{ version }}/{{ item }}.xix
