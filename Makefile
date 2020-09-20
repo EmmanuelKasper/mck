@@ -81,6 +81,7 @@ cleanall: clean
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 	rm -f mksh/mksh
 	rm -f $(DISK_IMAGE)
+	-rm st_mint-*.*.img.zip
 	$(MAKE) -C csed clean distclean
 	$(MAKE) -C minix/commands clean
 
