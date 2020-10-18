@@ -11,7 +11,7 @@ See http://www.subsole.org/st_mint
 You will need a Linux system the following packages installed:
 - ansible
 - mtools
-- pmake
+- bmake
 - mksh (or maybe ksh)
 from the Debian / Ubuntu archive
 
@@ -31,18 +31,18 @@ git submodule update --init
 To build the distribution:
 
 ```
-pmake
+bmake
 ```
 
 To create an Atari AHDI partitioned disk image with the distribution
 
 ```
-pmake install
+bmake install
 ```
 
 To copy the distribution in a partition mounted on /stmint, call
 ```
-pmake cardinstall
+bmake cardinstall
 ```
 
 ## Roadmap / Status
