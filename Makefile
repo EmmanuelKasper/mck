@@ -12,6 +12,14 @@ CC = m68k-atari-mint-gcc
 
 all: xa
 
+help:
+	@echo "Available targets:"
+	@echo "text: build a text only distribution, jumping to a mksh shell after boot"
+	@echo "solo: build a graphical distribution, using the TOS ROM single task AES"
+	@echo "xa: built a graphical distribution, using XaAES and Teradesk"
+	@echo "install: copy the build distribution into a disk image"
+	@echo "test: boot a disk image into hatari"
+
 mksh/mksh:
 	cd mksh; \
 	TARGET_OS=FreeMiNT CC=$(CC) CPPFLAGS="$$CPPFLAGS -DMKSH_SMALL" ./Build.sh
