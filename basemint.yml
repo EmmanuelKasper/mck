@@ -60,7 +60,7 @@
     - name: disable non working serial port mfp driver
       command: mv build/mint/{{ version }}/{{ item }}/mfp.xdd build/mint/{{ version }}/{{ item }}/mfp.xdx
       args:
-        creates: build/mint/{{ version }}/{{ item }}mfp.xdx
+        creates: build/mint/{{ version }}/{{ item }}/mfp.xdx
       loop:
         - st
         - ste
