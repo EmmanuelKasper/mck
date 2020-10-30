@@ -2,6 +2,7 @@
 MAKE = bmake
 # needs ksh or bash for this makefile, as we do brace expansion
 .SHELL: name=ksh
+SHELL = /bin/ksh
 
 .PHONY: clean cleanall install test solo text xa cardinstall demount
 
@@ -46,26 +47,9 @@ xa: mksh/mksh csed/sed minix/commands/term/term
 $(DISK_IMAGE):
 	unzip resources/$(DISK_IMAGE).zip
 
-# mount $(IMAGE_MOUNT_POINT) needs an entry similar to
-# /dev/loop0 /mnt/loop0 vfat defaults,user 0 0 in /etc/fstab
-
-# mount $(IMAGE_MOUNT_POINT) should be replaced with
-# udisksctl mount --filesystem-type vfat --block-device /dev/loop0
-# but udisksctl bombs out an error: Object /org/freedesktop/UDisks2/block_devices/loop0 is not a mountable filesystem.
-# this is a problem with libblkid not recognizing Atari FAT16 variant,
-# reported in https://www.spinics.net/lists/util-linux-ng/msg16472.html
-install: $(DISK_IMAGE)
-	#'Permission denied' messages of libgparted are harmless 
-	./helpers/mount-image.py $(DISK_IMAGE) 0
-	mount $(IMAGE_MOUNT_POINT)
-	rm -fr $(IMAGE_MOUNT_POINT)/{auto,extra,mint,nohog2.acc}
-	cp -r --dereference build/* $(IMAGE_MOUNT_POINT)
-	umount $(IMAGE_MOUNT_POINT)
-	udisksctl loop-delete --block-device $$(losetup --list --noheadings --output NAME  --associated $(DISK_IMAGE))
-
-demount:
-	-umount $(IMAGE_MOUNT_POINT)
-	-udisksctl loop-delete --block-device $$(losetup --list --noheadings --output NAME  --associated $(DISK_IMAGE))
+install: $(DISK_IMAGE) # first partition start at 1024th byte
+	-mdeltree -i $(DISK_IMAGE)@@1024 ::{auto,extra,mint}
+	-mcopy -s -i $(DISK_IMAGE)@@1024 build/* ::
 
 cardinstall:
 	mount /stmint
