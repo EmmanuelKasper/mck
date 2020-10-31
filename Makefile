@@ -6,7 +6,6 @@ SHELL = /bin/ksh
 
 .PHONY: clean cleanall install test solo text xa cardinstall demount
 
-IMAGE_MOUNT_POINT = /mnt/loop0
 # 4 partitions of 127MB, as larger partitions create a logical sector size > 4096 bytes, that
 # linux cannot grok, see https://git.io/JTKC2
 DISK_IMAGE = ahdi-512M.img
