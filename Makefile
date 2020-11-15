@@ -58,7 +58,7 @@ cardinstall:
 #	rsync --archive --verbose build/$$dir /stmint/$$dir; done
 	umount /stmint
 
-test:
+test: $(DISK_IMAGE)
 	hatari --acsi $(DISK_IMAGE) 2> /tmp/hatari.log --conout 2
 
 clean:
