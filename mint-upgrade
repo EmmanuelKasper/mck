@@ -1,0 +1,161 @@
+#!/usr/bin/python3
+import os
+import re
+import shutil
+import subprocess
+import sys
+from os import path
+from dataclasses import dataclass
+
+files = [
+    'KEYBOARD.TBL',
+    'sys-root/opt/GEM/teradesk/TERADESK.INF'
+]
+
+
+@dataclass(frozen=True)
+class MintInstall:
+    '''filesystem installation of FreeMiNT'''
+    version: str
+    short_version: str
+    path: str
+
+
+def usage():
+    print(f"usage: {sys.argv[0]} build_dir partition_to_upgrade")
+
+
+def get_mint_paths(install):
+    sysdir = path.join(install.path, 'MINT', install.version)
+    loader = path.join(install.path, 'AUTO',
+                       f"mint-{install.short_version}.prg")
+    if not path.isfile(loader):
+        print(
+            f"no loader {loader} found for mint version {install.version}",
+            file=sys.stderr)
+    return sysdir, loader
+
+
+def backup(install):
+    backup_dir = path.join(install.path, 'BACKUP.MNT')
+    sysdir = get_mint_paths(install)[0]
+    os.makedirs(backup_dir, exist_ok=True)
+    backups = []
+    for file in files:
+        source_file = path.join(sysdir, file)
+        if path.isfile(source_file):
+            target_file = path.join(backup_dir, path.basename(file))
+            shutil.copy(source_file, target_file)
+            backups.append({'relpath': file, 'backup': target_file})
+    return backups
+
+
+def copy(install_source, install_dest):
+    source_mint = path.join(install_source.path, 'mint')
+    target_mint = path.join(install_dest.path, 'MINT')
+    if not path.isdir(source_mint):
+        print(f"unable to find a source version in {source_mint}",
+              file=sys.stderr)
+        sys.exit(1)
+
+    shutil.copytree(source_mint, target_mint, dirs_exist_ok=True)
+    shutil.copytree(
+        path.join(source, 'auto'),
+        path.join(target, 'AUTO'),
+        dirs_exist_ok=True)
+
+
+def get_versions(rootdir):
+    sysdir_parent = path.join(rootdir, 'MINT')
+
+    if not path.isdir(sysdir_parent):
+        sysdir_parent = path.join(rootdir, 'mint')
+        if not path.isdir(sysdir_parent):
+            print(f"{sysdir_parent} does not contain a mint/MINT directory")
+            sys.exit(1)
+
+    (param, dirs, files) = next(os.walk(sysdir_parent))
+
+    match = None
+    for dir in dirs:
+        match = re.search(r'\d-\d{2}-(.{3})', dir)
+    if match is None:
+        print(f"unable to find a FreeMiNT version in {sysdir_parent}",
+              file=sys.stderr)
+        sys.exit(1)
+
+    version = match.group()
+    short_version = match.group(1)
+    return version, short_version
+
+
+def revert(source, target):
+    version, short_version = get_versions(source)
+    sysdir, loader = get_mint_paths(target, version, short_version)
+    shutil.rmtree(sysdir)
+    os.unlink(loader)
+
+
+def mark_distfiles(new, verbose=False):
+    marked = []
+    sysdir = get_mint_paths(new)[0]
+    for file in files:
+        full_p = path.join(sysdir, file)
+        if not path.isfile(full_p):
+            continue
+
+        new_full_p = path.splitext(full_p)[0] + '.VEN'
+        shutil.move(full_p,  new_full_p)
+        marked.append(new_full_p)
+
+    if verbose is True:
+        print('vendor files renamed', marked)
+    return marked
+
+
+def restore(backups, install):
+    restored = []
+    sysdir = get_mint_paths(install)[0]
+    for backup in backups:
+        if path.isfile(backup['backup']):
+            shutil.copy(backup['backup'], path.join(sysdir, backup['relpath']))
+            restored.append(path.join(sysdir, backup['relpath']))
+        else:
+            print(f"could not find file {backup['backup']} to restore",
+                  file=sys.stderr)
+
+
+def remove_install(install):
+    sysdir, loader = get_mint_paths(install)
+    removed = []
+    if path.isfile(loader):
+        os.unlink(loader)
+        removed.append(loader)
+    if path.isdir(sysdir):
+        shutil.rmtree(sysdir)
+        removed.append(loader)
+
+
+if __name__ == '__main__':
+    if (len(sys.argv) != 3 or not path.isdir(sys.argv[1])
+            or not path.isdir(sys.argv[2])):
+        usage()
+        sys.exit(1)
+    source = sys.argv[1]
+    target = sys.argv[2]
+
+    old = MintInstall(*get_versions(target), target)
+    git = MintInstall(*get_versions(source), source)
+    new = MintInstall(git.version, git.short_version, target)
+
+    if (old.version == git.version):
+        print(f"{old.path} already contains a {git.version} Mint installation",
+              file=sys.stderr)
+        sys.exit(1)
+
+    backups = backup(old)
+    copy(git, old)
+    mark_distfiles(new)
+    restore(backups, new)
+    remove_install(old)
+    sys.exit(0)
