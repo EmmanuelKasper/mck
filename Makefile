@@ -59,7 +59,7 @@ cardinstall:
 	umount /stmint
 
 test: $(DISK_IMAGE)
-	hatari --acsi $(DISK_IMAGE) 2> /tmp/hatari.log --conout 2
+	hatari --mono --acsi $(DISK_IMAGE) 2> /tmp/hatari.log --conout 2
 
 upgrade-test:
 	./mint-upgrade build/ ~/Projects/emul/atari/freemint_partition
