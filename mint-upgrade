@@ -20,25 +20,24 @@ class MintInstall:
     short_version: str
     path: str
 
+    def getpaths(self):
+        sysdir = path.join(self.path, 'MINT', self.version)
+        loader = path.join(self.path, 'AUTO',
+                           f"mint-{self.short_version}.prg")
+        if not path.isfile(loader):
+            print(
+                f"no loader {loader} found for mint version {self.version}",
+                file=sys.stderr)
+        return sysdir, loader
+
 
 def usage():
     print(f"usage: {sys.argv[0]} build_dir partition_to_upgrade")
 
 
-def get_mint_paths(install):
-    sysdir = path.join(install.path, 'MINT', install.version)
-    loader = path.join(install.path, 'AUTO',
-                       f"mint-{install.short_version}.prg")
-    if not path.isfile(loader):
-        print(
-            f"no loader {loader} found for mint version {install.version}",
-            file=sys.stderr)
-    return sysdir, loader
-
-
 def backup(install):
     backup_dir = path.join(install.path, 'BACKUP.MNT')
-    sysdir = get_mint_paths(install)[0]
+    sysdir = install.getpaths()[0]
     os.makedirs(backup_dir, exist_ok=True)
     backups = []
     for file in files:
@@ -98,14 +97,14 @@ def revert(source, target):
 
 def mark_distfiles(new, verbose=False):
     marked = []
-    sysdir = get_mint_paths(new)[0]
+    sysdir = new.getpaths()[0]
     for file in files:
         full_p = path.join(sysdir, file)
         if not path.isfile(full_p):
             continue
 
         new_full_p = path.splitext(full_p)[0] + '.VEN'
-        shutil.move(full_p,  new_full_p)
+        shutil.move(full_p, new_full_p)
         marked.append(new_full_p)
 
     if verbose is True:
@@ -115,7 +114,7 @@ def mark_distfiles(new, verbose=False):
 
 def restore(backups, install):
     restored = []
-    sysdir = get_mint_paths(install)[0]
+    sysdir = install.getpaths()[0]
     for backup in backups:
         if path.isfile(backup['backup']):
             shutil.copy(backup['backup'], path.join(sysdir, backup['relpath']))
@@ -126,7 +125,7 @@ def restore(backups, install):
 
 
 def remove_install(install):
-    sysdir, loader = get_mint_paths(install)
+    sysdir, loader = install.getpaths()
     removed = []
     if path.isfile(loader):
         os.unlink(loader)
@@ -148,7 +147,7 @@ if __name__ == '__main__':
     git = MintInstall(*get_versions(source), source)
     new = MintInstall(git.version, git.short_version, target)
 
-    if (old.version == git.version):
+    if old.version == git.version:
         print(f"{old.path} already contains a {git.version} Mint installation",
               file=sys.stderr)
         sys.exit(1)
