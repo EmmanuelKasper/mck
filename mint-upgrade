@@ -45,7 +45,7 @@ def backup(install):
         if path.isfile(source_file):
             target_file = path.join(backup_dir, path.basename(file))
             shutil.copy(source_file, target_file)
-            backups.append({'relpath': file, 'backup': target_file})
+            backups.append({'originalpath': file, 'backup': target_file})
     return backups
 
 
@@ -117,8 +117,8 @@ def restore(backups, install):
     sysdir = install.getpaths()[0]
     for backup in backups:
         if path.isfile(backup['backup']):
-            shutil.copy(backup['backup'], path.join(sysdir, backup['relpath']))
-            restored.append(path.join(sysdir, backup['relpath']))
+            shutil.copy(backup['backup'], path.join(sysdir, backup['originalpath']))
+            restored.append(path.join(sysdir, backup['originalpath']))
         else:
             print(f"could not find file {backup['backup']} to restore",
                   file=sys.stderr)
