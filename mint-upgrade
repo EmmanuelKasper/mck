@@ -7,9 +7,12 @@ import sys
 from os import path
 from dataclasses import dataclass
 
-files = [
-    'KEYBOARD.TBL',
-    'sys-root/opt/GEM/teradesk/TERADESK.INF'
+precious = [
+    'KEYBOARD.TBL',  # keyboard layout
+    'sys-root/opt/GEM/teradesk/TERADESK.INF',  # desktop configuration
+    'xaaes/320200.16',  # xaaes desktop background
+    'xaaes/640200.4',
+    'xaaes/640400.1'
 ]
 
 
@@ -40,12 +43,20 @@ def backup(install):
     sysdir = install.getpaths()[0]
     os.makedirs(backup_dir, exist_ok=True)
     backups = []
-    for file in files:
-        source_file = path.join(sysdir, file)
-        if path.isfile(source_file):
-            target_file = path.join(backup_dir, path.basename(file))
-            shutil.copy(source_file, target_file)
-            backups.append({'originalpath': file, 'backup': target_file})
+    for prec in precious:
+        src = path.join(sysdir, prec)
+        dest = path.join(backup_dir, path.basename(prec))
+        if not path.exists(src):
+            continue
+        elif path.isfile(src):
+            shutil.copy(src, dest)
+        elif path.isdir(src):
+            shutil.copytree(src, dest)
+        else:
+            print(f"{src}: unrecognized file type",
+                  file=sys.stderr)
+            sys.exit(1)
+        backups.append({'originalpath': prec, 'backup': dest})
     return backups
 
 
@@ -58,10 +69,9 @@ def copy(install_source, install_dest):
         sys.exit(1)
 
     shutil.copytree(source_mint, target_mint, dirs_exist_ok=True)
-    shutil.copytree(
-        path.join(source, 'auto'),
-        path.join(target, 'AUTO'),
-        dirs_exist_ok=True)
+    shutil.copytree(path.join(source, 'auto'),
+                    path.join(target, 'AUTO'),
+                    dirs_exist_ok=True)
 
 
 def get_versions(rootdir):
@@ -73,7 +83,7 @@ def get_versions(rootdir):
             print(f"{sysdir_parent} does not contain a mint/MINT directory")
             sys.exit(1)
 
-    (param, dirs, files) = next(os.walk(sysdir_parent))
+    (param, dirs, all_files) = next(os.walk(sysdir_parent))
 
     match = None
     for dir in dirs:
@@ -98,7 +108,7 @@ def revert(source, target):
 def mark_distfiles(new, verbose=False):
     marked = []
     sysdir = new.getpaths()[0]
-    for file in files:
+    for file in precious:
         full_p = path.join(sysdir, file)
         if not path.isfile(full_p):
             continue
@@ -116,12 +126,18 @@ def restore(backups, install):
     restored = []
     sysdir = install.getpaths()[0]
     for backup in backups:
-        if path.isfile(backup['backup']):
-            shutil.copy(backup['backup'], path.join(sysdir, backup['originalpath']))
-            restored.append(path.join(sysdir, backup['originalpath']))
+        src = backup['backup']
+        dest = path.join(sysdir, backup['originalpath'])
+        if path.isfile(src):
+            shutil.copy(src, dest)
+        elif path.isdir(src):
+            shutil.copytree(src, dest)
         else:
-            print(f"could not find file {backup['backup']} to restore",
+            print(f"could not find file {src} to restore",
                   file=sys.stderr)
+            sys.exit(1)
+        restored.append(dest)
+    return restored
 
 
 def remove_install(install):
