@@ -12,13 +12,13 @@ DISK_IMAGE = ahdi-512M.img
 VERSION = 1.3
 CC = m68k-atari-mint-gcc
 
-all: xa
+all: xaaes
 
 help:
 	@echo "Available targets:"
-	@echo "text: build a text only distribution, jumping to a mksh shell after boot"
-	@echo "solo: build a graphical distribution, using the TOS ROM single task AES"
-	@echo "xa: built a graphical distribution, using XaAES and Teradesk"
+	@echo "text-mode: build a text only distribution, jumping to a mksh shell after boot"
+	@echo "aes-tos: build a graphical distribution, using the TOS ROM single task AES"
+	@echo "xaaes: built a graphical distribution, using XaAES and Teradesk"
 	@echo "install: copy the build distribution into a disk image"
 	@echo "test: boot a disk image into hatari"
 
@@ -34,14 +34,14 @@ minix/commands/term/term:
 csed/sed:
 	$(MAKE) -C csed CC=$(CC)
 
-solo:
-	ansible-playbook solomint.yml --inventory localhost,
+aes-tos:
+	ansible-playbook playbook-aes-tos.yml --inventory localhost,
 
-text: mksh/mksh csed/sed minix/commands/term/term
-	ansible-playbook textmint.yml --inventory localhost,
+text-mode: mksh/mksh csed/sed minix/commands/term/term
+	ansible-playbook playbook-text-only.yml --inventory localhost,
 
-xa: mksh/mksh csed/sed minix/commands/term/term
-	ansible-playbook xamint.yml --inventory localhost,
+xaaes: mksh/mksh csed/sed minix/commands/term/term
+	ansible-playbook playbook-xaaes.yml --inventory localhost,
 
 $(DISK_IMAGE):
 	unzip resources/$(DISK_IMAGE).zip
