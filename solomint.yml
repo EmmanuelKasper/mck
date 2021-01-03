@@ -3,10 +3,6 @@
   connection: local
   gather_facts: no
   tasks:
-    - name: load freemint version from freemint-version.yml
-      include_vars:
-        file: freemint-version.yml
-
     - import_tasks: basemint.yml
 
     - name: use the ROM AES
