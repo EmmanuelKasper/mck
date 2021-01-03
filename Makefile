@@ -4,7 +4,7 @@ MAKE = bmake
 .SHELL: name=ksh
 SHELL = /bin/ksh
 
-.PHONY: clean cleanall install test solo text xa cardinstall demount
+.PHONY: aes-tos cardinstall clean cleanall help install test text-mode xaaes
 
 # 4 partitions of 127MB, as larger partitions create a logical sector size > 4096 bytes, that
 # linux cannot grok, see https://git.io/JTKC2
