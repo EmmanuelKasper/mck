@@ -1,5 +1,5 @@
 # this make file needs bsd make
-MAKE = bmake
+MAKE = pmake
 # needs ksh or bash for this makefile, as we do brace expansion
 .SHELL: name=ksh
 SHELL = /bin/ksh
