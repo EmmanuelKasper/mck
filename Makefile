@@ -12,6 +12,10 @@ DISK_IMAGE = ahdi-512M.img
 VERSION = 1.3
 CC = m68k-atari-mint-gcc
 
+# Needed for GEMDOS fat compatibility
+export MTOOLS_SKIP_CHECK = 1
+export MTOOLS_NO_VFAT =1 
+
 all: xaaes
 
 help:
