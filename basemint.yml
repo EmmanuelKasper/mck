@@ -158,6 +158,11 @@
         - grep
         - term
 
+    - name: copy fplay script
+      copy:
+        src: resources/fplay
+        dest: build/mint/{{ version }}/sys-root/usr/bin/fplay
+
     - name: create path for term command lock directory
       file:
         path: build/mint/{{ version }}/sys-root/usr/spool/locks

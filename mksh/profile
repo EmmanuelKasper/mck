@@ -1,4 +1,2 @@
 PS1='$USER@${HOSTNAME%%.*}:$PWD>'
 export TERM=tw100
-
-/bin/actrl chan 2 speed 50066

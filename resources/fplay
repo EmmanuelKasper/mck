@@ -1,0 +1,24 @@
+#!/usr/bin/env mksh
+#
+# play a bunch of files converted for the STE DMA audio module
+# see https://gist.github.com/EmmanuelKasper/cf398f1b2163dd1f7541 for conversion
+
+if [ -x /bin/actrl ]; then
+    /bin/actrl chan 2 speed 50066
+fi
+
+trap 'echo' INT
+
+for file in "$@"; do
+    case "$file" in
+        *.wae|*.WAE)
+            echo "playing $file"
+            cat "$file" > /dev/audio
+            # ffplay -i -nodisp -loglevel 8 "$file"
+            # file "$file"
+            ;;
+        *)
+            continue
+            ;;
+    esac
+done
