@@ -4,8 +4,8 @@
 
     - name: download mint {{ version }} distribution
       get_url:
-        url: "https://bintray.com/freemint/freemint/download_file?file_path=snapshots%2F{{ major_version }}-{{ commit_hash }}%2Ffreemint-{{ major_version }}-{{ minor_version }}-000-st_ste.zip"
-        dest: "{{ playbook_dir }}/freemint-{{ version }}-000-st_ste.zip"
+        url: "https://tho-otto.de/snapshots/freemint/bootable/freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
+        dest: "{{ playbook_dir }}/freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
         force: no
 
     - name: create folder structure
@@ -20,7 +20,7 @@
 
     - name: unpack freemint archive
       unarchive:
-        src: freemint-{{ version }}-000-st_ste.zip
+        src: freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip
         dest: freemint
         creates: freemint/auto/mint-{{ minor_version }}.prg
 
