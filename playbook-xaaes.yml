@@ -20,6 +20,11 @@
         path: build/mint/{{ version }}/xaaes/xaaes.cnf
         line: 'video = 4'
 
+    - name: copy a background file for XAAES
+      copy:
+        src: resources/xaaes/640400.1/
+        dest: build/mint/{{ version }}/xaaes/640400.1
+
     - name: copy a default INF file for teradesk
       copy:
         src: resources/XAAES.INF
