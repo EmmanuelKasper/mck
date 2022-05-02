@@ -20,10 +20,10 @@ all: xaaes
 
 help:
 	@echo "Available targets:"
-	@echo "text-mode: build a text only distribution, jumping to a mksh shell after boot"
-	@echo "aes-tos: build a graphical distribution, using the TOS ROM single task AES"
+	@echo "text: build a text only distribution, jumping to a mksh shell after boot"
+	@echo "single: build a graphical distribution, using the TOS ROM single task AES"
 	@echo "xaaes: built a graphical distribution, using XaAES and Teradesk"
-	@echo "install: copy the build distribution into a disk image"
+	@echo "install-card: copy the build distribution into a disk image"
 	@echo "test: boot a disk image into hatari"
 
 mksh/mksh:
@@ -38,10 +38,10 @@ minix/commands/term/term:
 csed/sed:
 	$(MAKE) -C csed CC=$(CC)
 
-aes-tos:
+single:
 	ansible-playbook playbook-aes-tos.yml --inventory localhost,
 
-text-mode: mksh/mksh csed/sed minix/commands/term/term
+text: mksh/mksh csed/sed minix/commands/term/term
 	ansible-playbook playbook-text-only.yml --inventory localhost,
 
 xaaes: mksh/mksh csed/sed minix/commands/term/term
@@ -50,11 +50,11 @@ xaaes: mksh/mksh csed/sed minix/commands/term/term
 $(DISK_IMAGE):
 	unzip resources/$(DISK_IMAGE).zip
 
-install: $(DISK_IMAGE) # first partition start at 1024th byte
+install-card: $(DISK_IMAGE) # first partition start at 1024th byte
 	-mdeltree -i $(DISK_IMAGE)@@1024 ::{auto,extra,mint}
 	-mcopy -s -i $(DISK_IMAGE)@@1024 build/* ::
 
-cardinstall:
+mount-copy:
 	mount /stmint
 	rm -fr /stmint/{auto,extra,mint}
 	cp -r build/{auto,extra,mint} /stmint
