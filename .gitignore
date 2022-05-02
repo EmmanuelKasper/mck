@@ -27,5 +27,5 @@ resources/ncurses-5.9-bin-mint-20131105.tar.bz2
 ahdi-128M.img
 st_mint-*.*.img.zip
 ahdi-512M.img
-demo_content/*
+demo-content/*
 .vscode

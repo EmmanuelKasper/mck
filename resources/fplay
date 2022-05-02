@@ -3,8 +3,10 @@
 # play a bunch of files converted for the STE DMA audio module
 # see https://gist.github.com/EmmanuelKasper/cf398f1b2163dd1f7541 for conversion
 
-if [ -x /bin/actrl ]; then
+if [ -f /bin/actrl ]; then
     /bin/actrl chan 2 speed 50066
+else
+    echo "unable to set channel and audio sampling rate, results unknown ..."
 fi
 
 trap 'echo' INT
