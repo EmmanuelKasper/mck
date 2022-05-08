@@ -4,7 +4,7 @@ MAKE = pmake
 .SHELL: name=ksh
 SHELL = /bin/ksh
 
-.PHONY: aes-tos cardinstall clean cleanall help install test text-mode xaaes
+.PHONY: help text xaaes single install-card test clean cleanall
 
 # 4 partitions of 127MB, as larger partitions create a logical sector size > 4096 bytes, that
 # linux cannot grok, see https://git.io/JTKC2
@@ -72,6 +72,7 @@ upgrade-test:
 	ls /home/manu/Projects/emul/atari/freemint_partition/{AUTO,MINT}
 
 clean:
+	rm -f $(DISK_IMAGE)
 	rm -fr build/*
 	rm -fr freemint
 	rm -f *.retry
