@@ -24,7 +24,7 @@
         dest: freemint
         creates: freemint/auto/mint-{{ minor_version }}.prg
 
-    - name: copy freemint kernel
+    - name: copy freemint kernel loader
       copy:
         src: freemint/auto/mint-{{ minor_version }}.prg
         dest: build/auto/mint-{{ minor_version }}.prg
@@ -33,6 +33,16 @@
       command: cp -r freemint/mint build/
       args:
         creates: build/mint
+
+    - name: disable default 68000 kernel
+      copy:
+        src: build/mint/{{ version }}/mint000.prg
+        dest: build/mint/{{ version }}/mint000.prx
+
+    - name: use kernel built with GEMDOS FAT driver
+      copy:
+        src: build/mint/{{ version }}/minthat.prg
+        dest: build/mint/{{ version }}/mint000.prg
 
     - name: remove default hostname
       replace:
