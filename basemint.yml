@@ -173,14 +173,6 @@
         src: resources/fplay
         dest: build/mint/{{ version }}/sys-root/usr/bin/fplay
 
-    - name: copy audio files to 'extra' folder
-      copy:
-        src: "{{ item }}"
-        dest: build/extra/
-      loop:
-        - demo-content/DUB1.WAE
-        - demo-content/DUB2.WAE
-
     - name: create path for term command lock directory
       file:
         path: build/mint/{{ version }}/sys-root/usr/spool/locks

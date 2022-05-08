@@ -50,9 +50,13 @@ xaaes: mksh/mksh csed/sed minix/commands/term/term
 $(DISK_IMAGE):
 	unzip resources/$(DISK_IMAGE).zip
 
-install-card: $(DISK_IMAGE) # first partition start at 1024th byte
+install-card: $(DISK_IMAGE)
+# first partition start at 1024th byte
+# verify with `parted $(DISK_IMAGE) -- unit b print`
 	-mdeltree -i $(DISK_IMAGE)@@1024 ::{auto,extra,mint}
+	-mdeltree -i $(DISK_IMAGE)@@133170176 ::demodata
 	-mcopy -s -i $(DISK_IMAGE)@@1024 build/* ::
+	-mcopy -s -i $(DISK_IMAGE)@@133170176 demodata ::
 
 mount-copy:
 	mount /stmint
