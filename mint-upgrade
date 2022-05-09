@@ -11,8 +11,7 @@ precious = [
     'KEYBOARD.TBL',  # keyboard layout
     'sys-root/opt/GEM/teradesk/TERADESK.INF',  # desktop configuration
     'xaaes/320200.16',  # xaaes desktop background
-    'xaaes/640200.4',
-    'xaaes/640400.1'
+    'xaaes/640200.4'
 ]
 
 
@@ -25,13 +24,16 @@ class MintInstall:
 
     def getpaths(self):
         sysdir = path.join(self.path, 'MINT', self.version)
-        loader = path.join(self.path, 'AUTO',
-                           f"mint-{self.short_version}.prg")
-        if not path.isfile(loader):
-            print(
-                f"no loader {loader} found for mint version {self.version}",
-                file=sys.stderr)
-        return sysdir, loader
+        loader = f"mint-{self.short_version}.prg"
+        loader_path = path.join(self.path, 'AUTO', loader)
+        if not path.isfile(loader_path):
+            loader = loader.upper()
+            loader_path = path.join(self.path, 'AUTO', loader)
+            if not path.isfile(loader_path):
+                print(
+                    f"no loader {loader_path} found for mint version {self.version}",
+                    file=sys.stderr)
+        return sysdir, loader_path
 
 
 def usage():
@@ -75,10 +77,10 @@ def copy(install_source, install_dest):
 
 
 def get_versions(rootdir):
-    sysdir_parent = path.join(rootdir, 'MINT')
+    sysdir_parent = path.join(rootdir, 'mint')
 
     if not path.isdir(sysdir_parent):
-        sysdir_parent = path.join(rootdir, 'mint')
+        sysdir_parent = path.join(rootdir, 'MINT')
         if not path.isdir(sysdir_parent):
             print(f"{sysdir_parent} does not contain a mint/MINT directory")
             sys.exit(1)
