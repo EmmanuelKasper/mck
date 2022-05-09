@@ -10,6 +10,7 @@ SHELL = /bin/ksh
 # linux cannot grok, see https://git.io/JTKC2
 DISK_IMAGE = ahdi-512M.img
 VERSION = 1.3
+EMUTOS_VERSION = 1.1.1
 CC = m68k-atari-mint-gcc
 
 # Needed for GEMDOS fat compatibility
@@ -70,10 +71,21 @@ test: $(DISK_IMAGE)
 	hatari --mono --gemdos-drive skip --acsi $(DISK_IMAGE) \
 		--conout 2 2> /tmp/hatari.log
 
+gemdos-test: emutos-256k-$(EMUTOS_VERSION)/etos256us.img
+	hatari --tos emutos-256k-$(EMUTOS_VERSION)/etos256us.img \
+		--mono --harddrive build
+
+emutos-256k-$(EMUTOS_VERSION)/etos256us.img: emutos-256k-$(EMUTOS_VERSION).zip
+	unzip emutos-256k-$(EMUTOS_VERSION).zip
+
+emutos-256k-$(EMUTOS_VERSION).zip:
+	wget https://sourceforge.net/projects/emutos/files/emutos/$(EMUTOS_VERSION)/emutos-256k-$(EMUTOS_VERSION).zip/download -O emutos-256k-$(EMUTOS_VERSION).zip
+
+
 upgrade-test:
 	./mint-upgrade build/ ~/Projects/emul/atari/freemint_partition
 	@echo
-	ls /home/manu/Projects/emul/atari/freemint_partition/{AUTO,MINT}
+	ls /home/manu/Projects/emul/atari/freemint_gemdos/{AUTO,MINT}
 
 clean:
 	rm -f $(DISK_IMAGE)
@@ -89,7 +101,8 @@ cleanall: clean
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 	rm -f mksh/mksh
 	rm -f $(DISK_IMAGE)
-	-rm st_mint-*.*.img.zip
+	rm -f st_mint-*.*.img.zip
+	rm -fr emutos-256k-$(EMUTOS_VERSION).zip emutos-256k-1.1.1
 	$(MAKE) -C csed clean distclean
 	$(MAKE) -C minix/commands clean
 
