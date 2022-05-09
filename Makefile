@@ -83,9 +83,9 @@ emutos-256k-$(EMUTOS_VERSION).zip:
 
 
 upgrade-test:
-	./mint-upgrade build/ ~/Projects/emul/atari/freemint_partition
+	./mint-upgrade build/ ~/Projects/emul/atari/freemint_gemdos
 	@echo
-	ls /home/manu/Projects/emul/atari/freemint_gemdos/{AUTO,MINT}
+	ls ~/Projects/emul/atari/freemint_gemdos/{AUTO,MINT}
 
 clean:
 	rm -f $(DISK_IMAGE)
