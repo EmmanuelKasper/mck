@@ -7,6 +7,8 @@ import sys
 from os import path
 from dataclasses import dataclass
 
+# WORK IN PROGRESS, DO NOT USE
+
 precious = [
     'KEYBOARD.TBL',  # keyboard layout
     'sys-root/opt/GEM/teradesk/TERADESK.INF',  # desktop configuration
@@ -158,6 +160,9 @@ if __name__ == '__main__':
             or not path.isdir(sys.argv[2])):
         usage()
         sys.exit(1)
+    print("if your FreeMiNT sysdir is not in the first disk partition "\
+		"you will need to replace references to u:/c/ in mint.cnf and "\
+		"xaaes.cnf accordingly")
     source = sys.argv[1]
     target = sys.argv[2]
 
