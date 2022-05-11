@@ -111,5 +111,3 @@ release:
 	zip st_mint-$(VERSION).img.zip st_mint-$(VERSION).img
 	scp st_mint-$(VERSION).img.zip $${USER}@ada:/srv/www/subsole.org/static/retrocomputing
 	rm st_mint-$(VERSION).img
-
-include make.mk
