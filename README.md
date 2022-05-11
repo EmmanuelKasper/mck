@@ -1,6 +1,8 @@
 MCK: The ST Mint Construction Kit
 =================================
 
+This project has NO MAINTENANCE INTENDED as project goals have been reached with ST Mint 1.4  
+
 A proof of concept to build an Atari ST Freemint distribution using Ansible as a build tool.
 Freemint is an Unix-like kernel for the Atari ST, see https://freemint.github.io/ for details
 
