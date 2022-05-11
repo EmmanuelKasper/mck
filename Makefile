@@ -9,7 +9,7 @@ SHELL = /bin/ksh
 # 4 partitions of 127MB, as larger partitions create a logical sector size > 4096 bytes, that
 # linux cannot grok, see https://git.io/JTKC2
 DISK_IMAGE = ahdi-512M.img
-VERSION = 1.3
+VERSION = 1.4
 EMUTOS_VERSION = 1.1.1
 CC = m68k-atari-mint-gcc
 
