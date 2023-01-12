@@ -47,6 +47,8 @@
 
     - name: disable all synthax highliting for qed editor to save RAM and speed startup
       command: mv build/mint/{{ version }}/sys-root/opt/GEM/qed/syntax build/mint/{{ version }}/sys-root/opt/GEM/qed/syntax.off
+      args:
+        creates: build/mint/{{ version }}/sys-root/opt/GEM/qed/syntax.off
 
     - name: remove floppy drive B from Desktop
       replace:
