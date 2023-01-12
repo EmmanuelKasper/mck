@@ -4,7 +4,7 @@ MAKE = pmake
 .SHELL: name=ksh
 SHELL = /bin/ksh
 
-.PHONY: help text xaaes single install-card test clean cleanall
+.PHONY: help text xaaes single image test clean cleanall
 
 # 4 partitions of 127MB, as larger partitions create a logical sector size > 4096 bytes, that
 # linux cannot grok, see https://git.io/JTKC2
@@ -20,7 +20,7 @@ help:
 	@echo "text: build a text only distribution, jumping to a mksh shell after boot"
 	@echo "single: build a graphical distribution, using the TOS ROM single task AES"
 	@echo "xaaes: built a graphical distribution, using XaAES and Teradesk"
-	@echo "install-card: copy the build distribution into a disk image"
+	@echo "image: copy the build distribution into a disk image"
 	@echo "test: boot a disk image into hatari"
 
 mksh/mksh:
@@ -47,7 +47,7 @@ xaaes: mksh/mksh csed/sed minix/commands/term/term
 $(DISK_IMAGE):
 	unzip resources/$(DISK_IMAGE).zip
 
-install-card: $(DISK_IMAGE)
+image: $(DISK_IMAGE)
 # first partition start at 1024th byte
 # verify with `parted $(DISK_IMAGE) -- unit b print`
 # MTOOLS export are needed for GEMDOS fat compatibility
