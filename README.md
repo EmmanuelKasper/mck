@@ -39,12 +39,7 @@ bmake
 To create an Atari AHDI partitioned disk image with the distribution
 
 ```
-bmake install
-```
-
-To copy the distribution in a partition mounted on /stmint, call
-```
-bmake cardinstall
+bmake image
 ```
 
 ## Roadmap / Status
