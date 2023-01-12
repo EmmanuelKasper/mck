@@ -196,6 +196,15 @@ deskicons=
 
 applications=
 {
+	app=
+	{
+		path=U:\opt\GEM\QED\qed.app
+		cmdl=%f
+		atype=
+		{
+			flag=0x2008
+		}
+	}
 }
 
 windows=
