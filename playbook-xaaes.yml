@@ -45,6 +45,9 @@
         src: resources/TERADESK.INF
         dest: build/mint/{{ version }}/sys-root/opt/GEM/teradesk/TERADESK.INF
 
+    - name: disable all synthax highliting for qed editor to save RAM and speed startup
+      command: mv build/mint/{{ version }}/sys-root/opt/GEM/qed/syntax build/mint/{{ version }}/sys-root/opt/GEM/qed/syntax.off
+
     - name: remove floppy drive B from Desktop
       replace:
         path: "build/mint/{{ version }}/mint.cnf"
