@@ -64,20 +64,21 @@ mount-copy:
 #	rsync --archive --verbose build/$$dir /stmint/$$dir; done
 	umount /stmint
 
-test: $(DISK_IMAGE)
-	hatari --mono --gemdos-drive skip --acsi $(DISK_IMAGE) \
-		--conout 2 2> /tmp/hatari.log
+test: $(DISK_IMAGE) emutos-256k-$(EMUTOS_VERSION).zip
+	hatari --mono --gemdos-drive skip --acsi $(DISK_IMAGE)\
+		--tos emutos-256k-$(EMUTOS_VERSION)/etos256us.img \
+		--memsize 4 --conout 2 2> /tmp/hatari.log
 
 gemdos-test: emutos-256k-$(EMUTOS_VERSION)/etos256us.img
 	hatari --tos emutos-256k-$(EMUTOS_VERSION)/etos256us.img \
-		--mono --harddrive build
+		--mono --memsize 4 --harddrive build
 
 emutos-256k-$(EMUTOS_VERSION)/etos256us.img: emutos-256k-$(EMUTOS_VERSION).zip
 	unzip emutos-256k-$(EMUTOS_VERSION).zip
+	touch emutos-256k-$(EMUTOS_VERSION)/etos256us.img # ensure img is newer than zip
 
 emutos-256k-$(EMUTOS_VERSION).zip:
 	wget https://sourceforge.net/projects/emutos/files/emutos/$(EMUTOS_VERSION)/emutos-256k-$(EMUTOS_VERSION).zip/download -O emutos-256k-$(EMUTOS_VERSION).zip
-
 
 upgrade-test:
 	./mint-upgrade build/ ~/Projects/emul/atari/freemint_gemdos
