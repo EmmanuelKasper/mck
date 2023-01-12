@@ -67,11 +67,11 @@ mount-copy:
 test: $(DISK_IMAGE) emutos-256k-$(EMUTOS_VERSION).zip
 	hatari --mono --gemdos-drive skip --acsi $(DISK_IMAGE)\
 		--tos emutos-256k-$(EMUTOS_VERSION)/etos256us.img \
-		--memsize 4 --conout 2 2> /tmp/hatari.log
+		--cpuclock 32 --memsize 4 --conout 2 2> /tmp/hatari.log
 
 gemdos-test: emutos-256k-$(EMUTOS_VERSION)/etos256us.img
 	hatari --tos emutos-256k-$(EMUTOS_VERSION)/etos256us.img \
-		--mono --memsize 4 --harddrive build
+		--cpuclock 32 --mono --memsize 4 --harddrive build
 
 emutos-256k-$(EMUTOS_VERSION)/etos256us.img: emutos-256k-$(EMUTOS_VERSION).zip
 	unzip emutos-256k-$(EMUTOS_VERSION).zip
