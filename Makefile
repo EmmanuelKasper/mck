@@ -64,7 +64,7 @@ mount-copy:
 #	rsync --archive --verbose build/$$dir /stmint/$$dir; done
 	umount /stmint
 
-test: $(DISK_IMAGE) emutos-256k-$(EMUTOS_VERSION).zip
+test: $(DISK_IMAGE) emutos-256k-$(EMUTOS_VERSION)/etos256us.img
 	hatari --mono --gemdos-drive skip --acsi $(DISK_IMAGE)\
 		--tos emutos-256k-$(EMUTOS_VERSION)/etos256us.img \
 		--cpuclock 32 --memsize 4 --conout 2 2> /tmp/hatari.log
