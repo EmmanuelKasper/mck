@@ -13,10 +13,6 @@ VERSION = 1.4
 EMUTOS_VERSION = 1.1.1
 CC = m68k-atari-mint-gcc
 
-# Needed for GEMDOS fat compatibility
-export MTOOLS_SKIP_CHECK = 1
-export MTOOLS_NO_VFAT =1 
-
 all: xaaes
 
 help:
@@ -54,10 +50,11 @@ $(DISK_IMAGE):
 install-card: $(DISK_IMAGE)
 # first partition start at 1024th byte
 # verify with `parted $(DISK_IMAGE) -- unit b print`
-	-mdeltree -i $(DISK_IMAGE)@@1024 ::{auto,extra,mint}
-	-mdeltree -i $(DISK_IMAGE)@@133170176 ::demodata
-	-mcopy -s -i $(DISK_IMAGE)@@1024 build/* ::
-	-mcopy -s -i $(DISK_IMAGE)@@133170176 demodata ::
+# MTOOLS export are needed for GEMDOS fat compatibility
+	-MTOOLS_SKIP_CHECK=1 MTOOLS_NO_VFAT=1 mdeltree -i $(DISK_IMAGE)@@1024 ::{auto,extra,mint}
+	-MTOOLS_SKIP_CHECK=1 MTOOLS_NO_VFAT=1 mdeltree -i $(DISK_IMAGE)@@133170176 ::demodata
+	-MTOOLS_SKIP_CHECK=1 MTOOLS_NO_VFAT=1 mcopy -s -i $(DISK_IMAGE)@@1024 build/* ::
+	-MTOOLS_SKIP_CHECK=1 MTOOLS_NO_VFAT=1 mcopy -s -i $(DISK_IMAGE)@@133170176 demodata ::
 
 mount-copy:
 	mount /stmint
