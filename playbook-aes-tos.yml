@@ -1,7 +1,7 @@
 - name: Build a ST Mint distribution using the TOS AES
   hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: false
   tasks:
     - import_tasks: basemint.yml
 
@@ -15,4 +15,3 @@
       copy:
         src: build/mint/{{ version }}/sys-root/opt/GEM/nohog2/nohog2.acc
         dest: build
-

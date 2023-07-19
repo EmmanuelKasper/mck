@@ -1,201 +1,169 @@
-    - name: load freemint version from freemint-version.yml
-      include_vars:
-        file: freemint-version.yml
-
-    - name: download mint {{ version }} distribution
-      get_url:
-        url: "https://tho-otto.de/snapshots/freemint/bootable/freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
-        dest: "{{ playbook_dir }}/freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
-        force: no
-
-    - name: create folder structure
-      file:
-        path: "{{ item }}"
-        state: directory
-      loop:
-        - freemint
-        - build/auto
-        - build/extra
-        - resources/etherne
-
-    - name: unpack freemint archive
-      unarchive:
-        src: freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip
-        dest: freemint
-        creates: freemint/auto/mint-{{ minor_version }}.prg
-
-    - name: copy freemint kernel loader
-      copy:
-        src: freemint/auto/mint-{{ minor_version }}.prg
-        dest: build/auto/mint-{{ minor_version }}.prg
-
-    - name : copy freemint sysdir
-      command: cp -r freemint/mint build/
-      args:
-        creates: build/mint
-
-    - name: disable default 68000 kernel
-      copy:
-        src: build/mint/{{ version }}/mint000.prg
-        dest: build/mint/{{ version }}/mint000.prx
-
-    - name: use kernel built with GEMDOS FAT driver
-      copy:
-        src: build/mint/{{ version }}/minthat.prg
-        dest: build/mint/{{ version }}/mint000.prg
-
-    - name: remove default hostname
-      replace:
-        path: build/mint/{{ version }}/mint.cnf
-        regexp : '^setenv HOSTNAME saturn$'
-        replace: 'setenv HOSTNAME stmint'
-
-    - name: set kernel debug level to alert
-      replace:
-        path: build/mint/{{ version }}/mint.cnf
-        regexp : '^#KERN_DEBUG_LEVEL=1$'
-        replace: 'KERN_DEBUG_LEVEL=1'
-
-    - name: disable unused filesystems
-      command: mv build/mint/{{ version }}/{{ item }}.xfs build/mint/{{ version }}/{{ item }}.xfx
-      args:
-        creates: build/mint/{{ version }}/{{ item }}.xfx
-      loop:
-        - ext2
-        - nfs
-
-    - name: disable unused device drivers
-      command: mv build/mint/{{ version }}/{{ item }}.xdd build/mint/{{ version }}/{{ item }}.xdx
-      args:
-        creates: build/mint/{{ version }}/{{ item }}.xdx
-      loop:
-        - flop_raw
-
-    - name: disable non working serial port mfp driver
-      command: mv build/mint/{{ version }}/{{ item }}/mfp.xdd build/mint/{{ version }}/{{ item }}/mfp.xdx
-      args:
-        creates: build/mint/{{ version }}/{{ item }}/mfp.xdx
-      loop:
-        - st
-        - ste
-        - megast
-        - megaste
-
-    - name: disable unused network interface drivers
-      command: mv build/mint/{{ version }}/{{ item }}.xif build/mint/{{ version }}/{{ item }}.xix
-      args:
-        creates: build/mint/{{ version }}/{{ item }}.xix
-      loop:
-        - plip
-
-    - name: copy mint.ini with boot log enabled
-      copy:
-        src: resources/mint.ini
-        dest: build/mint/{{ version }}
-
-    - name: copy mksh sell
-      copy:
-        src: mksh/mksh
-        dest: build/mint/{{ version }}/sys-root/bin
-
-    - name: copy minimal profile
-      copy:
-        src: mksh/profile
-        dest: build/mint/{{ version }}/sys-root/etc/profile
-
-    - name: set mksh as the default root shell
-      copy:
-        dest: build/mint/{{ version }}/sys-root/etc/passwd
-        content: |
-          root:x:0:0::/root:/bin/mksh
-
-    - name: download GNU coreutils for FreeMiNT
-      get_url:
-        url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/coreutils/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
-        dest: resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
-        force: no
-
-    # ignore warning to use the unarchive module, as it fails with
-    # 'failed to find handler for 5380204-142837785679065/source'
-    - name: untar coreutils
-      command: >
-        tar -C build/mint/{{ version }}/sys-root/
-          -xaf resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
-        usr/bin
-      args:
-        creates: build/mint/{{ version }}/sys-root/usr/bin/uname
-        warn: false
-
-    - name: download ncurses-bin for FreeMiNT
-      get_url:
-        url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/ncurses/ncurses-5.9-bin-mint-20131105.tar.bz2
-        dest: resources/ncurses-5.9-bin-mint-20131105.tar.bz2
-        force: no
-
-    # ignore warning to use the unarchive module, as it fails with
-    # 'failed to find handler for 5380204-142837785679065/source'
-    - name: untar coreutils
-      command: >
-        tar -C build/mint/{{ version }}/sys-root/
-          -xaf resources/ncurses-5.9-bin-mint-20131105.tar.bz2
-          usr/bin
-          usr/share/terminfo/t/tw52
-          usr/share/terminfo/t/tw52-m
-          usr/share/terminfo/t/tw100
-          usr/share/terminfo/s/st52
-          usr/share/terminfo/s/st52-color
-
-      args:
-        creates: build/mint/{{ version }}/sys-root/usr/bin/clear
-        warn: false
-
-    - name: create a symlink for accessing /usr/bin
-      replace:
-        path: build/mint/{{ version }}/mint.cnf
-        regexp : '^#sln e:/usr      u:/usr$'
-        replace: 'sln c:/mint/{{ version }}/sys-root/usr      u:/usr'
-
-    - name: copy csed the cheap sed
-      copy:
-        src: csed/sed
-        dest: build/mint/{{ version }}/sys-root/usr/bin/sed
-
-    - name: copy minix userland commands
-      copy:
-        src: minix/commands/{{ item }}/{{ item }}
-        dest: build/mint/{{ version }}/sys-root/usr/bin/{{ item }}
-      loop:
-        - grep
-        - term
-
-    - name: copy fplay script
-      copy:
-        src: resources/fplay
-        dest: build/mint/{{ version }}/sys-root/usr/bin/fplay
-
-    - name: create path for term command lock directory
-      file:
-        path: build/mint/{{ version }}/sys-root/usr/spool/locks
-        state: directory
-
-    - name: download ethernec driver
-      get_url:
-        url: http://web222.webclient5.de/prj/atari/download/etherne.zip
-        dest: resources/etherne.zip
-        force: no
-
-    - name: unarchive ethernec driver
-      unarchive:
-        src: resources/etherne.zip
-        dest: resources/etherne/
-        creates: resources/etherne/ENEC.MIF
-
-    - name: fix ethernet driver file permissions
-      file:
-        path: resources/etherne/ENEC.MIF
-        mode: '0644'
-
-    - name: copy ethernec driver to mint folder but leaves it disabled
-      command: cp resources/etherne/ENEC.MIF build/mint/{{ version }}/enec.xix
-      args:
-        creates: build/mint/{{ version }}/enec.xix
+- name: Load freemint version from freemint-version.yml
+  include_vars:
+    file: freemint-version.yml
+- name: Download mint distribution {{ version }}
+  get_url:
+    url: "https://tho-otto.de/snapshots/freemint/bootable/freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
+    dest: "{{ playbook_dir }}/freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
+    force: false
+- name: Create folder structure
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - freemint
+    - build/auto
+    - build/extra
+    - resources/etherne
+- name: Unpack freemint archive
+  unarchive:
+    src: "freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
+    dest: freemint
+    creates: "freemint/auto/mint-{{ minor_version }}.prg"
+- name: Copy freemint kernel loader
+  copy:
+    src: freemint/auto/mint-{{ minor_version }}.prg
+    dest: build/auto/mint-{{ minor_version }}.prg
+- name: Copy freemint sysdir
+  command: cp -r freemint/mint build/
+  args:
+    creates: build/mint
+- name: Disable default 68000 kernel
+  copy:
+    src: build/mint/{{ version }}/mint000.prg
+    dest: build/mint/{{ version }}/mint000.prx
+- name: Use kernel built with GEMDOS FAT driver
+  copy:
+    src: build/mint/{{ version }}/minthat.prg
+    dest: build/mint/{{ version }}/mint000.prg
+- name: Remove default hostname
+  replace:
+    path: build/mint/{{ version }}/mint.cnf
+    regexp: '^setenv HOSTNAME saturn$'
+    replace: 'setenv HOSTNAME stmint'
+- name: Set kernel debug level to alert
+  replace:
+    path: build/mint/{{ version }}/mint.cnf
+    regexp: '^#KERN_DEBUG_LEVEL=1$'
+    replace: 'KERN_DEBUG_LEVEL=1'
+- name: Disable unused filesystems
+  command: mv build/mint/{{ version }}/{{ item }}.xfs build/mint/{{ version }}/{{ item }}.xfx
+  args:
+    creates: build/mint/{{ version }}/{{ item }}.xfx
+  loop:
+    - ext2
+    - nfs
+- name: Disable unused device drivers
+  command: mv build/mint/{{ version }}/{{ item }}.xdd build/mint/{{ version }}/{{ item }}.xdx
+  args:
+    creates: build/mint/{{ version }}/{{ item }}.xdx
+  loop:
+    - flop_raw
+- name: Disable non working serial port mfp driver
+  command: mv build/mint/{{ version }}/{{ item }}/mfp.xdd build/mint/{{ version }}/{{ item }}/mfp.xdx
+  args:
+    creates: build/mint/{{ version }}/{{ item }}/mfp.xdx
+  loop:
+    - st
+    - ste
+    - megast
+    - megaste
+- name: Disable unused network interface drivers
+  command: mv build/mint/{{ version }}/{{ item }}.xif build/mint/{{ version }}/{{ item }}.xix
+  args:
+    creates: build/mint/{{ version }}/{{ item }}.xix
+  loop:
+    - plip
+- name: Copy mint.ini with boot log enabled
+  copy:
+    src: resources/mint.ini
+    dest: build/mint/{{ version }}
+- name: Copy mksh sell
+  copy:
+    src: mksh/mksh
+    dest: build/mint/{{ version }}/sys-root/bin
+- name: Copy minimal profile
+  copy:
+    src: mksh/profile
+    dest: build/mint/{{ version }}/sys-root/etc/profile
+- name: Set mksh as the default root shell
+  copy:
+    dest: build/mint/{{ version }}/sys-root/etc/passwd
+    content: |
+      root:x:0:0::/root:/bin/mksh
+- name: Download GNU coreutils for FreeMiNT
+  get_url:
+    url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/coreutils/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
+    dest: resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
+    force: false
+# ignore warning to use the unarchive module, as it fails with
+# 'failed to find handler for 5380204-142837785679065/source'
+- name: Untar coreutils
+  command: >
+    tar -C build/mint/{{ version }}/sys-root/
+      -xaf resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
+    usr/bin
+  args:
+    creates: build/mint/{{ version }}/sys-root/usr/bin/uname
+#    warn: false
+- name: Download ncurses-bin for FreeMiNT
+  get_url:
+    url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/ncurses/ncurses-5.9-bin-mint-20131105.tar.bz2
+    dest: resources/ncurses-5.9-bin-mint-20131105.tar.bz2
+    force: false
+# ignore warning to use the unarchive module, as it fails with
+# 'failed to find handler for 5380204-142837785679065/source'
+- name: Untar coreutils
+  command: >
+    tar -C build/mint/{{ version }}/sys-root/
+      -xaf resources/ncurses-5.9-bin-mint-20131105.tar.bz2
+      usr/bin
+      usr/share/terminfo/t/tw52
+      usr/share/terminfo/t/tw52-m
+      usr/share/terminfo/t/tw100
+      usr/share/terminfo/s/st52
+      usr/share/terminfo/s/st52-color
+  args:
+    creates: build/mint/{{ version }}/sys-root/usr/bin/clear
+#    warn: false
+- name: Create a symlink for accessing /usr/bin
+  replace:
+    path: build/mint/{{ version }}/mint.cnf
+    regexp: '^#sln e:/usr      u:/usr$'
+    replace: 'sln c:/mint/{{ version }}/sys-root/usr      u:/usr'
+- name: copy csed the cheap sed
+  copy:
+    src: csed/sed
+    dest: build/mint/{{ version }}/sys-root/usr/bin/sed
+- name: Copy minix userland commands
+  copy:
+    src: minix/commands/{{ item }}/{{ item }}
+    dest: build/mint/{{ version }}/sys-root/usr/bin/{{ item }}
+  loop:
+    - grep
+    - term
+- name: Copy fplay script
+  copy:
+    src: resources/fplay
+    dest: build/mint/{{ version }}/sys-root/usr/bin/fplay
+- name: Create path for term command lock directory
+  file:
+    path: build/mint/{{ version }}/sys-root/usr/spool/locks
+    state: directory
+- name: Download ethernec driver
+  get_url:
+    url: http://web222.webclient5.de/prj/atari/download/etherne.zip
+    dest: resources/etherne.zip
+    force: false
+- name: Unarchive ethernec driver
+  unarchive:
+    src: resources/etherne.zip
+    dest: resources/etherne/
+    creates: resources/etherne/ENEC.MIF
+- name: Fix ethernet driver file permissions
+  file:
+    path: resources/etherne/ENEC.MIF
+- name: Copy ethernec driver to mint folder but leaves it disabled
+  command: cp resources/etherne/ENEC.MIF build/mint/{{ version }}/enec.xix
+  args:
+    creates: build/mint/{{ version }}/enec.xix
