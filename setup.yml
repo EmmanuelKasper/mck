@@ -1,0 +1,27 @@
+- hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+    - name: install required debian packages
+      package:
+        name:
+          - ansible
+          - bmake
+          - gnupg2
+          - mksh
+          - mtools
+          - unzip
+        state: latest
+    - name: install Vincent Riviere's apt  key
+      apt_key:
+        url:  http://vincent.riviere.free.fr/apt/vincent-riviere-apt.gpg
+        state: present
+    - name: enable Vincent Riviere cross mint repository
+      apt_repository:
+        repo: deb http://vincent.riviere.free.fr/apt/ bullseye contrib
+        state: present
+    - name: install cross mint essentials
+      package:
+        name: cross-mint-essential
+        state: present
+
