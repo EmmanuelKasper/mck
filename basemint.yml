@@ -155,6 +155,7 @@
     url: http://web222.webclient5.de/prj/atari/download/etherne.zip
     dest: resources/etherne.zip
     force: false
+    mode: '0644'
 - name: Unarchive ethernec driver
   unarchive:
     src: resources/etherne.zip
@@ -163,6 +164,7 @@
 - name: Fix ethernet driver file permissions
   file:
     path: resources/etherne/ENEC.MIF
+    mode: '0644'
 - name: Copy ethernec driver to mint folder but leaves it disabled
   command: cp resources/etherne/ENEC.MIF build/mint/{{ version }}/enec.xix
   args:
