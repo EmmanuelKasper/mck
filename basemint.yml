@@ -113,7 +113,7 @@
     force: false
 # ignore warning to use the unarchive module, as it fails with
 # 'failed to find handler for 5380204-142837785679065/source'
-- name: Untar coreutils
+- name: Untar ncurses-bin
   command: >
     tar -C build/mint/{{ version }}/sys-root/
       -xaf resources/ncurses-5.9-bin-mint-20131105.tar.bz2
