@@ -11,7 +11,7 @@
         creates: build/mint/{{ version }}/xaaes/xaaes.cnf.orig
 
     - name: convert xaaes config file to utf-8 so we can edit it with ansible
-      shell: "iconv -f 437 -t utf-8 build/mint/{{ version }}/xaaes/xaaes.cnf.orig  | sed -n '/^[^# ]/p' > build/mint/{{ version }}/xaaes/xaaes.cnf"
+      shell: iconv -f 437 -t utf-8 build/mint/{{ version }}/xaaes/xaaes.cnf.orig  | sed -n '/^[^# ]/p' > build/mint/{{ version }}/xaaes/xaaes.cnf
       args:
         creates: build/mint/{{ version }}/xaaes/xaaes.cnf
 
