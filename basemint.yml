@@ -7,14 +7,14 @@
     dest: "{{ playbook_dir }}/freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
     force: false
 - name: Create folder structure
-  file:
-    path: "{{ item }}"
-    state: directory
   loop:
     - freemint
     - build/auto
     - build/extra
     - resources/etherne
+  file:
+    path: "{{ item }}"
+    state: directory
 - name: Unpack freemint archive
   unarchive:
     src: "freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
@@ -47,33 +47,33 @@
     regexp: '^#KERN_DEBUG_LEVEL=1$'
     replace: 'KERN_DEBUG_LEVEL=1'
 - name: Disable unused filesystems
-  command: mv build/mint/{{ version }}/{{ item }}.xfs build/mint/{{ version }}/{{ item }}.xfx
-  args:
-    creates: build/mint/{{ version }}/{{ item }}.xfx
   loop:
     - ext2
     - nfs
+  command: mv build/mint/{{ version }}/{{ item }}.xfs build/mint/{{ version }}/{{ item }}.xfx
+  args:
+    creates: build/mint/{{ version }}/{{ item }}.xfx
 - name: Disable unused device drivers
+  loop:
+    - flop_raw
   command: mv build/mint/{{ version }}/{{ item }}.xdd build/mint/{{ version }}/{{ item }}.xdx
   args:
     creates: build/mint/{{ version }}/{{ item }}.xdx
-  loop:
-    - flop_raw
 - name: Disable non working serial port mfp driver
-  command: mv build/mint/{{ version }}/{{ item }}/mfp.xdd build/mint/{{ version }}/{{ item }}/mfp.xdx
-  args:
-    creates: build/mint/{{ version }}/{{ item }}/mfp.xdx
   loop:
     - st
     - ste
     - megast
     - megaste
+  command: mv build/mint/{{ version }}/{{ item }}/mfp.xdd build/mint/{{ version }}/{{ item }}/mfp.xdx
+  args:
+    creates: build/mint/{{ version }}/{{ item }}/mfp.xdx
 - name: Disable unused network interface drivers
+  loop:
+    - plip
   command: mv build/mint/{{ version }}/{{ item }}.xif build/mint/{{ version }}/{{ item }}.xix
   args:
     creates: build/mint/{{ version }}/{{ item }}.xix
-  loop:
-    - plip
 - name: Copy mint.ini with boot log enabled
   copy:
     src: resources/mint.ini
@@ -136,12 +136,12 @@
     src: csed/sed
     dest: build/mint/{{ version }}/sys-root/usr/bin/sed
 - name: Copy minix userland commands
-  copy:
-    src: minix/commands/{{ item }}/{{ item }}
-    dest: build/mint/{{ version }}/sys-root/usr/bin/{{ item }}
   loop:
     - grep
     - term
+  copy:
+    src: minix/commands/{{ item }}/{{ item }}
+    dest: build/mint/{{ version }}/sys-root/usr/bin/{{ item }}
 - name: Copy fplay script
   copy:
     src: resources/fplay
