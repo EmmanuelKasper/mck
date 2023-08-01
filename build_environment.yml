@@ -1,4 +1,5 @@
 - hosts: all
+  name: install all packages for build environment
   gather_facts: false
   become: true
   tasks:

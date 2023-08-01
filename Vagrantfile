@@ -28,6 +28,6 @@ Vagrant.configure("2") do |config|
   #   apt-get install -y apache2
   # SHELL
   config.vm.provision "ansible"do |ansible|
-    ansible.playbook  = "setup.yml"
+    ansible.playbook  = "build_environment.yml"
   end
 end
