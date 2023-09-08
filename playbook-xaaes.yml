@@ -3,7 +3,7 @@
   connection: local
   gather_facts: no
   tasks:
-    - import_tasks: basemint.yml
+    - import_tasks: basemint_tasks.yml
 
     - name: creates a backup of the xaaes config file
       command: mv build/mint/{{ version }}/xaaes/xaaes.cnf build/mint/{{ version }}/xaaes/xaaes.cnf.orig

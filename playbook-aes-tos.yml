@@ -3,7 +3,7 @@
   connection: local
   gather_facts: false
   tasks:
-    - import_tasks: basemint.yml
+    - import_tasks: basemint_tasks.yml
 
     - name: use the ROM AES
       replace:
