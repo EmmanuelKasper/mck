@@ -68,11 +68,11 @@
         creates: resources/command.tos
 
     - name: copy command.tos to 'extra' folder
+      loop:
+        - resources/command.tos
       copy:
         src: "{{ item }}"
         dest: build/extra/
-      loop:
-        - resources/command.tos
 
     - name: download 2048 game
       get_url:
