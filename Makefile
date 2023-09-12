@@ -36,13 +36,13 @@ csed/sed:
 	$(MAKE) -C csed CC=$(CC)
 
 single:
-	ansible-playbook playbook-aes-tos.yml --inventory localhost,
+	ansible-playbook playbook-aes-tos.yml
 
 text: mksh/mksh csed/sed minix/commands/term/term
-	ansible-playbook playbook-text-only.yml --inventory localhost,
+	ansible-playbook playbook-text-only.yml
 
 xaaes: mksh/mksh csed/sed minix/commands/term/term
-	ansible-playbook playbook-xaaes.yml --inventory localhost,
+	ansible-playbook playbook-xaaes.yml
 
 $(DISK_IMAGE):
 	unzip resources/$(DISK_IMAGE).zip

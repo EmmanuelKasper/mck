@@ -1,7 +1,5 @@
 - name: Build a ST Mint distribution using Xaaes
   hosts: localhost
-  connection: local
-  gather_facts: no
   tasks:
     - import_tasks: basemint_tasks.yml
 

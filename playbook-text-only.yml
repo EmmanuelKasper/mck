@@ -1,7 +1,5 @@
 - name: Build a text based ST Mint distribution using the bash shell
   hosts: localhost
-  connection: local
-  gather_facts: no
   tasks:
     - import_tasks: basemint_tasks.yml
 

@@ -1,7 +1,5 @@
 - name: Build a ST Mint distribution using the TOS AES
   hosts: localhost
-  connection: local
-  gather_facts: false
   tasks:
     - import_tasks: basemint_tasks.yml
 
