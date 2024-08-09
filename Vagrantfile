@@ -6,8 +6,10 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  config.vm.provider :libvirt do |vm|  vm.cpus=2 end
-  config.vm.provider :libvirt do |vm|  vm.memory=2048 end
+  config.vm.provider :libvirt do |vm|
+    vm.cpus = 2
+    vm.memory = 2048
+  end
 
   config.vm.synced_folder ".", "/vagrant", type: "nfs"  
 
