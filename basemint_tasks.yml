@@ -18,7 +18,7 @@
 - name: Unpack freemint archive
   unarchive:
     src: "freemint-{{ major_version }}-{{ commit_hash }}-000-st_ste.zip"
-    dest: freemint
+    dest: "{{playbook_dir}}/freemint"
     creates: "freemint/auto/mint-{{ minor_version }}.prg"
 - name: Copy freemint kernel loader
   copy:
@@ -93,30 +93,30 @@
       root:x:0:0::/root:/bin/mksh
 - name: Download GNU coreutils for FreeMiNT
   get_url:
-    url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/coreutils/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
-    dest: resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
+    url: http://vincent.riviere.free.fr/soft/m68k-atari-mintelf/archives/mint/coreutils/coreutils-9.4-bin-mintelf-20240120.tar.xz
+    dest: resources/coreutils-9.4-bin-mintelf-20240120.tar.xz
     force: false
 # ignore warning to use the unarchive module, as it fails with
 # 'failed to find handler for 5380204-142837785679065/source'
 - name: Untar coreutils
   command: >
     tar -C build/mint/{{ version }}/sys-root/
-      -xaf resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2
+      -xaf resources/coreutils-9.4-bin-mintelf-20240120.tar.xz
     usr/bin
   args:
     creates: build/mint/{{ version }}/sys-root/usr/bin/uname
 #    warn: false
 - name: Download ncurses-bin for FreeMiNT
   get_url:
-    url: http://vincent.riviere.free.fr/soft/m68k-atari-mint/archives/mint/ncurses/ncurses-5.9-bin-mint-20131105.tar.bz2
-    dest: resources/ncurses-5.9-bin-mint-20131105.tar.bz2
+    url: http://vincent.riviere.free.fr/soft/m68k-atari-mintelf/archives/mint/ncurses/ncurses-6.4-bin-mintelf-20240121.tar.xz
+    dest: resources/ncurses-6.4-bin-mintelf-20240121.tar.xz
     force: false
 # ignore warning to use the unarchive module, as it fails with
 # 'failed to find handler for 5380204-142837785679065/source'
 - name: Untar ncurses-bin
   command: >
     tar -C build/mint/{{ version }}/sys-root/
-      -xaf resources/ncurses-5.9-bin-mint-20131105.tar.bz2
+      -xaf resources/ncurses-6.4-bin-mintelf-20240121.tar.xz
       usr/bin
       usr/share/terminfo/t/tw52
       usr/share/terminfo/t/tw52-m

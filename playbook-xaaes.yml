@@ -74,13 +74,13 @@
 
     - name: download 2048 game
       get_url:
-        url: https://ptonthat.fr/files/2048/2048_13b_68k.zip
-        dest: "{{ playbook_dir }}/resources/2048_13b_68k.zip"
+        url: https://ptonthat.fr/files/2048/2048_13c_68k.zip
+        dest: "{{ playbook_dir }}/resources/2048_13c_68k.zip"
         force: no
 
     - name: extract 2048
       unarchive:
-        src: resources/2048_13b_68k.zip
+        src: resources/2048_13c_68k.zip
         dest: "{{ playbook_dir }}/resources"
         creates: "{{ playbook_dir }}/resources/2048.68K/2048.APP"
 
