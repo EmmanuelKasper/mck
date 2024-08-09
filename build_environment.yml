@@ -1,11 +1,12 @@
 - hosts: all
-  name: install all packages for build environment
+  name: install requisites of build environment
   gather_facts: false
   become: true
   tasks:
     - name: install required debian packages
       package:
         name:
+          - git
           - ansible
           - bmake
           - gnupg2
