@@ -90,12 +90,9 @@
       changed_when: app_is_readable.rc != 0
       ignore_errors: true
 
-      # ignore warning to use the ansible file module, as it does not support recursion
     - name: fix 2048 zip permissions
       when: app_is_readable.rc != 0
       command: chmod -R ug+rw resources/2048.68K/
-      args:
-        warn: false
 
     - name : copy 2048
       command: cp -r resources/2048.68K build/extra/
