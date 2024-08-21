@@ -10,7 +10,6 @@
           - ansible
           - bmake
           - gnupg2
-          - mksh
           - mtools
           - unzip
         state: latest

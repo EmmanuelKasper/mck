@@ -1,4 +1,4 @@
-- name: Build a text based ST Mint distribution using the bash shell
+- name: Build a text based ST Mint distribution starting a single Korn shell
   hosts: localhost
   tasks:
     - import_tasks: basemint_tasks.yml

@@ -1,8 +1,7 @@
-# this make file needs bsd make
-MAKE = pmake
-# needs ksh or bash for this makefile, as we do brace expansion
-.SHELL: name=ksh
-SHELL = /bin/ksh
+# Minix 3 source code needs BSD make
+MAKE = bmake
+# needs ksh or bash for this makefile, as we do brace expansion in `make image`
+SHELL = /bin/bash
 
 .PHONY: help text xaaes single image test clean cleanall
 
@@ -93,14 +92,15 @@ clean:
 
 cleanall: clean
 	rm -f resources/disk00 resources/command.tos
-	rm -fr resources/2048_13b_68k.zip resources/2048.68K
+	rm -fr resources/2048_*.zip resources/2048.68K
 	rm -fr resources/etherne.zip resources/etherne
-	rm -fr resources/coreutils-8.21-mint-20131205-bin-mint-20131219.tar.bz2 resources/coreutils
+	rm -fr resources/coreutils-*
+	rm -fr resources/ncurses-* 
 	rm -f freemint-1.18.0.tar.bz2 freemint-1-19-*-000-st_ste.zip
 	rm -f mksh/mksh
 	rm -f $(DISK_IMAGE)
 	rm -f st_mint-*.*.img.zip
-	rm -fr emutos-256k-$(EMUTOS_VERSION).zip emutos-256k-1.1.1
+	rm -fr emutos-256k-$(EMUTOS_VERSION).zip emutos-256k-$(EMUTOS_VERSION)
 	$(MAKE) -C csed clean distclean
 	$(MAKE) -C minix/commands clean
 

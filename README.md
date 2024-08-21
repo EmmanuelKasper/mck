@@ -14,7 +14,6 @@ You will need a Linux system the following packages installed:
 - ansible
 - mtools
 - bmake
-- mksh (or maybe ksh)
 from the Debian / Ubuntu archive
 
 and
@@ -33,13 +32,13 @@ git submodule update --init
 To build the distribution:
 
 ```
-bmake
+make
 ```
 
 To create an Atari AHDI partitioned disk image with the distribution
 
 ```
-bmake image
+make image
 ```
 
 ## Roadmap / Status
