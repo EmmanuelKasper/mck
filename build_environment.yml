@@ -20,7 +20,7 @@
         state: present
     - name: enable Vincent Riviere cross mint repository
       apt_repository:
-        repo: deb http://vincent.riviere.free.fr/apt/ bullseye contrib
+        repo: deb http://vincent.riviere.free.fr/apt/ bookworm contrib
         state: present
     - name: install cross mint essentials
       package:
