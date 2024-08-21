@@ -3,6 +3,18 @@
   tasks:
     - import_tasks: basemint_tasks.yml
 
+    - name: move out default xaaes kernel module
+      copy:
+        src: build/mint/{{ version }}/xaaes/xaaes.km
+        dest: build/mint/{{ version }}/xaaes/xaaes.km.bk
+
+    - name: uses ST xaaes kernel module to save a few kilobytes of RAM
+      # note that this disables background images :(((
+      # see https://github.com/freemint/freemint/blob/b24bbff682e325ed7757f281a66c3e867c918e6b/xaaes/src.km/xa_defs.h#L97
+      copy:
+        src: build/mint/{{ version }}/xaaes/xaaesst.km
+        dest: build/mint/{{ version }}/xaaes/xaaes.km
+
     - name: creates a backup of the xaaes config file
       command: mv build/mint/{{ version }}/xaaes/xaaes.cnf build/mint/{{ version }}/xaaes/xaaes.cnf.orig
       args:
