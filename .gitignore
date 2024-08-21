@@ -29,6 +29,6 @@ st_mint-*.*.img.zip
 ahdi-512M.img
 demodata/*.WAE
 .vscode
-emutos-256k-1.1.1.zip
-emutos-256k-1.1.1/
+emutos-256k-*.zip
+emutos-256k-*/
 .vagrant/

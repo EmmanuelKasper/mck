@@ -10,7 +10,7 @@ SHELL = /bin/ksh
 # linux cannot grok, see https://git.io/JTKC2
 DISK_IMAGE = ahdi-512M.img
 VERSION = 1.4
-EMUTOS_VERSION = 1.1.1
+EMUTOS_VERSION = 1.3
 CC = m68k-atari-mint-gcc
 
 all: xaaes
