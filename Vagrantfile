@@ -8,7 +8,7 @@
 Vagrant.configure("2") do |config|
   config.vm.provider :libvirt do |vm|
     vm.cpus = 2
-    vm.memory = 2048
+    vm.memory = 512
     vm.qemu_use_session = false
   end
 
