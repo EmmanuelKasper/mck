@@ -8,7 +8,7 @@ options=
 	save=0x0001
 	dial=0x0001
 	xpre=0x0000
-	pref=0x101F
+	pref=0x101f
 	buff=512
 	maxd=256
 	plin=80
@@ -18,22 +18,22 @@ options=
 	sort=0
 	aarr=1
 	attr=0x0014
-	flds=0x001F
+	flds=0x001f
 	vidp=0x0000
 	vres=0
-	dpat=4
-	dcol=3
+	dpat=37
+	dcol=1
 	wpat=1
 	wcol=0
 }
 
 shortcuts=
 {
-	open=0x024F
+	open=0x024f
 	show=0x0249
 	srch=0x0246
 	prin=0x0250
-	dele=0x027F
+	dele=0x027f
 	sela=0x0241
 	quit=0x0251
 	cycl=0x0257
@@ -138,7 +138,7 @@ deskicons=
 	}
 	icon=
 	{
-		name=HARD@DISC
+		name=HARD@DISK@3
 		labl=HARD@DISC
 		type=1
 		driv=2
@@ -146,7 +146,7 @@ deskicons=
 	}
 	icon=
 	{
-		name=HARD@DISC
+		name=HARD@DISK@3
 		labl=HARD@DISC
 		type=1
 		driv=3
@@ -155,7 +155,7 @@ deskicons=
 	icon=
 	{
 		name=HARD@DISC
-		labl=HARD@DISC
+		labl=UNIX@FS@VIEW
 		type=1
 		driv=20
 		xpos=4
@@ -219,10 +219,10 @@ windows=
 		}
 		pos=
 		{
-			xpos=125
-			ypos=117
-			winw=38
-			winh=4
+			xpos=160
+			ypos=34
+			winw=40
+			winh=13
 		}
 		pos=
 		{
