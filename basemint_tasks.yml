@@ -51,6 +51,11 @@
     path: build/mint/{{ version }}/mint.cnf
     regexp: '^#KERN_SLICES=2$'
     replace: 'KERN_SLICES=5'
+- name: Make sure we have /usr/bin in the MiNT sysroot, needed for coreutils
+  replace:
+    path: build/mint/{{ version }}/mint.cnf
+    regexp: "#sln \\$\\{SYSDIR\\}sys-root/usr      u:/usr"
+    replace: "sln ${SYSDIR}sys-root/usr      u:/usr"
 - name: Disable unused filesystems
   loop:
     - ext2
