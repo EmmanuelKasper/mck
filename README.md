@@ -19,7 +19,17 @@ from the Debian / Ubuntu archive
 and
 - cross-mint-essential
 - zlib-m68k-atari-mint
-from Vincent Rivière's m68k-atari-mint cross-tools
+from Vincent Rivière's m68k-atari-mint cross-tools.
+
+A [Vagrant](https://www.vagrantup.com/) virtual machine dev environment is provided for quick bootstrap. To use
+run
+~~~
+vagrant up
+vagrant ssh
+# in vm
+cd /vagrant
+~~~
+and you are ready to build.
 
 ## Usage
 
