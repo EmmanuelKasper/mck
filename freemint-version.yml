@@ -1,6 +1,5 @@
 ---
 major_version: 1-19
-commit_hash: 851f615f
-minor_version: 851
+commit_hash: 59848c2b
+minor_version: 598
 version: "{{ major_version }}-{{ minor_version }}"
-

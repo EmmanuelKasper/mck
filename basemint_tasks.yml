@@ -34,7 +34,7 @@
     dest: build/mint/{{ version }}/mint000.prx
 - name: Use kernel built with GEMDOS FAT driver
   copy:
-    src: build/mint/{{ version }}/minthat.prg
+    src: build/mint/{{ version }}/mint000h.prg
     dest: build/mint/{{ version }}/mint000.prg
 - name: Remove default hostname
   replace:
