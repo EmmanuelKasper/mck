@@ -46,6 +46,11 @@
     path: build/mint/{{ version }}/mint.cnf
     regexp: '^#KERN_DEBUG_LEVEL=1$'
     replace: 'KERN_DEBUG_LEVEL=1'
+- name: Increase kernel slices
+  replace:
+    path: build/mint/{{ version }}/mint.cnf
+    regexp: '^#KERN_SLICES=2$'
+    replace: 'KERN_SLICES=5'
 - name: Disable unused filesystems
   loop:
     - ext2
